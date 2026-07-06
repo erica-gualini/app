@@ -65,9 +65,24 @@ GENDER_COLORS = {
 st.markdown(
     """
     <style>
-    .main {
-        background-color: #F7FBFD;
-    }
+.stApp {
+    background-color: #F7FBFD;
+    color: #052B44;
+}
+
+.main {
+    background-color: #F7FBFD;
+    color: #052B44;
+}
+
+[data-testid="stAppViewContainer"] {
+    background-color: #F7FBFD;
+    color: #052B44;
+}
+
+[data-testid="stMarkdownContainer"] {
+    color: #052B44;
+}
 
     .hero {
         padding: 34px 38px;
@@ -138,20 +153,30 @@ st.markdown(
 
     .info-box {
         background-color: white;
+        color: #052B44;
         border-left: 6px solid #22B8CF;
         border-radius: 16px;
         padding: 18px 20px;
         margin: 16px 0;
         box-shadow: 0 6px 20px rgba(5,43,68,0.05);
-    }
+}
+
+    .info-box b {
+        color: #052B44;
+}
 
     .warning-box {
         background-color: #FFF8E6;
+        color: #052B44;
         border-left: 6px solid #D6A937;
         border-radius: 16px;
         padding: 18px 20px;
         margin: 16px 0;
-    }
+}
+
+    .warning-box b {
+        color: #052B44;
+}
 
     .small-caption {
         font-size: 13px;
@@ -559,24 +584,63 @@ def first_existing_column(df, candidates):
 
 
 def plotly_clean_layout(fig, height=480, title=None):
+    if title is not None:
+        fig.update_layout(title=title)
+
     fig.update_layout(
         height=height,
-        title=title,
-        title_font=dict(size=22, color=NAVY),
-        font=dict(family="Arial", size=13, color=NAVY),
+        font=dict(
+            family="Arial",
+            size=13,
+            color=NAVY
+        ),
+        title=dict(
+            font=dict(size=22, color=NAVY),
+            x=0.02,
+            xanchor="left"
+        ),
         paper_bgcolor="white",
         plot_bgcolor="white",
-        margin=dict(l=30, r=30, t=70, b=40),
+        margin=dict(l=45, r=35, t=85, b=55),
         legend=dict(
             orientation="h",
             yanchor="bottom",
             y=1.02,
             xanchor="right",
-            x=1
+            x=1,
+            font=dict(color=NAVY, size=12)
+        ),
+        hoverlabel=dict(
+            bgcolor="white",
+            font_size=13,
+            font_color=NAVY
         )
     )
-    fig.update_xaxes(showgrid=True, gridcolor="#E7EEF2", zeroline=False)
-    fig.update_yaxes(showgrid=True, gridcolor="#E7EEF2", zeroline=False)
+
+    fig.update_xaxes(
+        showgrid=True,
+        gridcolor="#DDEAF0",
+        zeroline=False,
+        title_font=dict(color=NAVY, size=14),
+        tickfont=dict(color=NAVY, size=12),
+        linecolor=NAVY,
+        color=NAVY
+    )
+
+    fig.update_yaxes(
+        showgrid=True,
+        gridcolor="#DDEAF0",
+        zeroline=False,
+        title_font=dict(color=NAVY, size=14),
+        tickfont=dict(color=NAVY, size=12),
+        linecolor=NAVY,
+        color=NAVY
+    )
+
+    fig.update_traces(
+        textfont=dict(color=NAVY, size=11)
+    )
+
     return fig
 
 
@@ -1000,31 +1064,59 @@ if page == "Home":
     col_a, col_b = st.columns([1.2, 1])
 
     with col_a:
-        wr_decade = wr.dropna(subset=["year"]).copy()
-        wr_decade["decade"] = (wr_decade["year"] // 10 * 10).astype(int).astype(str) + "s"
+        wr_year = wr.dropna(subset=["year"]).copy()
+        wr_year["year"] = wr_year["year"].astype(int)
 
-        decade_counts = (
-            wr_decade.groupby("decade")
+        year_counts = (
+            wr_year.groupby("year")
             .size()
             .reset_index(name="records")
-            .sort_values("decade")
+            .sort_values("year")
         )
 
         fig = px.bar(
-            decade_counts,
-            x="decade",
+            year_counts,
+            x="year",
             y="records",
             text="records",
             color_discrete_sequence=[BLUE],
-            title="World records by decade"
+            title="World records by year"
         )
-        fig.update_traces(textposition="outside")
-        fig = plotly_clean_layout(fig, height=430)
+
+        fig.update_traces(
+            textposition="outside",
+            textfont=dict(color=NAVY, size=9),
+            marker_line_color="white",
+            marker_line_width=0.8,
+            cliponaxis=False
+        )
+
+        fig.update_xaxes(
+            title="Year",
+            dtick=10
+        )
+
+        fig.update_yaxes(
+            title="Number of world records"
+        )
+
+        fig = plotly_clean_layout(fig, height=460)
         st.plotly_chart(fig, use_container_width=True)
+
+        st.markdown(
+            """
+            <div class="small-caption">
+            Each bar shows how many world record entries were set in that year.
+            Recent years after 2020 are included when present in the dataset.
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
     with col_b:
         athlete_wr = (
-            wr.groupby("name")
+            wr[wr["name"] != ""]
+            .groupby("name")
             .size()
             .reset_index(name="world_records")
             .sort_values("world_records", ascending=False)
@@ -1036,16 +1128,47 @@ if page == "Home":
             x="world_records",
             y="name",
             orientation="h",
+            text="world_records",
             color_discrete_sequence=[GOLD],
-            title="Most frequent names in world record history"
+            title="Most recurring athletes in world record history"
         )
-        fig.update_layout(yaxis=dict(autorange="reversed"))
-        fig = plotly_clean_layout(fig, height=430)
+
+        fig.update_traces(
+            textposition="outside",
+            textfont=dict(color=NAVY, size=12),
+            marker_line_color="white",
+            marker_line_width=0.8,
+            cliponaxis=False
+        )
+
+        fig.update_layout(
+            yaxis=dict(autorange="reversed")
+        )
+
+        fig.update_xaxes(
+            title="Number of world record entries"
+        )
+
+        fig.update_yaxes(
+            title=""
+        )
+
+        fig = plotly_clean_layout(fig, height=460)
         st.plotly_chart(fig, use_container_width=True)
 
+        st.markdown(
+            """
+            <div class="small-caption">
+            This ranking counts record entries, not unique titles or medals.
+            The same athlete can appear multiple times across events and years.
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
     section(
-        "How to read this app",
-        "Use the sidebar to move across the story: first the record timeline, then current records, then all-time rankings, athletes and nations."
+    "How to read this app",
+    "Use the swimming-pool lanes at the top of the page to move across the story: first the record timeline, then current records, then all-time rankings, athletes and nations."
     )
 
     st.markdown(
