@@ -1,4 +1,8 @@
 import re
+import base64
+import random
+import unicodedata
+from difflib import get_close_matches
 from pathlib import Path
 from urllib.parse import quote
 
@@ -65,71 +69,132 @@ GENDER_COLORS = {
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700;800&display=swap');
+
+    html, body, .stApp {
+        font-family: 'Barlow', system-ui, -apple-system, sans-serif;
+    }
+
+    .stApp {
+        background-color: #EDE4D2;
+    }
 
     .main {
-        background-color: #F7FBFD;
+        background-color: transparent;
+    }
+
+    /* thin wave rule used as a decorative divider */
+    .wave-rule {
+        height: 12px;
+        margin: 4px 0 12px 0;
+        background:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='12'%3E%3Cpath d='M0 6 q11.25 -6 22.5 0 t22.5 0 t22.5 0 t22.5 0' fill='none' stroke='%231A38A8' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x left center / 90px 12px;
+        opacity: 0.5;
     }
 
     .hero {
-        padding: 34px 38px;
-        border-radius: 24px;
-        background: linear-gradient(135deg, #052B44 0%, #0A6C9F 48%, #22B8CF 100%);
-        color: white;
-        margin-bottom: 28px;
-        box-shadow: 0 10px 30px rgba(5,43,68,0.18);
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1.12fr 0.88fr;
+        gap: 34px;
+        align-items: center;
+        padding: 42px 46px;
+        border-radius: 26px;
+        background: #F7F1E3;
+        border: 1px solid #E7DFCB;
+        color: #12233A;
+        margin-bottom: 26px;
+        box-shadow: 0 26px 60px -34px rgba(5,43,68,0.5);
+    }
+
+    .hero-kicker {
+        font-family: 'Barlow', system-ui, sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #1A38A8;
+        margin-bottom: 12px;
     }
 
     .hero h1 {
-        font-size: 52px;
-        font-weight: 800;
-        margin-bottom: 8px;
+        font-family: 'Anton', system-ui, sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.005em;
+        line-height: 0.9;
+        font-size: 62px;
+        color: #1A38A8;
+        margin: 0 0 16px 0;
     }
 
     .hero p {
-        font-size: 19px;
-        opacity: 0.95;
-        max-width: 950px;
-        line-height: 1.45;
+        font-family: 'Barlow', system-ui, sans-serif;
+        font-size: 17.5px;
+        font-weight: 500;
+        color: #3A4A5C;
+        opacity: 1;
+        max-width: 620px;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    @media (max-width: 900px) {
+        .hero {
+            grid-template-columns: 1fr;
+            gap: 22px;
+            padding: 30px 28px;
+        }
+        .hero h1 { font-size: 46px; }
     }
 
     .section-title {
-        color: #052B44;
-        font-size: 28px;
-        font-weight: 800;
-        margin-top: 12px;
-        margin-bottom: 6px;
+        font-family: 'Anton', system-ui, sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.006em;
+        line-height: 0.95;
+        color: #1A38A8;
+        font-size: 40px;
+        margin-top: 16px;
+        margin-bottom: 8px;
     }
 
     .section-subtitle {
+        font-family: 'Barlow', system-ui, sans-serif;
         color: #52616B;
-        font-size: 16px;
+        font-size: 16.5px;
+        font-weight: 500;
+        max-width: 840px;
         margin-bottom: 18px;
-        line-height: 1.45;
+        line-height: 1.5;
     }
 
     .kpi-card {
-        background-color: white;
+        background-color: #FFFDF8;
         padding: 22px 22px;
-        border-radius: 20px;
-        border: 1px solid #E4EEF3;
-        box-shadow: 0 6px 20px rgba(5,43,68,0.06);
+        border-radius: 18px;
+        border: 1px solid #E7DFCB;
+        box-shadow: 0 12px 28px -18px rgba(5,43,68,0.4);
         min-height: 130px;
     }
 
     .kpi-label {
-        font-size: 13px;
+        font-size: 12.5px;
         text-transform: uppercase;
         color: #52616B;
         font-weight: 700;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.08em;
     }
 
     .kpi-value {
-        font-size: 34px;
-        color: #052B44;
-        font-weight: 850;
+        font-family: 'Anton', system-ui, sans-serif;
+        font-weight: 400;
+        font-size: 42px;
+        color: #1A38A8;
         margin-top: 8px;
+        line-height: 1;
     }
 
     .kpi-note {
@@ -139,20 +204,22 @@ st.markdown(
     }
 
     .info-box {
-        background-color: white;
-        border-left: 6px solid #22B8CF;
-        border-radius: 16px;
-        padding: 18px 20px;
+        background-color: #FFFDF8;
+        border-left: 6px solid #1A38A8;
+        border-radius: 14px;
+        padding: 18px 22px;
         margin: 16px 0;
-        box-shadow: 0 6px 20px rgba(5,43,68,0.05);
+        box-shadow: 0 12px 28px -20px rgba(5,43,68,0.4);
+        color: #26333F;
     }
 
     .warning-box {
-        background-color: #FFF8E6;
+        background-color: #FBF3DE;
         border-left: 6px solid #D6A937;
-        border-radius: 16px;
-        padding: 18px 20px;
+        border-radius: 14px;
+        padding: 18px 22px;
         margin: 16px 0;
+        color: #4A3E1E;
     }
 
     .small-caption {
@@ -191,11 +258,11 @@ st.markdown(
     .home-pool {
         max-width: 1400px;
         margin: 0 auto 10px auto;
-        background: #FFFFFF;
-        border: 1px solid #E3EEF3;
+        background: #FBF7EF;
+        border: 1px solid #E7DFCB;
         border-radius: 24px;
         padding: 16px;
-        box-shadow: 0 30px 70px -30px rgba(5,43,68,0.30);
+        box-shadow: 0 30px 70px -34px rgba(5,43,68,0.4);
     }
 
     .home-pool-head {
@@ -204,22 +271,20 @@ st.markdown(
     }
 
     .home-pool-title {
-        font-family: 'Baloo 2', system-ui, sans-serif;
-        font-size: 32px;
-        font-weight: 800;
-        letter-spacing: -0.02em;
-        line-height: 1.15;
-        background: linear-gradient(92deg, #052B44 0%, #0A6C9F 52%, #22B8CF 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+        font-family: 'Anton', system-ui, sans-serif;
+        font-size: 34px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.01em;
+        line-height: 0.95;
+        color: #1A38A8;
     }
 
     .home-pool-sub {
         color: #52616B;
         font-size: 13.5px;
-        font-weight: 550;
-        margin-top: 6px;
+        font-weight: 500;
+        margin-top: 7px;
         line-height: 1.4;
     }
 
@@ -331,12 +396,13 @@ st.markdown(
 
     .hl-name {
         display: block;
-        font-family: 'Baloo 2', system-ui, sans-serif;
-        color: #052B44;
-        font-size: 13px;
-        font-weight: 800;
-        line-height: 1.15;
-        letter-spacing: -0.01em;
+        font-family: 'Anton', system-ui, sans-serif;
+        color: #12233A;
+        font-size: 14px;
+        font-weight: 400;
+        text-transform: uppercase;
+        line-height: 1.05;
+        letter-spacing: 0.02em;
     }
 
     .hl-tag {
@@ -567,13 +633,13 @@ st.markdown(
     }
 
     .brand-tag {
-        font-family: 'Baloo 2', system-ui, sans-serif;
+        font-family: 'Barlow', system-ui, sans-serif;
         font-size: 11px;
         font-weight: 700;
-        letter-spacing: 0.14em;
+        letter-spacing: 0.15em;
         text-transform: uppercase;
-        color: #2C7EA8;
-        margin-top: 3px;
+        color: #1A38A8;
+        margin-top: 4px;
     }
 
     .home-pool.compact .brand-tag { font-size: 10px; margin-top: 2px; }
@@ -599,14 +665,11 @@ st.markdown(
     }
 
     .ps-num {
-        font-family: 'Baloo 2', system-ui, sans-serif;
-        font-size: 25px;
-        font-weight: 800;
+        font-family: 'Anton', system-ui, sans-serif;
+        font-size: 30px;
+        font-weight: 400;
         line-height: 1;
-        background: linear-gradient(90deg, #0A6C9F, #22B8CF);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+        color: #1A38A8;
     }
 
     .ps-lab {
@@ -646,6 +709,161 @@ st.markdown(
         .pool-stat { min-width: 88px; padding: 10px 12px; }
         .ps-num { font-size: 21px; }
     }
+
+    /* ============================================================
+       SWIM RECORD TOE - GAME (styled to match the app)
+    ============================================================ */
+
+    .game-turn-card {
+        background: linear-gradient(135deg, #FFFFFF 0%, #E8F8FB 100%);
+        border: 1px solid #E4EEF3;
+        border-radius: 20px;
+        padding: 16px 20px;
+        box-shadow: 0 6px 20px rgba(5,43,68,0.06);
+        color: #052B44;
+        text-align: center;
+    }
+
+    .game-turn-card .gt-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        font-weight: 700;
+        color: #52616B;
+    }
+
+    .game-turn-card .gt-value {
+        font-family: 'Anton', system-ui, sans-serif;
+        font-weight: 400;
+        color: #1A38A8;
+        margin-top: 4px;
+        line-height: 1.05;
+    }
+
+    .game-axis-label {
+        font-family: 'Anton', system-ui, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        background: #12233A;
+        color: white;
+        border-radius: 16px;
+        padding: 12px 10px;
+        text-align: center;
+        font-weight: 400;
+        min-height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1.1;
+        box-shadow: 0 8px 18px rgba(5,43,68,0.14);
+    }
+
+    .game-row-label {
+        font-family: 'Anton', system-ui, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        background: linear-gradient(135deg, #1A38A8 0%, #0A6C9F 100%);
+        color: white;
+        border-radius: 16px;
+        padding: 12px 10px;
+        text-align: center;
+        font-weight: 400;
+        min-height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1.1;
+        box-shadow: 0 8px 18px rgba(5,43,68,0.12);
+    }
+
+    .game-empty-corner {
+        background: transparent;
+        min-height: 64px;
+    }
+
+    /* Game buttons — pool-lane look (only the Game page uses buttons). */
+    div[data-testid="stButton"] button {
+        font-family: 'Barlow', system-ui, sans-serif;
+        border-radius: 16px;
+        border: 2px solid rgba(26,56,168,0.22);
+        background:
+            linear-gradient(90deg,
+                rgba(255,255,255,0.72) 0px,
+                rgba(255,255,255,0.72) 2px,
+                transparent 2px,
+                transparent calc(100% - 2px),
+                rgba(255,255,255,0.72) calc(100% - 2px),
+                rgba(255,255,255,0.72) 100%
+            ),
+            linear-gradient(135deg, #E8F8FB 0%, #BDEFFA 48%, #6EDAF0 100%);
+        color: #12233A;
+        font-weight: 700;
+        min-height: 62px;
+        box-shadow: 0 8px 20px rgba(5,43,68,0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        white-space: pre-line;
+    }
+
+    div[data-testid="stButton"] button:hover {
+        border-color: #0A6C9F;
+        transform: translateY(-2px);
+        box-shadow: 0 14px 28px rgba(5,43,68,0.16);
+    }
+
+    div[data-testid="stButton"] button:disabled {
+        background: #E4EEF3;
+        color: #52616B;
+        border-color: #D8ECF4;
+        box-shadow: none;
+        transform: none;
+    }
+
+    /* ============================================================
+       SWIM PHOTOS (with graceful placeholder when missing)
+    ============================================================ */
+
+    .swim-figure {
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+        border: 1px solid #E7DFCB;
+        box-shadow: 0 22px 50px -30px rgba(5,43,68,0.55);
+        background: #D7E6EE;
+    }
+
+    .swim-figure-inner {
+        position: relative;
+        width: 100%;
+    }
+
+    .swim-figure-inner > img,
+    .swim-figure-inner > .img-ph-label {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .swim-figure.is-placeholder {
+        background:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Cg fill='none' stroke='%231A38A8' stroke-opacity='0.28' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M0 12 q15 -8 30 0 t30 0 t30 0 t30 0'/%3E%3Cpath d='M0 28 q15 -8 30 0 t30 0 t30 0 t30 0'/%3E%3C/g%3E%3C/svg%3E") repeat,
+            linear-gradient(135deg, #E9EFEA 0%, #D7E6EE 100%);
+    }
+
+    .img-ph-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #3A4A5C;
+        font-family: 'Barlow', system-ui, sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 1.4;
+        padding: 18px;
+    }
+
+    .img-ph-label b { color: #1A38A8; }
 
     </style>
     """,
@@ -1113,6 +1331,215 @@ if missing_files:
 
 
 # ============================================================
+# GAME FUNCTIONS - SWIM RECORD TOE
+# ============================================================
+
+def normalize_answer(value):
+    """Normalize swimmer names for robust answer checking."""
+    value = clean_text(value).lower()
+    value = unicodedata.normalize("NFKD", value)
+    value = "".join(ch for ch in value if not unicodedata.combining(ch))
+    value = re.sub(r"[^a-z0-9\s]", "", value)
+    value = re.sub(r"\s+", " ", value)
+    return value.strip()
+
+
+def prepare_swim_game_data(df):
+    """Prepare world record data for the tic-tac-toe quiz."""
+    game_df = df.copy()
+
+    game_df = game_df[game_df["name"].astype(str).str.strip() != ""].copy()
+    game_df = game_df[game_df["event_label"].astype(str).str.strip() != ""].copy()
+
+    # Place criterion: location first, meet as fallback.
+    game_df["record_place"] = game_df["location"].astype(str).apply(clean_text)
+
+    if "meet" in game_df.columns:
+        game_df.loc[game_df["record_place"] == "", "record_place"] = (
+            game_df.loc[game_df["record_place"] == "", "meet"]
+            .astype(str)
+            .apply(clean_text)
+        )
+
+    game_df.loc[game_df["record_place"] == "", "record_place"] = "Unknown place"
+
+    # Decade criterion.
+    game_df["year_numeric"] = pd.to_numeric(game_df["year"], errors="coerce")
+    game_df["decade"] = np.where(
+        game_df["year_numeric"].notna(),
+        ((game_df["year_numeric"] // 10) * 10).astype("Int64").astype(str) + "s",
+        "Unknown decade"
+    )
+
+    # Compact event criterion, useful if event_label is too specific.
+    game_df["event_family"] = (
+        game_df["distance"].astype(str)
+        + "m "
+        + game_df["stroke"].astype(str)
+    )
+
+    # Remove empty/useless criteria.
+    for col in ["record_place", "nationality", "decade", "course", "event_label", "event_family"]:
+        if col in game_df.columns:
+            game_df[col] = game_df[col].astype(str).apply(clean_text)
+            game_df = game_df[game_df[col] != ""]
+            game_df = game_df[game_df[col] != "Unknown"]
+
+    return game_df
+
+
+def build_swim_game_grid(game_df, row_col, col_col, attempts=1500):
+    """
+    Build a 3x3 grid.
+    It tries to find rows and columns where every intersection has at least one valid swimmer.
+    """
+    pair_counts = (
+        game_df
+        .dropna(subset=[row_col, col_col, "name"])
+        .groupby([row_col, col_col])["name"]
+        .nunique()
+        .reset_index(name="valid_answers")
+    )
+
+    if pair_counts.empty:
+        return [], [], 0
+
+    # Use the most connected values to avoid impossible boards.
+    candidate_rows = (
+        pair_counts.groupby(row_col)["valid_answers"]
+        .sum()
+        .sort_values(ascending=False)
+        .head(35)
+        .index
+        .tolist()
+    )
+
+    candidate_cols = (
+        pair_counts.groupby(col_col)["valid_answers"]
+        .sum()
+        .sort_values(ascending=False)
+        .head(35)
+        .index
+        .tolist()
+    )
+
+    if len(candidate_rows) < 3 or len(candidate_cols) < 3:
+        return [], [], 0
+
+    best_rows = None
+    best_cols = None
+    best_score = -1
+
+    for _ in range(attempts):
+        rows = random.sample(candidate_rows, 3)
+        cols = random.sample(candidate_cols, 3)
+
+        score = 0
+        for r in rows:
+            for c in cols:
+                exists = (
+                    (pair_counts[row_col] == r)
+                    & (pair_counts[col_col] == c)
+                ).any()
+                if exists:
+                    score += 1
+
+        if score > best_score:
+            best_rows = rows
+            best_cols = cols
+            best_score = score
+
+        if score == 9:
+            break
+
+    return best_rows, best_cols, best_score
+
+
+def get_cell_answers(game_df, row_value, col_value, row_col, col_col):
+    """Return all valid swimmers for a specific grid cell."""
+    cell_df = game_df[
+        (game_df[row_col].astype(str) == str(row_value))
+        & (game_df[col_col].astype(str) == str(col_value))
+    ].copy()
+
+    answers = (
+        cell_df["name"]
+        .dropna()
+        .astype(str)
+        .apply(clean_text)
+        .drop_duplicates()
+        .sort_values()
+        .tolist()
+    )
+
+    return answers
+
+
+def validate_swim_answer(game_df, answer, row_value, col_value, row_col, col_col):
+    """Check whether the submitted swimmer is valid for the selected cell."""
+    valid_answers = get_cell_answers(game_df, row_value, col_value, row_col, col_col)
+
+    if not valid_answers:
+        return False, None, []
+
+    normalized_map = {
+        normalize_answer(name): name
+        for name in valid_answers
+    }
+
+    user_norm = normalize_answer(answer)
+
+    if user_norm in normalized_map:
+        return True, normalized_map[user_norm], valid_answers
+
+    close = get_close_matches(
+        user_norm,
+        list(normalized_map.keys()),
+        n=1,
+        cutoff=0.84
+    )
+
+    if close:
+        return True, normalized_map[close[0]], valid_answers
+
+    return False, None, valid_answers
+
+
+def check_swim_game_winner(board):
+    """Return winner symbol, Draw, or None."""
+    lines = []
+
+    lines.extend(board)
+    lines.extend([[board[0][j], board[1][j], board[2][j]] for j in range(3)])
+    lines.append([board[0][0], board[1][1], board[2][2]])
+    lines.append([board[0][2], board[1][1], board[2][0]])
+
+    for line in lines:
+        if line[0] != "" and line[0] == line[1] == line[2]:
+            return line[0]
+
+    if all(board[i][j] != "" for i in range(3) for j in range(3)):
+        return "Draw"
+
+    return None
+
+
+def reset_swim_record_toe(game_df, row_col, col_col):
+    rows, cols, score = build_swim_game_grid(game_df, row_col, col_col)
+
+    st.session_state.swim_toe_rows = rows
+    st.session_state.swim_toe_cols = cols
+    st.session_state.swim_toe_score = score
+    st.session_state.swim_toe_board = [["" for _ in range(3)] for _ in range(3)]
+    st.session_state.swim_toe_answers = [["" for _ in range(3)] for _ in range(3)]
+    st.session_state.swim_toe_turn = "❌"
+    st.session_state.swim_toe_winner = None
+    st.session_state.swim_toe_selected = None
+    st.session_state.swim_toe_used_names = []
+    st.session_state.swim_toe_feedback = ""
+
+
+# ============================================================
 # NAVIGATION - SWIMMING POOL LANES
 # ============================================================
 
@@ -1258,6 +1685,63 @@ POOL_FOOT = (
 )
 
 
+# ------------------------------------------------------------
+# Swim photos.
+# Drop image files into an "assets/" folder next to this script
+# (e.g. assets/hero.jpg). If the file is missing, a clean themed
+# placeholder is shown instead, so the layout never breaks.
+# ------------------------------------------------------------
+
+ASSETS_DIR = Path("assets")
+
+
+def _img_data_uri(path):
+    ext = path.suffix.lower().lstrip(".")
+    mime = "jpeg" if ext in ("jpg", "jpeg") else ext
+    data = base64.b64encode(path.read_bytes()).decode()
+    return f"data:image/{mime};base64,{data}"
+
+
+def swim_figure(filename, alt="Swimming", ratio="62%", radius=20):
+    """Return an HTML figure for a swim photo in assets/, or a placeholder."""
+    path = ASSETS_DIR / filename
+
+    if path.exists():
+        inner = (
+            f'<img src="{_img_data_uri(path)}" alt="{alt}" '
+            f'style="object-fit:cover;display:block;"/>'
+        )
+        ph_class = ""
+    else:
+        inner = f'<div class="img-ph-label">Add <b>assets/{filename}</b><br>{alt}</div>'
+        ph_class = " is-placeholder"
+
+    return (
+        f'<div class="swim-figure{ph_class}" style="border-radius:{radius}px;">'
+        f'<div class="swim-figure-inner" style="padding-top:{ratio};">{inner}</div>'
+        f'</div>'
+    )
+
+
+def page_header(title, subtitle="", image_file=None, alt="Swimming", ratio="120%"):
+    """Section header. With an image it becomes a two-column 'title beside photo'
+    layout like an editorial spread; without one it falls back to a plain title."""
+    if image_file is None:
+        section(title, subtitle)
+        return
+
+    col_txt, col_img = st.columns([1.45, 1], gap="large")
+
+    with col_txt:
+        st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
+        st.markdown("<div class='wave-rule'></div>", unsafe_allow_html=True)
+        if subtitle:
+            st.markdown(f"<div class='section-subtitle'>{subtitle}</div>", unsafe_allow_html=True)
+
+    with col_img:
+        st.markdown(swim_figure(image_file, alt, ratio=ratio), unsafe_allow_html=True)
+
+
 # Small pool-header on every page except the Home.
 if page != "Home":
     compact_pool_html = (
@@ -1286,6 +1770,25 @@ with st.sidebar:
 
 if page == "Home":
 
+    # Editorial hero: big poster title + intro + a swimming photo.
+    hero_html = (
+        '<div class="hero">'
+        '<div class="hero-text">'
+        '<div class="hero-kicker">World records · Rankings · Athletes</div>'
+        '<h1>From records<br>to legends</h1>'
+        '<div class="wave-rule"></div>'
+        '<p>Dive into more than a century of swimming world records, the all-time '
+        'top-200 rankings, and the athletes and nations behind them — then challenge '
+        'yourself in the game.</p>'
+        '</div>'
+        '<div class="hero-media">'
+        f'{swim_figure("hero.jpg", "Olympic swimming start", ratio="66%")}'
+        '</div>'
+        '</div>'
+    )
+
+    st.markdown(hero_html, unsafe_allow_html=True)
+
     # The Home uses the same builder as the other pages: the pool is
     # identical, here just full page (without the "compact" class).
     home_pool_html = (
@@ -1312,9 +1815,12 @@ if page == "Home":
 
 elif page == "World Record Timeline":
 
-    section(
+    page_header(
         "World Record Timeline",
-        "Follow how the fastest official world record in each event changed over time. Lower seconds mean faster performance."
+        "Follow how the fastest official world record in each event changed over time. Lower seconds mean faster performance.",
+        image_file="timeline.jpg",
+        alt="Vintage Olympic swimming start",
+        ratio="70%"
     )
 
     filtered = apply_common_filters(
@@ -1441,9 +1947,12 @@ elif page == "World Record Timeline":
 
 elif page == "All-Time Top 200 Rankings":
 
-    section(
+    page_header(
         "All-Time Top 200 Rankings",
-        "Go beyond the world record and explore the depth of elite swimming performances."
+        "Go beyond the world record and explore the depth of elite swimming performances.",
+        image_file="top200.jpg",
+        alt="Underwater view of swimmers",
+        ratio="122%"
     )
 
     filtered = apply_common_filters(
@@ -1599,9 +2108,12 @@ elif page == "All-Time Top 200 Rankings":
 
 elif page == "Athletes Hall of Fame":
 
-    section(
+    page_header(
         "Athletes Hall of Fame",
-        "Explore the swimmers who appear most often in world record history and all-time rankings."
+        "Explore the swimmers who appear most often in world record history and all-time rankings.",
+        image_file="athletes.jpg",
+        alt="Swimmer racing butterfly",
+        ratio="128%"
     )
 
     wr_names = set(wr["name"].dropna().unique())
@@ -1781,9 +2293,12 @@ elif page == "Athletes Hall of Fame":
 
 elif page == "Nations & Places":
 
-    section(
+    page_header(
         "Nations & Places",
-        "Discover which nations and locations appear most frequently in swimming record history and all-time rankings."
+        "Discover which nations and locations appear most frequently in swimming record history and all-time rankings.",
+        image_file="nations.jpg",
+        alt="Underwater backstroke swimmer",
+        ratio="126%"
     )
 
     filtered_wr = apply_common_filters(
@@ -2184,26 +2699,346 @@ elif page == "Data & Methods":
 
 
 # ============================================================
-# PAGE 8 - GAME (placeholder — to be developed later)
+# PAGE 8 - GAME (SWIM RECORD TOE)
 # ============================================================
 
 elif page == "Game":
 
-    section(
-        "Game",
-        "An interactive swimming quiz is on the way. This lane is reserved for it."
+    page_header(
+        "Swim Record Toe",
+        "A swimming take on tic-tac-toe: pick a square, connect its row and column criteria, "
+        "then name a swimmer who really set a world record matching both. Claim three lanes in a row to win.",
+        image_file="game.jpg",
+        alt="Swimming goggles by the pool",
+        ratio="118%"
     )
 
     st.markdown(
         """
         <div class="info-box">
-        <b>🏊 Coming soon.</b><br>
-        This section will host a small game based on the datasets — for example,
-        guessing the world record holder, the record time, or the fastest of two events.
-        We'll build it in the next step.
+        <b>How to play</b><br>
+        1. Choose a free square in the pool grid.<br>
+        2. Look at the row and column criteria that meet in that square.<br>
+        3. Type the swimmer's name or pick it from the dropdown.<br>
+        4. If the answer exists in the world record dataset, you claim the lane with ❌ or ⭕.
         </div>
         """,
         unsafe_allow_html=True
     )
 
-    st.info("Nothing to play yet — the game logic will be added here.")
+    game_df = prepare_swim_game_data(wr)
+
+    if game_df.empty:
+        st.error("The game cannot start because the world record dataset has no usable swimmer names.")
+        st.stop()
+
+    row_options = {
+        "Specific event": "event_label",
+        "Event family": "event_family",
+        "Stroke": "stroke",
+        "Gender": "gender"
+    }
+
+    col_options = {
+        "Record location / pool": "record_place",
+        "Nationality": "nationality",
+        "Decade": "decade",
+        "Course": "course"
+    }
+
+    c_setup_1, c_setup_2, c_setup_3 = st.columns([1, 1, 0.7])
+
+    with c_setup_1:
+        row_label = st.selectbox(
+            "Rows define",
+            list(row_options.keys()),
+            index=0,
+            key="swim_toe_row_label"
+        )
+
+    with c_setup_2:
+        col_label = st.selectbox(
+            "Columns define",
+            list(col_options.keys()),
+            index=0,
+            key="swim_toe_col_label"
+        )
+
+    row_col = row_options[row_label]
+    col_col = col_options[col_label]
+
+    with c_setup_3:
+        st.write("")
+        st.write("")
+        new_game = st.button("New game", use_container_width=True)
+
+    state_missing = (
+        "swim_toe_board" not in st.session_state
+        or "swim_toe_rows" not in st.session_state
+        or "swim_toe_cols" not in st.session_state
+    )
+
+    axes_changed = (
+        st.session_state.get("swim_toe_row_col") != row_col
+        or st.session_state.get("swim_toe_col_col") != col_col
+    )
+
+    if state_missing or axes_changed or new_game:
+        st.session_state.swim_toe_row_col = row_col
+        st.session_state.swim_toe_col_col = col_col
+        reset_swim_record_toe(game_df, row_col, col_col)
+
+    rows = st.session_state.swim_toe_rows
+    cols = st.session_state.swim_toe_cols
+    board = st.session_state.swim_toe_board
+
+    if not rows or not cols:
+        st.warning("Not enough data to build a 3x3 game board with these criteria. Try another row or column setting.")
+        st.stop()
+
+    if st.session_state.swim_toe_score < 9:
+        st.markdown(
+            """
+            <div class="warning-box">
+            This board contains one or more very difficult cells.
+            Try another <b>New game</b>, or switch from location to nationality/decade for an easier board.
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    c_turn_1, c_turn_2, c_turn_3 = st.columns(3)
+
+    with c_turn_1:
+        st.markdown(
+            f"""
+            <div class="game-turn-card">
+            <div class="gt-label">Current turn</div>
+            <div class="gt-value" style="font-size:34px;">{st.session_state.swim_toe_turn}</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    with c_turn_2:
+        claimed = sum(
+            1 for i in range(3) for j in range(3)
+            if st.session_state.swim_toe_board[i][j] != ""
+        )
+        st.markdown(
+            f"""
+            <div class="game-turn-card">
+            <div class="gt-label">Claimed lanes</div>
+            <div class="gt-value" style="font-size:34px;">{claimed}/9</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    with c_turn_3:
+        if st.session_state.swim_toe_winner is None:
+            status_text = "Race still open"
+        elif st.session_state.swim_toe_winner == "Draw":
+            status_text = "Draw"
+        else:
+            status_text = f"{st.session_state.swim_toe_winner} wins"
+
+        st.markdown(
+            f"""
+            <div class="game-turn-card">
+            <div class="gt-label">Status</div>
+            <div class="gt-value" style="font-size:22px;">{status_text}</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    st.markdown("")
+
+    # Header row
+    header_cols = st.columns(4)
+    header_cols[0].markdown("<div class='game-empty-corner'></div>", unsafe_allow_html=True)
+
+    for j in range(3):
+        header_cols[j + 1].markdown(
+            f"<div class='game-axis-label'>{cols[j]}</div>",
+            unsafe_allow_html=True
+        )
+
+    # Game grid
+    for i in range(3):
+        grid_cols = st.columns(4)
+
+        grid_cols[0].markdown(
+            f"<div class='game-row-label'>{rows[i]}</div>",
+            unsafe_allow_html=True
+        )
+
+        for j in range(3):
+            current_mark = board[i][j]
+            valid_answers = get_cell_answers(game_df, rows[i], cols[j], row_col, col_col)
+
+            if current_mark != "":
+                label = f"{current_mark}\n{st.session_state.swim_toe_answers[i][j]}"
+                disabled = True
+            elif not valid_answers:
+                label = "No data"
+                disabled = True
+            else:
+                label = "Dive in"
+
+                if st.session_state.swim_toe_selected == (i, j):
+                    label = "Selected"
+
+                disabled = st.session_state.swim_toe_winner is not None
+
+            if grid_cols[j + 1].button(
+                label,
+                key=f"swim_toe_cell_{i}_{j}",
+                use_container_width=True,
+                disabled=disabled
+            ):
+                st.session_state.swim_toe_selected = (i, j)
+                st.session_state.swim_toe_feedback = ""
+                st.rerun()
+
+    winner = st.session_state.swim_toe_winner
+
+    if winner is not None:
+        if winner == "Draw":
+            st.success("The race ends in a draw. No more free lanes.")
+        else:
+            st.success(f"{winner} wins the pool battle!")
+
+    selected = st.session_state.swim_toe_selected
+
+    if selected is not None and st.session_state.swim_toe_winner is None:
+
+        i, j = selected
+        row_value = rows[i]
+        col_value = cols[j]
+
+        valid_answers = get_cell_answers(game_df, row_value, col_value, row_col, col_col)
+
+        st.markdown(
+            f"""
+            <div class="info-box">
+            <b>Selected square:</b> {row_value} × {col_value}<br>
+            Write the swimmer manually or choose a name from the dropdown.
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        all_swimmers = (
+            game_df["name"]
+            .dropna()
+            .astype(str)
+            .apply(clean_text)
+            .drop_duplicates()
+            .sort_values()
+            .tolist()
+        )
+
+        c_ans_1, c_ans_2 = st.columns(2)
+
+        with c_ans_1:
+            typed_answer = st.text_input(
+                "Write swimmer name",
+                placeholder="Example: Michael Phelps",
+                key=f"typed_answer_{i}_{j}"
+            )
+
+        with c_ans_2:
+            dropdown_answer = st.selectbox(
+                "Or choose swimmer from dropdown",
+                [""] + all_swimmers,
+                index=0,
+                key=f"dropdown_answer_{i}_{j}"
+            )
+
+        answer_to_check = typed_answer.strip() if typed_answer.strip() else dropdown_answer.strip()
+
+        c_submit_1, c_submit_2, c_submit_3 = st.columns([1, 1, 1])
+
+        with c_submit_1:
+            submit_answer = st.button("Submit answer", use_container_width=True)
+
+        with c_submit_2:
+            clear_selection = st.button("Cancel selection", use_container_width=True)
+
+        with c_submit_3:
+            reveal_hint = st.button("Small hint", use_container_width=True)
+
+        if clear_selection:
+            st.session_state.swim_toe_selected = None
+            st.session_state.swim_toe_feedback = ""
+            st.rerun()
+
+        if reveal_hint:
+            if valid_answers:
+                st.info(f"Hint: there are {len(valid_answers)} valid swimmer(s) for this square.")
+            else:
+                st.warning("No valid swimmer exists for this square in the dataset.")
+
+        if submit_answer:
+            if answer_to_check == "":
+                st.warning("Write or select a swimmer before submitting.")
+            elif normalize_answer(answer_to_check) in st.session_state.swim_toe_used_names:
+                st.warning("This swimmer has already been used in this game. Try another name.")
+            else:
+                is_correct, matched_name, possible_answers = validate_swim_answer(
+                    game_df,
+                    answer_to_check,
+                    row_value,
+                    col_value,
+                    row_col,
+                    col_col
+                )
+
+                if is_correct:
+                    st.session_state.swim_toe_board[i][j] = st.session_state.swim_toe_turn
+                    st.session_state.swim_toe_answers[i][j] = matched_name
+                    st.session_state.swim_toe_used_names.append(normalize_answer(matched_name))
+
+                    new_winner = check_swim_game_winner(st.session_state.swim_toe_board)
+                    st.session_state.swim_toe_winner = new_winner
+
+                    if new_winner is None:
+                        st.session_state.swim_toe_turn = "⭕" if st.session_state.swim_toe_turn == "❌" else "❌"
+
+                    st.session_state.swim_toe_selected = None
+                    st.success(f"Correct! {matched_name} claims the lane.")
+                    st.rerun()
+
+                else:
+                    st.error("Wrong answer for this square. Try again.")
+
+                    with st.expander("Show possible valid answers for this square"):
+                        if possible_answers:
+                            st.write(", ".join(possible_answers[:20]))
+                        else:
+                            st.write("No valid answers available in the dataset.")
+
+    st.markdown("---")
+
+    with st.expander("Used swimmers in this game"):
+        if st.session_state.swim_toe_used_names:
+            shown_used = [
+                st.session_state.swim_toe_answers[i][j]
+                for i in range(3)
+                for j in range(3)
+                if st.session_state.swim_toe_answers[i][j] != ""
+            ]
+            st.write(", ".join(shown_used))
+        else:
+            st.write("No swimmer used yet.")
+
+    with st.expander("Why this game belongs in the app"):
+        st.markdown(
+            """
+            This game turns passive exploration into active recall.
+            After browsing the records, users can test whether they remember the links between
+            swimmers, events, places and historical record moments.
+            """
+        )
