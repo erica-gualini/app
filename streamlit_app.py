@@ -65,6 +65,8 @@ GENDER_COLORS = {
 st.markdown(
     """
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap');
+
     .main {
         background-color: #F7FBFD;
     }
@@ -167,235 +169,21 @@ st.markdown(
         background-color: #EFF8FB;
     }
 
-    /* ============================================================
-       TOP NAVIGATION - OLYMPIC SWIMMING POOL
-    ============================================================ */
-
     .block-container {
-        padding-top: 1.2rem;
+        padding-top: 2.6rem;
     }
 
-    .pool-nav-shell {
-        position: sticky;
-        top: 0;
-        z-index: 999;
-        background: rgba(247, 251, 253, 0.92);
-        backdrop-filter: blur(16px);
-        border: 1px solid #D8ECF4;
-        border-radius: 26px;
-        padding: 18px 20px 20px 20px;
-        margin-bottom: 28px;
-        box-shadow: 0 12px 34px rgba(5,43,68,0.10);
-    }
-
-    .pool-nav-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: end;
-        gap: 16px;
-        margin-bottom: 14px;
-    }
-
-    .pool-brand {
-        color: #052B44;
-        font-size: 24px;
-        font-weight: 900;
-        letter-spacing: -0.03em;
-        line-height: 1.05;
-    }
-
-    .pool-subtitle {
-        color: #52616B;
-        font-size: 13px;
-        font-weight: 650;
-        text-align: right;
-        max-width: 420px;
-        line-height: 1.35;
-    }
-
-    .pool-grid {
-        display: grid;
-        grid-template-columns: repeat(8, minmax(86px, 1fr));
-        gap: 9px;
-    }
-
-    .pool-lane {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: end;
-        min-height: 104px;
-        padding: 12px 10px;
-        border-radius: 18px;
-        overflow: hidden;
-        text-decoration: none !important;
-        color: white !important;
-        border: 1px solid rgba(255,255,255,0.72);
-        box-shadow:
-            inset 3px 0 0 rgba(255,255,255,0.70),
-            inset -3px 0 0 rgba(255,255,255,0.70),
-            0 8px 18px rgba(5,43,68,0.10);
-        background:
-            linear-gradient(90deg,
-                rgba(255,255,255,0.72) 0px,
-                rgba(255,255,255,0.72) 2px,
-                transparent 2px,
-                transparent calc(100% - 2px),
-                rgba(255,255,255,0.72) calc(100% - 2px),
-                rgba(255,255,255,0.72) 100%
-            ),
-            radial-gradient(circle at 18% 22%, rgba(255,255,255,0.35) 0 2px, transparent 3px 15px),
-            radial-gradient(circle at 70% 38%, rgba(255,255,255,0.25) 0 2px, transparent 3px 18px),
-            linear-gradient(180deg, #6EDAF0 0%, #21A7D0 48%, #087CAD 100%);
-        background-size: 100% 100%, 32px 24px, 38px 29px, 100% 100%;
-        transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
-    }
-
-    .pool-lane::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: 1;
-        background:
-            linear-gradient(180deg,
-                rgba(5,43,68,0.88) 0%,
-                rgba(10,108,159,0.75) 52%,
-                rgba(34,184,207,0.58) 100%
-            );
-        transform: scaleY(0);
-        transform-origin: bottom;
-        transition: transform 0.34s ease;
-    }
-
-    .pool-lane::after {
-        content: "";
-        position: absolute;
-        top: 6px;
-        left: 50%;
-        z-index: 3;
-        width: 20px;
-        height: 31px;
-        background: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2044%2070'%3E%3Cg%20fill='none'%20stroke='%23FFFFFF'%20stroke-width='4.6'%20stroke-linecap='round'%3E%3Cpath%20d='M15%2020%20L12%204'%3E%3CanimateTransform%20attributeName='transform'%20type='rotate'%20values='-6%2015%2020%3B16%2015%2020%3B-6%2015%2020'%20dur='1s'%20repeatCount='indefinite'/%3E%3C/path%3E%3Cpath%20d='M29%2020%20L37%2032'%3E%3CanimateTransform%20attributeName='transform'%20type='rotate'%20values='12%2029%2020%3B-14%2029%2020%3B12%2029%2020'%20dur='1s'%20repeatCount='indefinite'/%3E%3C/path%3E%3Cpath%20d='M19.5%2046%20L17.5%2064'%3E%3CanimateTransform%20attributeName='transform'%20type='rotate'%20values='-9%2019.5%2046%3B9%2019.5%2046%3B-9%2019.5%2046'%20dur='0.4s'%20repeatCount='indefinite'/%3E%3C/path%3E%3Cpath%20d='M24.5%2046%20L26.5%2062'%3E%3CanimateTransform%20attributeName='transform'%20type='rotate'%20values='9%2024.5%2046%3B-9%2024.5%2046%3B9%2024.5%2046'%20dur='0.4s'%20repeatCount='indefinite'/%3E%3C/path%3E%3C/g%3E%3Ccircle%20cx='22'%20cy='13'%20r='5.6'%20fill='%23FFFFFF'/%3E%3Cpath%20d='M15%2020%20Q22%2015.5%2029%2020%20L26%2045.5%20Q22%2048.5%2018%2045.5%20Z'%20fill='%23FFFFFF'/%3E%3C/svg%3E") center / contain no-repeat;
-        opacity: 0;
-        transform: translateX(-50%) translateY(96px);
-        transition:
-            transform 0.58s cubic-bezier(.2,.85,.2,1),
-            opacity 0.18s ease;
-        filter: drop-shadow(0 4px 6px rgba(5,43,68,0.35));
-    }
-
-    .pool-lane:hover {
-        transform: translateY(-4px);
-        border-color: #FFFFFF;
-        box-shadow:
-            inset 3px 0 0 rgba(255,255,255,0.86),
-            inset -3px 0 0 rgba(255,255,255,0.86),
-            0 16px 32px rgba(5,43,68,0.20);
-    }
-
-    .pool-lane:hover::before {
-        transform: scaleY(1);
-    }
-
-    .pool-lane:hover::after {
-        opacity: 1;
-        transform: translateX(-50%) translateY(2px);
-    }
-
-    .pool-lane.active {
-        border: 2px solid #D6A937;
-        box-shadow:
-            inset 3px 0 0 rgba(255,255,255,0.90),
-            inset -3px 0 0 rgba(255,255,255,0.90),
-            0 16px 34px rgba(214,169,55,0.28);
-    }
-
-    .pool-lane.active::before {
-        transform: scaleY(1);
-        background:
-            linear-gradient(180deg,
-                rgba(5,43,68,0.94) 0%,
-                rgba(10,108,159,0.84) 55%,
-                rgba(214,169,55,0.68) 100%
-            );
-    }
-
-    .pool-lane.active::after {
-        opacity: 1;
-        transform: translateX(-50%) translateY(2px);
-    }
-
-    .lane-number,
-    .lane-label,
-    .lane-tag {
-        position: relative;
-        z-index: 2;
-        display: block;
-        text-shadow: 0 2px 8px rgba(5,43,68,0.34);
-    }
-
-    .lane-number {
-        font-size: 11px;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        opacity: 0.88;
-        margin-bottom: 4px;
-    }
-
-    .lane-label {
-        font-size: 15px;
-        font-weight: 900;
-        line-height: 1.05;
-    }
-
-    .lane-tag {
-        font-size: 10.5px;
-        font-weight: 650;
-        opacity: 0.86;
-        margin-top: 5px;
-        line-height: 1.15;
-    }
-
-    .current-lane {
-        margin-top: 12px;
-        color: #52616B;
-        font-size: 13px;
-        text-align: center;
-        font-weight: 600;
-    }
-
-    .current-lane b {
-        color: #052B44;
-    }
-
-    @media (max-width: 1150px) {
-        .pool-grid {
-            grid-template-columns: repeat(4, minmax(120px, 1fr));
-        }
-
-        .pool-lane {
-            min-height: 92px;
-        }
-    }
-
-    @media (max-width: 650px) {
-        .pool-nav-top {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .pool-subtitle {
-            text-align: left;
-        }
-
-        .pool-grid {
-            grid-template-columns: repeat(2, minmax(120px, 1fr));
-        }
+    /* Let the sticky pool header sit above Streamlit's own top bar
+       instead of being clipped by it. */
+    header[data-testid="stHeader"] {
+        background: transparent;
     }
 
     /* ============================================================
-       HOME - FULL PAGE OLYMPIC POOL
+       HOME + NAV - OLYMPIC POOL
+       One single pool component is used everywhere:
+       - full page on the Home
+       - small sticky header (.compact) on every other page
        Light & clean: flat refined blue, hairline borders, thin red
        rope dashes, translucent floor numerals, pictogram swimmer.
     ============================================================ */
@@ -416,11 +204,15 @@ st.markdown(
     }
 
     .home-pool-title {
-        color: #052B44;
-        font-size: 30px;
-        font-weight: 900;
-        letter-spacing: -0.04em;
-        line-height: 1.05;
+        font-family: 'Baloo 2', system-ui, sans-serif;
+        font-size: 32px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        background: linear-gradient(92deg, #052B44 0%, #0A6C9F 52%, #22B8CF 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
     }
 
     .home-pool-sub {
@@ -539,6 +331,7 @@ st.markdown(
 
     .hl-name {
         display: block;
+        font-family: 'Baloo 2', system-ui, sans-serif;
         color: #052B44;
         font-size: 13px;
         font-weight: 800;
@@ -653,6 +446,205 @@ st.markdown(
 
         .pool-rope:nth-of-type(2n) { display: none; }
         .pool-rope:nth-of-type(4) { display: block; }
+    }
+
+    /* ============================================================
+       COMPACT POOL NAV — the very same pool as the Home, shrunk.
+       Shown as a sticky header on every page other than Home,
+       so navigation always keeps the identical style.
+    ============================================================ */
+
+    .home-pool.compact {
+        position: sticky;
+        top: 8px;
+        z-index: 999;
+        max-width: 1400px;
+        margin: 0 auto 24px auto;
+        padding: 12px;
+        box-shadow: 0 14px 34px -12px rgba(5,43,68,0.30);
+    }
+
+    .home-pool.compact .home-pool-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        text-align: left;
+        margin: 4px 4px 10px 4px;
+    }
+
+    .home-pool.compact .home-pool-title { font-size: 19px; }
+
+    .home-pool.compact .brand-logo { width: 38px; height: 38px; }
+
+    .home-pool.compact .home-pool-sub {
+        margin-top: 0;
+        text-align: right;
+        max-width: 440px;
+        font-size: 12px;
+    }
+
+    .home-pool.compact .home-lanes {
+        border-radius: 14px;
+        animation-duration: 30s;
+    }
+
+    /* fixed height instead of 68vh */
+    .home-pool.compact .home-lane { min-height: 122px; }
+
+    .home-pool.compact .hl-line { top: 8%; bottom: 4%; }
+
+    .home-pool.compact .hl-btn {
+        margin: 12px 6px 0 6px;
+        padding: 8px 4px;
+        border-radius: 9px;
+    }
+
+    .home-pool.compact .hl-name { font-size: 12px; }
+
+    .home-pool.compact .hl-tag {
+        font-size: 8.5px;
+        margin-top: 3px;
+    }
+
+    .home-pool.compact .hl-num {
+        bottom: 8px;
+        font-size: 26px;
+    }
+
+    .home-pool.compact .home-lane::after {
+        width: 26px;
+        height: 40px;
+    }
+
+    .home-pool.compact .current-lane {
+        margin-top: 10px;
+        color: #52616B;
+        font-size: 12.5px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .home-pool.compact .current-lane b { color: #052B44; }
+
+    /* compact stays short on small screens too
+       (wins over the .home-lane media queries by specificity) */
+    @media (max-width: 1150px) {
+        .home-pool.compact .home-lane { min-height: 96px; }
+    }
+
+    @media (max-width: 650px) {
+        .home-pool.compact .home-pool-head {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .home-pool.compact .home-pool-sub { text-align: left; }
+        .home-pool.compact .home-lane { min-height: 84px; }
+    }
+
+    /* ============================================================
+       BRAND / LOGO, STAT CHIPS, POOL LEGEND
+    ============================================================ */
+
+    .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        vertical-align: middle;
+    }
+
+    .brand-logo {
+        width: 48px;
+        height: 48px;
+        flex: none;
+        filter: drop-shadow(0 6px 14px rgba(5,43,68,0.28));
+    }
+
+    .brand-text {
+        text-align: left;
+        line-height: 1;
+    }
+
+    .brand-tag {
+        font-family: 'Baloo 2', system-ui, sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #2C7EA8;
+        margin-top: 3px;
+    }
+
+    .home-pool.compact .brand-tag { font-size: 10px; margin-top: 2px; }
+
+    .pool-stats {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 18px 0 2px 0;
+    }
+
+    .pool-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 108px;
+        padding: 12px 18px;
+        border-radius: 16px;
+        background: #FFFFFF;
+        border: 1px solid #E3EEF3;
+        box-shadow: 0 10px 22px -14px rgba(5,43,68,0.45);
+    }
+
+    .ps-num {
+        font-family: 'Baloo 2', system-ui, sans-serif;
+        font-size: 25px;
+        font-weight: 800;
+        line-height: 1;
+        background: linear-gradient(90deg, #0A6C9F, #22B8CF);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .ps-lab {
+        margin-top: 5px;
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #5A7484;
+    }
+
+    .pool-foot {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 16px;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: #52616B;
+    }
+
+    .pool-foot span {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    .pool-foot i {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    @media (max-width: 650px) {
+        .pool-stat { min-width: 88px; padding: 10px 12px; }
+        .ps-num { font-size: 21px; }
     }
 
     </style>
@@ -1121,40 +1113,40 @@ if missing_files:
 
 
 # ============================================================
-# TOP NAVIGATION - SWIMMING POOL LANES
+# NAVIGATION - SWIMMING POOL LANES
 # ============================================================
 
 PAGES = [
     "Home",
     "World Record Timeline",
-    "Current World Records",
     "All-Time Top 200 Rankings",
     "Athletes Hall of Fame",
     "Nations & Places",
     "Compare Events",
-    "Data & Methods"
+    "Data & Methods",
+    "Game"
 ]
 
 PAGE_LABELS = {
     "Home": "Home",
     "World Record Timeline": "Timeline",
-    "Current World Records": "Records",
     "All-Time Top 200 Rankings": "Top 200",
     "Athletes Hall of Fame": "Athletes",
     "Nations & Places": "Nations",
     "Compare Events": "Compare",
-    "Data & Methods": "Methods"
+    "Data & Methods": "Methods",
+    "Game": "Game"
 }
 
 PAGE_TAGS = {
     "Home": "Start block",
     "World Record Timeline": "Record flow",
-    "Current World Records": "Gold lane",
     "All-Time Top 200 Rankings": "Elite depth",
     "Athletes Hall of Fame": "Legends",
     "Nations & Places": "Maps & flags",
     "Compare Events": "Race match",
-    "Data & Methods": "Behind data"
+    "Data & Methods": "Behind data",
+    "Game": "Play & guess"
 }
 
 # Read selected page from the URL.
@@ -1166,38 +1158,120 @@ if isinstance(query_page, list):
 
 page = query_page if query_page in PAGES else "Home"
 
-# Build the lane buttons as ONE compact HTML string.
-# Important: no multi-line indented HTML here, otherwise Streamlit may print it as code.
-nav_items = ""
 
-for i, page_name in enumerate(PAGES, start=1):
-    active_class = " active" if page == page_name else ""
-    page_url = quote(page_name, safe="")
+# ------------------------------------------------------------
+# Shared builder for the pool lanes.
+# The SAME lanes are used both for the full-page pool on the Home
+# and for the small (sticky) pool shown on every other page, so
+# navigation always keeps the identical style.
+# Keep it as ONE compact HTML string: no multi-line indented HTML,
+# otherwise Streamlit renders it as a code block.
+# ------------------------------------------------------------
 
-    nav_items += (
-        f'<a class="pool-lane{active_class}" href="?page={page_url}">'
-        f'<span class="lane-number">Lane {i}</span>'
-        f'<span class="lane-label">{PAGE_LABELS[page_name]}</span>'
-        f'<span class="lane-tag">{PAGE_TAGS[page_name]}</span>'
-        f'</a>'
+def build_pool_lanes():
+    lanes = ""
+    for i, page_name in enumerate(PAGES, start=1):
+        active_class = " active" if page == page_name else ""
+        page_url = quote(page_name, safe="")
+        lanes += (
+            f'<a class="home-lane{active_class}" href="?page={page_url}">'
+            f'<span class="hl-line"></span>'
+            f'<span class="hl-btn">'
+            f'<span class="hl-name">{PAGE_LABELS[page_name]}</span>'
+            f'<span class="hl-tag">{PAGE_TAGS[page_name]}</span>'
+            f'</span>'
+            f'<span class="hl-num">{i}</span>'
+            f'</a>'
+        )
+    # Rope separators on the exact lane boundaries (absolute, the grid ignores them).
+    lanes += '<span class="pool-rope"></span>' * 7
+    return lanes
+
+
+# ------------------------------------------------------------
+# Brand logo (inline SVG): a rounded badge with a gradient pool,
+# white waves, a little swimmer and a gold "record" dot.
+# ------------------------------------------------------------
+
+LOGO_SVG = (
+    '<svg class="brand-logo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">'
+    '<defs><linearGradient id="swlg" x1="0" y1="0" x2="1" y2="1">'
+    '<stop offset="0" stop-color="#052B44"/>'
+    '<stop offset="0.5" stop-color="#0A6C9F"/>'
+    '<stop offset="1" stop-color="#22B8CF"/>'
+    '</linearGradient></defs>'
+    '<rect x="1" y="1" width="46" height="46" rx="13" fill="url(#swlg)"/>'
+    '<g fill="none" stroke="#FFFFFF" stroke-linecap="round">'
+    '<path d="M6 32 q4 -4 8 0 t8 0 t8 0 t8 0" stroke-width="2"/>'
+    '<path d="M6 38 q4 -4 8 0 t8 0 t8 0 t8 0" stroke-width="2" opacity="0.55"/>'
+    '</g>'
+    '<circle cx="18.5" cy="16" r="3.4" fill="#FFFFFF"/>'
+    '<path d="M13.5 24 q6 -5 12 -3 l6.5 -4.5" fill="none" stroke="#FFFFFF" '
+    'stroke-width="3" stroke-linecap="round"/>'
+    '<circle cx="34.5" cy="13.5" r="2.4" fill="#D6A937"/>'
+    '</svg>'
+)
+
+
+def brand_html(tagline):
+    """Logo + title + small uppercase tagline, reused on every header."""
+    return (
+        '<div class="brand">'
+        f'{LOGO_SVG}'
+        '<div class="brand-text">'
+        '<div class="home-pool-title">Swim Records Explorer</div>'
+        f'<div class="brand-tag">{tagline}</div>'
+        '</div>'
+        '</div>'
     )
 
-nav_html = (
-    '<div class="pool-nav-shell">'
-    '<div class="pool-nav-top">'
-    '<div class="pool-brand">🏊 Swim Records Explorer</div>'
-    '<div class="pool-subtitle">'
-    'Select a lane to dive into swimming records, rankings, athletes and nations.'
-    '</div>'
-    '</div>'
-    f'<div class="pool-grid">{nav_items}</div>'
-    f'<div class="current-lane">Current lane: <b>{PAGE_LABELS[page]}</b></div>'
+
+def home_stats_html():
+    """Scoreboard-style chips with a few real numbers from the datasets."""
+    names = {clean_text(x) for x in wr["name"].dropna()} | {clean_text(x) for x in top["athlete"].dropna()}
+    names = {n for n in names if n}
+
+    chips = [
+        (len(wr), "World records"),
+        (wr["event_label"].nunique(), "Events"),
+        (len(names), "Athletes"),
+        (wr["nationality"].nunique(), "Nations"),
+    ]
+
+    inner = ""
+    for num, lab in chips:
+        inner += (
+            f'<div class="pool-stat">'
+            f'<span class="ps-num">{num}</span>'
+            f'<span class="ps-lab">{lab}</span>'
+            f'</div>'
+        )
+    return f'<div class="pool-stats">{inner}</div>'
+
+
+POOL_FOOT = (
+    '<div class="pool-foot">'
+    '<span><i style="background:#0A6C9F"></i>Long course</span>'
+    '<span><i style="background:#22B8CF"></i>Short course</span>'
+    '<span><i style="background:#D6A937"></i>Current record</span>'
     '</div>'
 )
 
-# The Home page renders its own full-page pool, so skip the compact nav there.
+
+# Small pool-header on every page except the Home.
 if page != "Home":
-    st.markdown(nav_html, unsafe_allow_html=True)
+    compact_pool_html = (
+        '<div class="home-pool compact">'
+        '<div class="home-pool-head">'
+        f'{brand_html("Records · Rankings · Athletes")}'
+        '<div class="home-pool-sub">Select a lane to jump to another section.</div>'
+        '</div>'
+        f'<div class="home-lanes">{build_pool_lanes()}</div>'
+        f'<div class="current-lane">Current lane: <b>{PAGE_LABELS[page]}</b></div>'
+        '</div>'
+    )
+    st.markdown(compact_pool_html, unsafe_allow_html=True)
+
 
 with st.sidebar:
     st.markdown("## 🏊 Filters")
@@ -1212,39 +1286,20 @@ with st.sidebar:
 
 if page == "Home":
 
-    # Full-page Olympic pool: every section of the site is a lane.
-    # Hover a lane and the swimmer goes bottom -> top toward the finish wall.
-    # Important: keep the HTML as ONE compact string, no indented lines.
-    lane_items = ""
-
-    for i, page_name in enumerate(PAGES, start=1):
-        active_class = " active" if page == page_name else ""
-        page_url = quote(page_name, safe="")
-
-        lane_items += (
-            f'<a class="home-lane{active_class}" href="?page={page_url}">'
-            f'<span class="hl-line"></span>'
-            f'<span class="hl-btn">'
-            f'<span class="hl-name">{PAGE_LABELS[page_name]}</span>'
-            f'<span class="hl-tag">{PAGE_TAGS[page_name]}</span>'
-            f'</span>'
-            f'<span class="hl-num">{i}</span>'
-            f'</a>'
-        )
-
-    # Rope separators on the exact lane boundaries (absolute, the grid ignores them).
-    lane_items += '<span class="pool-rope"></span>' * 7
-
+    # The Home uses the same builder as the other pages: the pool is
+    # identical, here just full page (without the "compact" class).
     home_pool_html = (
         '<div class="home-pool">'
         '<div class="home-pool-head">'
-        '<div class="home-pool-title">Swim Records Explorer</div>'
+        f'{brand_html("World records · Rankings · Athletes · Nations")}'
         '<div class="home-pool-sub">'
-        'Eight lanes, one pool: world records, all-time rankings, athletes and nations. '
-        'Hover a lane to send the swimmer up, click to dive into that section.'
+        'Eight lanes, one pool. Hover a lane to send the swimmer up, '
+        'then click to dive into that section.'
         '</div>'
+        f'{home_stats_html()}'
         '</div>'
-        f'<div class="home-lanes">{lane_items}</div>'
+        f'<div class="home-lanes">{build_pool_lanes()}</div>'
+        f'{POOL_FOOT}'
         '</div>'
     )
 
@@ -1381,100 +1436,7 @@ elif page == "World Record Timeline":
 
 
 # ============================================================
-# PAGE 3 - CURRENT WORLD RECORDS
-# ============================================================
-
-elif page == "Current World Records":
-
-    section(
-        "Current World Records",
-        "A clean overview of the records that currently define the limit of swimming performance."
-    )
-
-    current = wr[wr["is_current_bool"] == True].copy()
-
-    filtered = apply_common_filters(
-        current,
-        gender=True,
-        course=True,
-        stroke=True,
-        distance=True,
-        key_prefix="current"
-    )
-
-    if filtered.empty:
-        st.warning("No current records available for the selected filters.")
-        st.stop()
-
-    c1, c2, c3, c4 = st.columns(4)
-
-    with c1:
-        st.metric("Current records shown", len(filtered))
-
-    with c2:
-        st.metric("Athletes", filtered["name"].nunique())
-
-    with c3:
-        st.metric("Nations", filtered["nationality"].nunique())
-
-    with c4:
-        newest_year = int(filtered["year"].max()) if filtered["year"].notna().any() else "-"
-        st.metric("Most recent record year", newest_year)
-
-    st.markdown(
-        """
-        <div class="warning-box">
-        Direct time comparison across different distances is not analytically fair.
-        Use filters to compare similar events, or read this page as a lookup view of current records.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    display = filtered.copy()
-    display["label"] = display["event_label"] + " — " + display["name"]
-
-    fig = px.bar(
-        display.sort_values("seconds", ascending=True),
-        x="seconds",
-        y="label",
-        orientation="h",
-        color="gender",
-        color_discrete_map=GENDER_COLORS,
-        hover_data=["time", "nationality", "meet", "location", "date"],
-        title="Current world records selected"
-    )
-    fig.update_layout(yaxis=dict(autorange="reversed"))
-    fig.update_xaxes(title="Time in seconds")
-    fig.update_yaxes(title="")
-    fig = plotly_clean_layout(fig, height=max(420, 26 * len(display)))
-    st.plotly_chart(fig, use_container_width=True)
-
-    table_cols = [
-        "event_label", "time", "seconds", "name", "nationality",
-        "date", "meet", "location"
-    ]
-
-    st.dataframe(
-        filtered[table_cols].rename(
-            columns={
-                "event_label": "Event",
-                "time": "Time",
-                "seconds": "Seconds",
-                "name": "Athlete",
-                "nationality": "Nationality",
-                "date": "Date",
-                "meet": "Meet",
-                "location": "Location"
-            }
-        ),
-        use_container_width=True,
-        hide_index=True
-    )
-
-
-# ============================================================
-# PAGE 4 - ALL-TIME TOP 200 RANKINGS
+# PAGE 3 - ALL-TIME TOP 200 RANKINGS
 # ============================================================
 
 elif page == "All-Time Top 200 Rankings":
@@ -1632,7 +1594,7 @@ elif page == "All-Time Top 200 Rankings":
 
 
 # ============================================================
-# PAGE 5 - ATHLETES HALL OF FAME
+# PAGE 4 - ATHLETES HALL OF FAME
 # ============================================================
 
 elif page == "Athletes Hall of Fame":
@@ -1814,7 +1776,7 @@ elif page == "Athletes Hall of Fame":
 
 
 # ============================================================
-# PAGE 6 - NATIONS & PLACES
+# PAGE 5 - NATIONS & PLACES
 # ============================================================
 
 elif page == "Nations & Places":
@@ -1950,7 +1912,7 @@ elif page == "Nations & Places":
 
 
 # ============================================================
-# PAGE 7 - COMPARE EVENTS
+# PAGE 6 - COMPARE EVENTS
 # ============================================================
 
 elif page == "Compare Events":
@@ -2111,7 +2073,7 @@ elif page == "Compare Events":
 
 
 # ============================================================
-# PAGE 8 - DATA & METHODS
+# PAGE 7 - DATA & METHODS
 # ============================================================
 
 elif page == "Data & Methods":
@@ -2219,3 +2181,29 @@ elif page == "Data & Methods":
 
     with st.expander("Top performances raw preview"):
         st.dataframe(top.head(100), use_container_width=True)
+
+
+# ============================================================
+# PAGE 8 - GAME (placeholder — to be developed later)
+# ============================================================
+
+elif page == "Game":
+
+    section(
+        "Game",
+        "An interactive swimming quiz is on the way. This lane is reserved for it."
+    )
+
+    st.markdown(
+        """
+        <div class="info-box">
+        <b>🏊 Coming soon.</b><br>
+        This section will host a small game based on the datasets — for example,
+        guessing the world record holder, the record time, or the fastest of two events.
+        We'll build it in the next step.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.info("Nothing to play yet — the game logic will be added here.")
