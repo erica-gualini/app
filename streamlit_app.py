@@ -790,20 +790,23 @@ st.markdown(
     .cine-kicker .brand-logo { width: 42px; height: 42px; flex: none; }
 
     .cine-title {
-        margin: 0;
-        font-family: 'Anton', system-ui, sans-serif;
-        font-weight: 400;
-        text-transform: uppercase;
-        color: #E7B94A;
-        font-size: clamp(66px, 9.4vw, 134px);
-        line-height: 0.82;
-        letter-spacing: 0.01em;
-        transform: skewX(-8deg);
-        transform-origin: left;
-        text-shadow: 0 10px 34px rgba(0,0,0,0.55);
-    }
+    margin: 0;
+    font-family: 'Anton', system-ui, sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #E7B94A !important;
+    font-size: clamp(92px, 12vw, 180px);
+    line-height: 0.82;
+    letter-spacing: 0.01em;
+    transform: skewX(-8deg);
+    transform-origin: left;
+    text-shadow: 0 12px 38px rgba(0,0,0,0.62);
+}
 
-    .cine-title .gold { color: #E7B94A; }
+.cine-title span,
+.cine-title .gold {
+    color: #E7B94A !important;
+}
 
     .cine-tag {
         display: flex;
@@ -875,12 +878,12 @@ st.markdown(
     .cine-chev.tr { top: 56px; right: 40px; }
     .cine-chev.br { bottom: 20px; left: 50%; transform: translateX(-50%); }
 
-    @media (max-width: 900px) {
-        .cine-inner { grid-template-columns: 1fr; padding: 4vh 24px; }
-        .cine-cards { display: none; }
-        .cine-title { font-size: 62px; }
-        .home-cine { min-height: 48vh; }
-    }
+@media (max-width: 900px) {
+    .cine-inner { grid-template-columns: 1fr; padding: 4vh 24px; }
+    .cine-cards { display: none; }
+    .cine-title { font-size: 72px; }
+    .home-cine { min-height: 48vh; }
+}
 
     </style>
     """,
