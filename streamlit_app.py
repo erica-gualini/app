@@ -73,81 +73,32 @@ st.markdown(
 
     html, body, .stApp {
         font-family: 'Barlow', system-ui, -apple-system, sans-serif;
+        color: #24343B;
     }
 
-    .stApp {
-        background-color: #EDE4D2;
+    .stApp { background-color: #E9F3F2; }
+    .main { background-color: transparent; }
+
+    .block-container { padding-top: 0.7rem; max-width: 1180px; }
+    header[data-testid="stHeader"] { background: transparent; }
+
+    .fullbleed {
+        position: relative;
+        left: 50%; right: 50%;
+        margin-left: -50vw; margin-right: -50vw;
+        width: 100vw;
     }
 
-    .main {
-        background-color: transparent;
-    }
-
-    /* thin wave rule used as a decorative divider */
     .wave-rule {
         height: 12px;
         margin: 4px 0 12px 0;
-        background:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='12'%3E%3Cpath d='M0 6 q11.25 -6 22.5 0 t22.5 0 t22.5 0 t22.5 0' fill='none' stroke='%231A38A8' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x left center / 90px 12px;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='12'%3E%3Cpath d='M0 6 q11.25 -6 22.5 0 t22.5 0 t22.5 0 t22.5 0' fill='none' stroke='%230C4A5A' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x left center / 90px 12px;
         opacity: 0.5;
     }
 
-    .hero {
-        position: relative;
-        overflow: hidden;
-        display: grid;
-        grid-template-columns: 1.12fr 0.88fr;
-        gap: 34px;
-        align-items: center;
-        padding: 42px 46px;
-        border-radius: 26px;
-        background: #F7F1E3;
-        border: 1px solid #E7DFCB;
-        color: #12233A;
-        margin-bottom: 26px;
-        box-shadow: 0 26px 60px -34px rgba(5,43,68,0.5);
-    }
-
-    .hero-kicker {
-        font-family: 'Barlow', system-ui, sans-serif;
-        font-size: 13px;
-        font-weight: 700;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: #1A38A8;
-        margin-bottom: 12px;
-    }
-
-    .hero h1 {
-        font-family: 'Anton', system-ui, sans-serif;
-        font-weight: 400;
-        text-transform: uppercase;
-        letter-spacing: 0.005em;
-        line-height: 0.9;
-        font-size: 62px;
-        color: #1A38A8;
-        margin: 0 0 16px 0;
-    }
-
-    .hero p {
-        font-family: 'Barlow', system-ui, sans-serif;
-        font-size: 17.5px;
-        font-weight: 500;
-        color: #3A4A5C;
-        opacity: 1;
-        max-width: 620px;
-        line-height: 1.5;
-        margin: 0;
-    }
-
-    @media (max-width: 900px) {
-        .hero {
-            grid-template-columns: 1fr;
-            gap: 22px;
-            padding: 30px 28px;
-        }
-        .hero h1 { font-size: 46px; }
-    }
+    /* ============================================================
+       SECTION HEADERS — bold condensed poster style (per the deck)
+    ============================================================ */
 
     .section-title {
         font-family: 'Anton', system-ui, sans-serif;
@@ -155,156 +106,151 @@ st.markdown(
         text-transform: uppercase;
         letter-spacing: 0.006em;
         line-height: 0.95;
-        color: #1A38A8;
-        font-size: 40px;
-        margin-top: 16px;
+        color: #0C4A5A;
+        font-size: 42px;
+        margin-top: 12px;
         margin-bottom: 8px;
     }
 
     .section-subtitle {
-        font-family: 'Barlow', system-ui, sans-serif;
-        color: #52616B;
+        color: #5A7480;
         font-size: 16.5px;
         font-weight: 500;
         max-width: 840px;
         margin-bottom: 18px;
-        line-height: 1.5;
-    }
-
-    .kpi-card {
-        background-color: #FFFDF8;
-        padding: 22px 22px;
-        border-radius: 18px;
-        border: 1px solid #E7DFCB;
-        box-shadow: 0 12px 28px -18px rgba(5,43,68,0.4);
-        min-height: 130px;
-    }
-
-    .kpi-label {
-        font-size: 12.5px;
-        text-transform: uppercase;
-        color: #52616B;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-    }
-
-    .kpi-value {
-        font-family: 'Anton', system-ui, sans-serif;
-        font-weight: 400;
-        font-size: 42px;
-        color: #1A38A8;
-        margin-top: 8px;
-        line-height: 1;
-    }
-
-    .kpi-note {
-        font-size: 13px;
-        color: #52616B;
-        margin-top: 5px;
-    }
-
-    .info-box {
-        background-color: #FFFDF8;
-        border-left: 6px solid #1A38A8;
-        border-radius: 14px;
-        padding: 18px 22px;
-        margin: 16px 0;
-        box-shadow: 0 12px 28px -20px rgba(5,43,68,0.4);
-        color: #26333F;
-    }
-
-    .warning-box {
-        background-color: #FBF3DE;
-        border-left: 6px solid #D6A937;
-        border-radius: 14px;
-        padding: 18px 22px;
-        margin: 16px 0;
-        color: #4A3E1E;
-    }
-
-    .small-caption {
-        font-size: 13px;
-        color: #52616B;
-        line-height: 1.4;
-    }
-
-    div[data-testid="stMetricValue"] {
-        color: #052B44;
-    }
-
-    div[data-testid="stSidebar"] {
-        background-color: #EFF8FB;
-    }
-
-    .block-container {
-        padding-top: 2.6rem;
-    }
-
-    /* Let the sticky pool header sit above Streamlit's own top bar
-       instead of being clipped by it. */
-    header[data-testid="stHeader"] {
-        background: transparent;
+        line-height: 1.55;
     }
 
     /* ============================================================
-       HOME + NAV - OLYMPIC POOL
-       One single pool component is used everywhere:
-       - full page on the Home
-       - small sticky header (.compact) on every other page
-       Light & clean: flat refined blue, hairline borders, thin red
-       rope dashes, translucent floor numerals, pictogram swimmer.
+       HOME TOP BAND — title + short description + doodles
     ============================================================ */
 
-    .home-pool {
-        max-width: 1400px;
-        margin: 0 auto 10px auto;
-        background: #FBF7EF;
-        border: 1px solid #E7DFCB;
-        border-radius: 24px;
-        padding: 16px;
-        box-shadow: 0 30px 70px -34px rgba(5,43,68,0.4);
+    .swim-band {
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 24px;
+        background: #FBFEFE;
+        border: 1px solid #D8E9E8;
+        border-radius: 22px;
+        padding: 22px 30px;
+        margin: 4px 0 22px 0;
+        box-shadow: 0 18px 40px -28px rgba(12,74,90,0.5);
     }
 
-    .home-pool-head {
-        text-align: center;
-        margin: 10px 0 16px 0;
+    .swim-band-icon .brand-logo {
+        width: 56px; height: 56px;
+        filter: drop-shadow(0 8px 16px rgba(12,74,90,0.28));
     }
 
-    .home-pool-title {
+    .swim-band-title {
         font-family: 'Anton', system-ui, sans-serif;
-        font-size: 34px;
         font-weight: 400;
         text-transform: uppercase;
         letter-spacing: 0.01em;
-        line-height: 0.95;
-        color: #1A38A8;
+        line-height: 0.94;
+        font-size: 40px;
+        color: #0C4A5A;
+        display: flex;
+        align-items: center;
+        gap: 12px;
     }
 
-    .home-pool-sub {
-        color: #52616B;
-        font-size: 13.5px;
+    .swim-sparkle { width: 22px; height: 22px; flex: none; }
+
+    .swim-band-desc {
+        margin-top: 8px;
+        font-size: 15px;
         font-weight: 500;
-        margin-top: 7px;
-        line-height: 1.4;
+        color: #4A6470;
+        line-height: 1.5;
+        max-width: 720px;
     }
+
+    .swim-band-waves {
+        width: 116px; height: 66px;
+        border-radius: 14px;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='58' height='15'%3E%3Cpath d='M0 8 q7.25 -7 14.5 0 t14.5 0 t14.5 0 t14.5 0' fill='none' stroke='%230C4A5A' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E") repeat, #EAF6F5;
+        background-size: 58px 15px, 100% 100%;
+        border: 1px solid #D8E9E8;
+        box-shadow: inset 0 0 0 3px #FBFEFE;
+    }
+
+    @media (max-width: 850px) {
+        .swim-band { grid-template-columns: auto 1fr; padding: 18px 20px; }
+        .swim-band-waves { display: none; }
+        .swim-band-title { font-size: 30px; }
+    }
+
+    /* ============================================================
+       MINI POOL — the little pool used as header on inner pages
+    ============================================================ */
+
+    .mini-pool {
+        background: #FBFEFE;
+        border: 1px solid #D8E9E8;
+        border-radius: 22px;
+        padding: 14px 16px 16px 16px;
+        margin: 2px 0 24px 0;
+        box-shadow: 0 18px 40px -30px rgba(12,74,90,0.5);
+    }
+
+    .mini-pool-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin: 2px 6px 12px 6px;
+    }
+
+    .mini-pool-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+    }
+
+    .mini-pool-brand .brand-logo { width: 30px; height: 30px; }
+
+    .mini-pool-brand span {
+        font-family: 'Anton', system-ui, sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.01em;
+        font-size: 20px;
+        color: #0C4A5A;
+    }
+
+    .mini-pool-current {
+        font-size: 12.5px;
+        font-weight: 600;
+        color: #5A7480;
+    }
+
+    .mini-pool-current b { color: #0C4A5A; }
+
+    /* ============================================================
+       POOL LANES (full on Home, compact via .mini)
+    ============================================================ */
 
     .home-lanes {
         position: relative;
         display: grid;
         grid-template-columns: repeat(8, 1fr);
         gap: 0;
-        border-radius: 16px;
         overflow: hidden;
         background:
-            url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='130'%20height='44'%3E%3Cpath%20d='M0%2022%20Q16.25%2014%2032.5%2022%20T65%2022%20T97.5%2022%20T130%2022'%20fill='none'%20stroke='%23FFFFFF'%20stroke-opacity='0.10'%20stroke-width='2'%20stroke-linecap='round'/%3E%3C/svg%3E") repeat,
-            url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='220'%20height='74'%3E%3Cpath%20d='M0%2037%20Q27.5%2025%2055%2037%20T110%2037%20T165%2037%20T220%2037'%20fill='none'%20stroke='%23FFFFFF'%20stroke-opacity='0.06'%20stroke-width='3'%20stroke-linecap='round'/%3E%3C/svg%3E") repeat,
-            linear-gradient(180deg, #46B8E6 0%, #1E86BC 100%);
+            url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='130'%20height='44'%3E%3Cpath%20d='M0%2022%20Q16.25%2014%2032.5%2022%20T65%2022%20T97.5%2022%20T130%2022'%20fill='none'%20stroke='%23FFFFFF'%20stroke-opacity='0.12'%20stroke-width='2'%20stroke-linecap='round'/%3E%3C/svg%3E") repeat,
+            url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='220'%20height='74'%3E%3Cpath%20d='M0%2037%20Q27.5%2025%2055%2037%20T110%2037%20T165%2037%20T220%2037'%20fill='none'%20stroke='%23FFFFFF'%20stroke-opacity='0.07'%20stroke-width='3'%20stroke-linecap='round'/%3E%3C/svg%3E") repeat,
+            linear-gradient(180deg, #8FD0D6 0%, #2C8093 55%, #145A6B 100%);
         background-size: 130px 44px, 220px 74px, 100% 100%;
-        box-shadow:
-            inset 0 0 0 1px rgba(255,255,255,0.35),
-            inset 0 18px 40px rgba(5,43,68,0.16);
-        animation: home-water-drift 22s linear infinite;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.30), inset 0 18px 44px rgba(5,40,50,0.18);
+        animation: home-water-drift 26s linear infinite;
     }
+
+    .home-lanes.mini { border-radius: 16px; }
 
     @keyframes home-water-drift {
         from { background-position: 0 0, 0 0, 0 0; }
@@ -314,30 +260,26 @@ st.markdown(
     .home-lane {
         position: relative;
         display: block;
-        min-height: 68vh;
+        min-height: 62vh;
         overflow: hidden;
         text-decoration: none !important;
         transition: background 0.25s ease;
     }
 
-    .home-lane:hover {
-        background: rgba(255,255,255,0.07);
-    }
+    .home-lanes.mini .home-lane { min-height: 116px; }
 
-    /* Lane ropes sit exactly on the lane boundaries (siblings of the
-       lanes, absolutely positioned so the grid ignores them):
-       a thin white cable with crisp red dashes. */
+    .home-lane:hover { background: rgba(255,255,255,0.08); }
+
     .pool-rope {
         position: absolute;
-        top: 0;
-        bottom: 0;
+        top: 0; bottom: 0;
         width: 6px;
         transform: translateX(-50%);
         z-index: 2;
         pointer-events: none;
         background:
-            repeating-linear-gradient(180deg, #E23636 0px 12px, transparent 12px 22px) center top / 4px 100% no-repeat,
-            linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.55)) center top / 1.5px 100% no-repeat;
+            repeating-linear-gradient(180deg, #E45A63 0px 12px, transparent 12px 22px) center top / 4px 100% no-repeat,
+            linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.6)) center top / 1.5px 100% no-repeat;
     }
 
     .pool-rope:nth-of-type(1) { left: 12.5%; }
@@ -348,522 +290,411 @@ st.markdown(
     .pool-rope:nth-of-type(6) { left: 75%; }
     .pool-rope:nth-of-type(7) { left: 87.5%; }
 
-    /* Dark line on the lane floor, with the T mark at both walls. */
     .hl-line {
         position: absolute;
-        left: 50%;
-        top: 13%;
-        bottom: 5%;
+        left: 50%; top: 12%; bottom: 5%;
         width: 4px;
         transform: translateX(-50%);
         z-index: 1;
         pointer-events: none;
-        background: rgba(5,43,68,0.16);
+        background: rgba(5,40,50,0.16);
         border-radius: 2px;
     }
 
-    .hl-line::before,
-    .hl-line::after {
+    .hl-line::before, .hl-line::after {
         content: "";
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        width: 22px;
-        height: 4px;
-        background: rgba(5,43,68,0.16);
+        width: 22px; height: 4px;
+        background: rgba(5,40,50,0.16);
         border-radius: 2px;
     }
 
     .hl-line::before { top: 0; }
     .hl-line::after { bottom: 0; }
+    .home-lanes.mini .hl-line { top: 8%; bottom: 6%; }
 
-    /* Section button: a frosted minimal card on the finish wall. */
     .hl-btn {
         position: relative;
         z-index: 3;
         display: block;
-        margin: 14px 10px 0 10px;
-        padding: 10px 6px;
+        margin: 16px 12px 0 12px;
+        padding: 12px 7px;
         text-align: center;
         background: rgba(255,255,255,0.92);
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        border: 1px solid #E3EEF3;
-        border-radius: 10px;
-        box-shadow: 0 10px 24px -12px rgba(5,43,68,0.45);
+        border: 1px solid rgba(255,255,255,0.9);
+        border-radius: 14px;
+        box-shadow: 0 12px 26px -14px rgba(5,40,50,0.5);
         transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
+
+    .home-lanes.mini .hl-btn { margin: 12px 6px 0 6px; padding: 8px 4px; border-radius: 11px; }
 
     .hl-name {
         display: block;
         font-family: 'Anton', system-ui, sans-serif;
-        color: #12233A;
-        font-size: 14px;
+        color: #0C4A5A;
+        font-size: 16px;
         font-weight: 400;
         text-transform: uppercase;
         line-height: 1.05;
         letter-spacing: 0.02em;
     }
 
+    .home-lanes.mini .hl-name { font-size: 13px; }
+
     .hl-tag {
         display: block;
-        color: #5A7484;
+        color: #5A7480;
         font-size: 9.5px;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
-        margin-top: 4px;
+        letter-spacing: 0.1em;
+        margin-top: 5px;
         line-height: 1.15;
     }
 
+    .home-lanes.mini .hl-tag { font-size: 8px; margin-top: 3px; }
+
     .home-lane:hover .hl-btn {
-        transform: translateY(-2px);
-        border-color: #E23636;
-        box-shadow: 0 16px 30px -14px rgba(5,43,68,0.55);
+        transform: translateY(-3px);
+        border-color: #C9A24B;
+        box-shadow: 0 18px 32px -14px rgba(5,40,50,0.55);
     }
 
-    .home-lane.active .hl-btn {
-        border-color: #E23636;
-    }
+    .home-lane.active .hl-btn { border-color: #C9A24B; }
 
-    /* Translucent lane numeral painted on the pool floor. */
     .hl-num {
         position: absolute;
-        bottom: 14px;
-        left: 0;
-        right: 0;
+        bottom: 16px; left: 0; right: 0;
         z-index: 1;
         text-align: center;
-        font-size: 42px;
-        font-weight: 900;
-        letter-spacing: -0.02em;
+        font-family: 'Anton', system-ui, sans-serif;
+        font-size: 44px;
+        font-weight: 400;
         line-height: 1;
-        color: rgba(255,255,255,0.30);
+        color: rgba(255,255,255,0.34);
         pointer-events: none;
     }
 
-    /* The swimmer: a white pictogram that swims up to the wall on hover. */
+    .home-lanes.mini .hl-num { font-size: 26px; bottom: 8px; }
+
     .home-lane::after {
         content: "";
         position: absolute;
-        top: 100%;
-        left: 50%;
+        top: 100%; left: 50%;
         z-index: 4;
-        width: 40px;
-        height: 62px;
+        width: 40px; height: 62px;
         background: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2044%2070'%3E%3Cg%20fill='none'%20stroke='%23FFFFFF'%20stroke-width='4.6'%20stroke-linecap='round'%3E%3Cpath%20d='M15%2020%20L12%204'%3E%3CanimateTransform%20attributeName='transform'%20type='rotate'%20values='-6%2015%2020%3B16%2015%2020%3B-6%2015%2020'%20dur='1s'%20repeatCount='indefinite'/%3E%3C/path%3E%3Cpath%20d='M29%2020%20L37%2032'%3E%3CanimateTransform%20attributeName='transform'%20type='rotate'%20values='12%2029%2020%3B-14%2029%2020%3B12%2029%2020'%20dur='1s'%20repeatCount='indefinite'/%3E%3C/path%3E%3Cpath%20d='M19.5%2046%20L17.5%2064'%3E%3CanimateTransform%20attributeName='transform'%20type='rotate'%20values='-9%2019.5%2046%3B9%2019.5%2046%3B-9%2019.5%2046'%20dur='0.4s'%20repeatCount='indefinite'/%3E%3C/path%3E%3Cpath%20d='M24.5%2046%20L26.5%2062'%3E%3CanimateTransform%20attributeName='transform'%20type='rotate'%20values='9%2024.5%2046%3B-9%2024.5%2046%3B9%2024.5%2046'%20dur='0.4s'%20repeatCount='indefinite'/%3E%3C/path%3E%3C/g%3E%3Ccircle%20cx='22'%20cy='13'%20r='5.6'%20fill='%23FFFFFF'/%3E%3Cpath%20d='M15%2020%20Q22%2015.5%2029%2020%20L26%2045.5%20Q22%2048.5%2018%2045.5%20Z'%20fill='%23FFFFFF'/%3E%3C/svg%3E") center / contain no-repeat;
         opacity: 0;
         transform: translate(-50%, -50%);
-        filter: drop-shadow(0 4px 8px rgba(5,43,68,0.35));
+        filter: drop-shadow(0 4px 8px rgba(5,40,50,0.35));
         pointer-events: none;
     }
+
+    .home-lanes.mini .home-lane::after { width: 24px; height: 38px; }
 
     .home-lane:hover::after {
         animation: swim-up 1.7s cubic-bezier(0.3, 0.55, 0.35, 1) forwards;
     }
 
     @keyframes swim-up {
-        0% {
-            opacity: 0;
-            top: 100%;
-            transform: translate(-50%, -50%) rotate(0deg);
-        }
-        7% {
-            opacity: 1;
-        }
-        30% {
-            transform: translate(-56%, -50%) rotate(-3deg);
-        }
-        55% {
-            transform: translate(-44%, -50%) rotate(3deg);
-        }
-        80% {
-            transform: translate(-53%, -50%) rotate(-2deg);
-        }
-        100% {
-            opacity: 1;
-            top: 15%;
-            transform: translate(-50%, -50%) rotate(0deg);
-        }
+        0%   { opacity: 0; top: 100%; transform: translate(-50%, -50%) rotate(0deg); }
+        7%   { opacity: 1; }
+        30%  { transform: translate(-56%, -50%) rotate(-3deg); }
+        55%  { transform: translate(-44%, -50%) rotate(3deg); }
+        80%  { transform: translate(-53%, -50%) rotate(-2deg); }
+        100% { opacity: 1; top: 14%; transform: translate(-50%, -50%) rotate(0deg); }
     }
 
     @media (max-width: 1150px) {
-        .home-lanes {
-            grid-template-columns: repeat(4, 1fr);
-            row-gap: 14px;
-        }
-
-        .home-lane {
-            min-height: 40vh;
-        }
-
+        .home-lanes { grid-template-columns: repeat(4, 1fr); }
+        .home-lane { min-height: 44vh; }
+        .home-lanes.mini .home-lane { min-height: 100px; }
         .pool-rope { display: none; }
         .pool-rope:nth-of-type(2n) { display: block; }
     }
 
     @media (max-width: 650px) {
-        .home-lanes {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .home-lane {
-            min-height: 34vh;
-        }
-
+        .home-lanes { grid-template-columns: repeat(2, 1fr); }
+        .home-lane { min-height: 36vh; }
+        .home-lanes.mini .home-lane { min-height: 92px; }
         .pool-rope:nth-of-type(2n) { display: none; }
         .pool-rope:nth-of-type(4) { display: block; }
-    }
-
-    /* ============================================================
-       COMPACT POOL NAV — the very same pool as the Home, shrunk.
-       Shown as a sticky header on every page other than Home,
-       so navigation always keeps the identical style.
-    ============================================================ */
-
-    .home-pool.compact {
-        position: sticky;
-        top: 8px;
-        z-index: 999;
-        max-width: 1400px;
-        margin: 0 auto 24px auto;
-        padding: 12px;
-        box-shadow: 0 14px 34px -12px rgba(5,43,68,0.30);
-    }
-
-    .home-pool.compact .home-pool-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 16px;
-        flex-wrap: wrap;
-        text-align: left;
-        margin: 4px 4px 10px 4px;
-    }
-
-    .home-pool.compact .home-pool-title { font-size: 19px; }
-
-    .home-pool.compact .brand-logo { width: 38px; height: 38px; }
-
-    .home-pool.compact .home-pool-sub {
-        margin-top: 0;
-        text-align: right;
-        max-width: 440px;
-        font-size: 12px;
-    }
-
-    .home-pool.compact .home-lanes {
-        border-radius: 14px;
-        animation-duration: 30s;
-    }
-
-    /* fixed height instead of 68vh */
-    .home-pool.compact .home-lane { min-height: 122px; }
-
-    .home-pool.compact .hl-line { top: 8%; bottom: 4%; }
-
-    .home-pool.compact .hl-btn {
-        margin: 12px 6px 0 6px;
-        padding: 8px 4px;
-        border-radius: 9px;
-    }
-
-    .home-pool.compact .hl-name { font-size: 12px; }
-
-    .home-pool.compact .hl-tag {
-        font-size: 8.5px;
-        margin-top: 3px;
-    }
-
-    .home-pool.compact .hl-num {
-        bottom: 8px;
-        font-size: 26px;
-    }
-
-    .home-pool.compact .home-lane::after {
-        width: 26px;
-        height: 40px;
-    }
-
-    .home-pool.compact .current-lane {
-        margin-top: 10px;
-        color: #52616B;
-        font-size: 12.5px;
-        text-align: center;
-        font-weight: 600;
-    }
-
-    .home-pool.compact .current-lane b { color: #052B44; }
-
-    /* compact stays short on small screens too
-       (wins over the .home-lane media queries by specificity) */
-    @media (max-width: 1150px) {
-        .home-pool.compact .home-lane { min-height: 96px; }
-    }
-
-    @media (max-width: 650px) {
-        .home-pool.compact .home-pool-head {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        .home-pool.compact .home-pool-sub { text-align: left; }
-        .home-pool.compact .home-lane { min-height: 84px; }
-    }
-
-    /* ============================================================
-       BRAND / LOGO, STAT CHIPS, POOL LEGEND
-    ============================================================ */
-
-    .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        vertical-align: middle;
-    }
-
-    .brand-logo {
-        width: 48px;
-        height: 48px;
-        flex: none;
-        filter: drop-shadow(0 6px 14px rgba(5,43,68,0.28));
-    }
-
-    .brand-text {
-        text-align: left;
-        line-height: 1;
-    }
-
-    .brand-tag {
-        font-family: 'Barlow', system-ui, sans-serif;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: #1A38A8;
-        margin-top: 4px;
-    }
-
-    .home-pool.compact .brand-tag { font-size: 10px; margin-top: 2px; }
-
-    .pool-stats {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin: 18px 0 2px 0;
-    }
-
-    .pool-stat {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-width: 108px;
-        padding: 12px 18px;
-        border-radius: 16px;
-        background: #FFFFFF;
-        border: 1px solid #E3EEF3;
-        box-shadow: 0 10px 22px -14px rgba(5,43,68,0.45);
-    }
-
-    .ps-num {
-        font-family: 'Anton', system-ui, sans-serif;
-        font-size: 30px;
-        font-weight: 400;
-        line-height: 1;
-        color: #1A38A8;
-    }
-
-    .ps-lab {
-        margin-top: 5px;
-        font-size: 10.5px;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: #5A7484;
     }
 
     .pool-foot {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 20px;
-        margin-top: 16px;
+        gap: 22px;
+        margin: 18px 0 6px 0;
         font-size: 12.5px;
         font-weight: 600;
-        color: #52616B;
+        color: #5A7480;
     }
 
-    .pool-foot span {
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-    }
-
-    .pool-foot i {
-        width: 11px;
-        height: 11px;
-        border-radius: 50%;
-        display: inline-block;
-    }
-
-    @media (max-width: 650px) {
-        .pool-stat { min-width: 88px; padding: 10px 12px; }
-        .ps-num { font-size: 21px; }
-    }
+    .pool-foot span { display: inline-flex; align-items: center; gap: 7px; }
+    .pool-foot i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
 
     /* ============================================================
-       SWIM RECORD TOE - GAME (styled to match the app)
+       CARDS / CALLOUTS
+    ============================================================ */
+
+    .kpi-card {
+        background-color: #FFFFFF;
+        padding: 22px 22px;
+        border-radius: 18px;
+        border: 1px solid #D8E9E8;
+        box-shadow: 0 14px 30px -22px rgba(12,74,90,0.45);
+        min-height: 130px;
+    }
+
+    .kpi-label {
+        font-size: 12px; text-transform: uppercase; color: #5A7480;
+        font-weight: 700; letter-spacing: 0.1em;
+    }
+
+    .kpi-value {
+        font-family: 'Anton', system-ui, sans-serif;
+        font-weight: 400; font-size: 44px; color: #0C4A5A;
+        margin-top: 6px; line-height: 1;
+    }
+
+    .kpi-note { font-size: 13px; color: #5A7480; margin-top: 5px; }
+
+    .info-box {
+        background-color: #FFFFFF;
+        border-left: 5px solid #1B6E7E;
+        border-radius: 16px; padding: 18px 22px; margin: 16px 0;
+        box-shadow: 0 14px 30px -24px rgba(12,74,90,0.4);
+        color: #2A3B42;
+    }
+
+    .warning-box {
+        background-color: #FBF4E2;
+        border-left: 5px solid #C9A24B;
+        border-radius: 16px; padding: 18px 22px; margin: 16px 0;
+        color: #4A3E1E;
+    }
+
+    .small-caption { font-size: 13px; color: #5A7480; line-height: 1.45; }
+    div[data-testid="stMetricValue"] { color: #0C4A5A; }
+    div[data-testid="stSidebar"] { background-color: #DFF0EF; }
+
+    /* stat chips kept available (not used on Home now) */
+    .pool-stats { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px 40px; margin: 22px auto 6px auto; }
+    .pool-stat { display: flex; flex-direction: column; align-items: center; background: transparent; border: none; box-shadow: none; padding: 0; }
+    .ps-num { font-family: 'Anton', system-ui, sans-serif; font-weight: 400; font-size: 34px; line-height: 1; color: #0C4A5A; }
+    .ps-lab { margin-top: 2px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #5A7480; }
+
+    /* ============================================================
+       SWIM PHOTOS (with graceful placeholder)
+    ============================================================ */
+
+    .swim-figure {
+        position: relative; overflow: hidden;
+        border-radius: 20px; border: 1px solid #D8E9E8;
+        box-shadow: 0 24px 50px -30px rgba(12,74,90,0.55);
+        background: #CFE6E6;
+    }
+
+    .swim-figure-inner { position: relative; width: 100%; }
+
+    .swim-figure-inner > img,
+    .swim-figure-inner > .img-ph-label {
+        position: absolute; inset: 0; width: 100%; height: 100%;
+    }
+
+    .swim-figure-inner > img { object-fit: cover; display: block; }
+
+    .swim-figure.is-placeholder {
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Cg fill='none' stroke='%231B6E7E' stroke-opacity='0.26' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M0 12 q15 -8 30 0 t30 0 t30 0 t30 0'/%3E%3Cpath d='M0 28 q15 -8 30 0 t30 0 t30 0 t30 0'/%3E%3C/g%3E%3C/svg%3E") repeat, linear-gradient(135deg, #E6F0EC 0%, #CFE6E6 100%);
+    }
+
+    .img-ph-label {
+        display: flex; align-items: center; justify-content: center;
+        text-align: center; color: #3C6672;
+        font-weight: 600; font-size: 14px; line-height: 1.4; padding: 18px;
+    }
+
+    .img-ph-label b { color: #1B6E7E; }
+
+    /* ============================================================
+       SWIM RECORD TOE — GAME
     ============================================================ */
 
     .game-turn-card {
-        background: linear-gradient(135deg, #FFFFFF 0%, #E8F8FB 100%);
-        border: 1px solid #E4EEF3;
-        border-radius: 20px;
-        padding: 16px 20px;
-        box-shadow: 0 6px 20px rgba(5,43,68,0.06);
-        color: #052B44;
-        text-align: center;
+        background: linear-gradient(135deg, #FFFFFF 0%, #E4F2F1 100%);
+        border: 1px solid #D8E9E8; border-radius: 20px;
+        padding: 16px 20px; box-shadow: 0 10px 24px -16px rgba(12,74,90,0.4);
+        color: #0C4A5A; text-align: center;
     }
 
     .game-turn-card .gt-label {
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.07em;
-        font-weight: 700;
-        color: #52616B;
+        font-size: 12px; text-transform: uppercase; letter-spacing: 0.09em;
+        font-weight: 700; color: #5A7480;
     }
 
     .game-turn-card .gt-value {
         font-family: 'Anton', system-ui, sans-serif;
-        font-weight: 400;
-        color: #1A38A8;
-        margin-top: 4px;
-        line-height: 1.05;
+        font-weight: 400; color: #0C4A5A; margin-top: 4px; line-height: 1.05;
     }
 
     .game-axis-label {
         font-family: 'Anton', system-ui, sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 0.02em;
-        background: #12233A;
-        color: white;
-        border-radius: 16px;
-        padding: 12px 10px;
-        text-align: center;
-        font-weight: 400;
-        min-height: 64px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        line-height: 1.1;
-        box-shadow: 0 8px 18px rgba(5,43,68,0.14);
+        text-transform: uppercase; letter-spacing: 0.02em;
+        font-size: 15px; font-weight: 400;
+        background: #0C4A5A; color: white; border-radius: 16px;
+        padding: 12px 10px; text-align: center; min-height: 64px;
+        display: flex; align-items: center; justify-content: center;
+        line-height: 1.1; box-shadow: 0 10px 20px -10px rgba(12,74,90,0.4);
     }
 
     .game-row-label {
         font-family: 'Anton', system-ui, sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 0.02em;
-        background: linear-gradient(135deg, #1A38A8 0%, #0A6C9F 100%);
-        color: white;
-        border-radius: 16px;
-        padding: 12px 10px;
-        text-align: center;
-        font-weight: 400;
-        min-height: 72px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        line-height: 1.1;
-        box-shadow: 0 8px 18px rgba(5,43,68,0.12);
+        text-transform: uppercase; letter-spacing: 0.02em;
+        font-size: 15px; font-weight: 400;
+        background: linear-gradient(135deg, #1B6E7E 0%, #2C8093 100%); color: white;
+        border-radius: 16px; padding: 12px 10px; text-align: center; min-height: 72px;
+        display: flex; align-items: center; justify-content: center;
+        line-height: 1.1; box-shadow: 0 10px 20px -10px rgba(12,74,90,0.35);
     }
 
-    .game-empty-corner {
-        background: transparent;
-        min-height: 64px;
-    }
+    .game-empty-corner { background: transparent; min-height: 64px; }
 
-    /* Game buttons — pool-lane look (only the Game page uses buttons). */
     div[data-testid="stButton"] button {
         font-family: 'Barlow', system-ui, sans-serif;
         border-radius: 16px;
-        border: 2px solid rgba(26,56,168,0.22);
-        background:
-            linear-gradient(90deg,
-                rgba(255,255,255,0.72) 0px,
-                rgba(255,255,255,0.72) 2px,
-                transparent 2px,
-                transparent calc(100% - 2px),
-                rgba(255,255,255,0.72) calc(100% - 2px),
-                rgba(255,255,255,0.72) 100%
-            ),
-            linear-gradient(135deg, #E8F8FB 0%, #BDEFFA 48%, #6EDAF0 100%);
-        color: #12233A;
-        font-weight: 700;
-        min-height: 62px;
-        box-shadow: 0 8px 20px rgba(5,43,68,0.08);
+        border: 1.5px solid rgba(27,110,126,0.28);
+        background: linear-gradient(135deg, #EAF6F5 0%, #C7E7E7 48%, #9AD5D6 100%);
+        color: #0C4A5A; font-weight: 700; min-height: 62px;
+        box-shadow: 0 10px 22px -14px rgba(12,74,90,0.3);
         transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         white-space: pre-line;
     }
 
     div[data-testid="stButton"] button:hover {
-        border-color: #0A6C9F;
-        transform: translateY(-2px);
-        box-shadow: 0 14px 28px rgba(5,43,68,0.16);
+        border-color: #1B6E7E; transform: translateY(-2px);
+        box-shadow: 0 16px 28px -14px rgba(12,74,90,0.4);
     }
 
     div[data-testid="stButton"] button:disabled {
-        background: #E4EEF3;
-        color: #52616B;
-        border-color: #D8ECF4;
-        box-shadow: none;
-        transform: none;
+        background: #E1EEED; color: #7A93A0; border-color: #D2E6E5;
+        box-shadow: none; transform: none;
     }
 
     /* ============================================================
-       SWIM PHOTOS (with graceful placeholder when missing)
+       HOME HEADER — free, poster-style, fills the whole top area.
+       Logo + kicker line, big two-tone title (no box), tagline,
+       waves + site description.
     ============================================================ */
 
-    .swim-figure {
-        position: relative;
-        overflow: hidden;
-        border-radius: 20px;
-        border: 1px solid #E7DFCB;
-        box-shadow: 0 22px 50px -30px rgba(5,43,68,0.55);
-        background: #D7E6EE;
-    }
+    .home-head { margin: 2px 0 14px 0; }
 
-    .swim-figure-inner {
-        position: relative;
-        width: 100%;
-    }
-
-    .swim-figure-inner > img,
-    .swim-figure-inner > .img-ph-label {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .swim-figure.is-placeholder {
-        background:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Cg fill='none' stroke='%231A38A8' stroke-opacity='0.28' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M0 12 q15 -8 30 0 t30 0 t30 0 t30 0'/%3E%3Cpath d='M0 28 q15 -8 30 0 t30 0 t30 0 t30 0'/%3E%3C/g%3E%3C/svg%3E") repeat,
-            linear-gradient(135deg, #E9EFEA 0%, #D7E6EE 100%);
-    }
-
-    .img-ph-label {
+    .home-topline {
         display: flex;
         align-items: center;
-        justify-content: center;
-        text-align: center;
-        color: #3A4A5C;
-        font-family: 'Barlow', system-ui, sans-serif;
-        font-weight: 600;
-        font-size: 14px;
-        line-height: 1.4;
-        padding: 18px;
+        gap: 14px;
+        margin-bottom: 12px;
     }
 
-    .img-ph-label b { color: #1A38A8; }
+    .home-logo .brand-logo {
+        width: 46px;
+        height: 46px;
+        flex: none;
+        filter: drop-shadow(0 8px 16px rgba(12,74,90,0.28));
+    }
+
+    .home-kicker {
+        flex: 1;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #1B6E7E;
+        line-height: 1.2;
+    }
+
+    .home-chevrons {
+        color: #22B8CF;
+        font-weight: 800;
+        letter-spacing: -0.08em;
+        font-size: 22px;
+        flex: none;
+    }
+
+    .home-title {
+        margin: 0;
+        font-family: 'Anton', system-ui, sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        line-height: 0.86;
+        letter-spacing: 0.01em;
+        color: #0C4A5A;
+        font-size: clamp(52px, 8.6vw, 108px);
+    }
+
+    .home-title .l2 { color: #C9A24B; }
+
+    .home-tagline {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 10px 0 12px 0;
+        font-family: 'Anton', system-ui, sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        font-size: clamp(20px, 2.7vw, 34px);
+        line-height: 1;
+        color: #1B6E7E;
+    }
+
+    .home-tagline .chev {
+        color: #22B8CF;
+        font-family: 'Barlow', system-ui, sans-serif;
+        font-weight: 800;
+        font-size: 0.66em;
+        letter-spacing: -0.08em;
+    }
+
+    .home-waves {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin: 2px 0 12px 0;
+    }
+
+    .home-waves span {
+        display: block;
+        height: 9px;
+        flex: 1;
+        max-width: 260px;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='9'%3E%3Cpath d='M0 4.5 q5.25 -4.5 10.5 0 t10.5 0 t10.5 0 t10.5 0' fill='none' stroke='%231B6E7E' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x left center / 42px 9px;
+        opacity: 0.5;
+    }
+
+    .home-waves span:nth-child(2) { max-width: 180px; }
+    .home-waves span:nth-child(3) { max-width: 110px; }
+
+    .home-desc {
+        margin: 0;
+        font-size: 16.5px;
+        font-weight: 500;
+        color: #3E5964;
+        line-height: 1.5;
+        max-width: 960px;
+    }
+
+    .home-desc b { color: #0C4A5A; }
+
+    @media (max-width: 650px) {
+        .home-title { font-size: 46px; }
+        .home-tagline { font-size: 20px; }
+    }
 
     </style>
     """,
@@ -1616,26 +1447,33 @@ def build_pool_lanes():
 
 
 # ------------------------------------------------------------
-# Brand logo (inline SVG): a rounded badge with a gradient pool,
-# white waves, a little swimmer and a gold "record" dot.
+# Brand logo (inline SVG): a stopwatch — for records/times — whose
+# dial holds swimming waves, with a gold hand and crown (achievement).
+# Recalls both swimming and records.
 # ------------------------------------------------------------
 
 LOGO_SVG = (
     '<svg class="brand-logo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">'
     '<defs><linearGradient id="swlg" x1="0" y1="0" x2="1" y2="1">'
-    '<stop offset="0" stop-color="#052B44"/>'
-    '<stop offset="0.5" stop-color="#0A6C9F"/>'
+    '<stop offset="0" stop-color="#0C4A5A"/>'
+    '<stop offset="0.55" stop-color="#1B6E7E"/>'
     '<stop offset="1" stop-color="#22B8CF"/>'
     '</linearGradient></defs>'
     '<rect x="1" y="1" width="46" height="46" rx="13" fill="url(#swlg)"/>'
-    '<g fill="none" stroke="#FFFFFF" stroke-linecap="round">'
-    '<path d="M6 32 q4 -4 8 0 t8 0 t8 0 t8 0" stroke-width="2"/>'
-    '<path d="M6 38 q4 -4 8 0 t8 0 t8 0 t8 0" stroke-width="2" opacity="0.55"/>'
-    '</g>'
-    '<circle cx="18.5" cy="16" r="3.4" fill="#FFFFFF"/>'
-    '<path d="M13.5 24 q6 -5 12 -3 l6.5 -4.5" fill="none" stroke="#FFFFFF" '
-    'stroke-width="3" stroke-linecap="round"/>'
-    '<circle cx="34.5" cy="13.5" r="2.4" fill="#D6A937"/>'
+    # stopwatch crown + gold button
+    '<rect x="21.5" y="5.5" width="5" height="4.6" rx="1.6" fill="#FFFFFF"/>'
+    '<circle cx="24" cy="4.2" r="2.6" fill="#C9A24B"/>'
+    # dial
+    '<circle cx="24" cy="28" r="14" fill="#FFFFFF"/>'
+    # swimming waves inside the dial
+    '<path d="M13 33 q2.75 -3.2 5.5 0 t5.5 0 t5.5 0" fill="none" '
+    'stroke="#0C4A5A" stroke-width="2.2" stroke-linecap="round"/>'
+    '<path d="M14.5 37 q2.4 -2.8 4.8 0 t4.8 0 t4.8 0" fill="none" '
+    'stroke="#1B6E7E" stroke-width="1.8" stroke-linecap="round" opacity="0.55"/>'
+    # timer hand + pin (record accent)
+    '<path d="M24 28 L24 16.5" fill="none" stroke="#C9A24B" '
+    'stroke-width="2.6" stroke-linecap="round"/>'
+    '<circle cx="24" cy="28" r="1.9" fill="#C9A24B"/>'
     '</svg>'
 )
 
@@ -1742,26 +1580,57 @@ def page_header(title, subtitle="", image_file=None, alt="Swimming", ratio="120%
         st.markdown(swim_figure(image_file, alt, ratio=ratio), unsafe_allow_html=True)
 
 
-# Small pool-header on every page except the Home.
-if page != "Home":
-    compact_pool_html = (
-        '<div class="home-pool compact">'
-        '<div class="home-pool-head">'
-        f'{brand_html("Records · Rankings · Athletes")}'
-        '<div class="home-pool-sub">Select a lane to jump to another section.</div>'
+def render_home_head():
+    """Free, poster-style Home header that fills the top: logo + kicker line,
+    a big two-tone title (no box), the dive-in tagline, waves and description."""
+    html = (
+        '<div class="home-head">'
+        '<div class="home-topline">'
+        f'<div class="home-logo">{LOGO_SVG}</div>'
+        '<div class="home-kicker">World records &middot; Rankings &middot; Athletes &middot; Nations</div>'
+        '<div class="home-chevrons">&#8250;&#8250;&#8250;</div>'
         '</div>'
-        f'<div class="home-lanes">{build_pool_lanes()}</div>'
-        f'<div class="current-lane">Current lane: <b>{PAGE_LABELS[page]}</b></div>'
+        '<h1 class="home-title">Swim <span class="l2">Records</span> Explorer</h1>'
+        '<div class="home-tagline">'
+        'Let\'s dive in and swim through records '
+        '<span class="chev">&#8250;&#8250;&#8250;</span>'
+        '</div>'
+        '<div class="home-waves"><span></span><span></span><span></span></div>'
+        '<p class="home-desc">'
+        'A century of official <b>world records</b>, all-time <b>top-200</b> rankings, and '
+        'the swimmers, nations and pools behind every mark — plus a game to test yourself. '
+        'Pick a lane below to dive in.'
+        '</p>'
         '</div>'
     )
-    st.markdown(compact_pool_html, unsafe_allow_html=True)
+    st.markdown(html, unsafe_allow_html=True)
 
 
-with st.sidebar:
-    st.markdown("## 🏊 Filters")
-    st.caption("Use this panel only when a page requires filtering.")
-    st.markdown("---")
-    st.caption("Gold = current record / best performance. Blue = long course. Aqua = short course.")
+def render_compact_pool(active_page):
+    """Little pool used as the header/navigation on inner pages."""
+    html = (
+        '<div class="mini-pool">'
+        '<div class="mini-pool-head">'
+        f'<span class="mini-pool-brand">{LOGO_SVG}<span>Swim Records Explorer</span></span>'
+        f'<span class="mini-pool-current">You are in <b>{PAGE_LABELS[active_page]}</b></span>'
+        '</div>'
+        f'<div class="home-lanes mini">{build_pool_lanes()}</div>'
+        '</div>'
+    )
+    st.markdown(html, unsafe_allow_html=True)
+
+
+# Inner pages get the little pool as their header; the Home builds its own below.
+if page != "Home":
+    render_compact_pool(page)
+
+
+if page != "Home":
+    with st.sidebar:
+        st.markdown("## 🏊 Filters")
+        st.caption("Use this panel only when a page requires filtering.")
+        st.markdown("---")
+        st.caption("Gold = current record / best performance. Blue = long course. Aqua = short course.")
 
 
 # ============================================================
@@ -1770,43 +1639,25 @@ with st.sidebar:
 
 if page == "Home":
 
-    # Editorial hero: big poster title + intro + a swimming photo.
-    hero_html = (
-        '<div class="hero">'
-        '<div class="hero-text">'
-        '<div class="hero-kicker">World records · Rankings · Athletes</div>'
-        '<h1>From records<br>to legends</h1>'
-        '<div class="wave-rule"></div>'
-        '<p>Dive into more than a century of swimming world records, the all-time '
-        'top-200 rankings, and the athletes and nations behind them — then challenge '
-        'yourself in the game.</p>'
-        '</div>'
-        '<div class="hero-media">'
-        f'{swim_figure("hero.jpg", "Olympic swimming start", ratio="66%")}'
-        '</div>'
-        '</div>'
+    # The sidebar has no purpose on the Home — hide it completely here.
+    st.markdown(
+        "<style>"
+        "section[data-testid='stSidebar']{display:none !important;}"
+        "div[data-testid='stSidebarCollapsedControl']{display:none !important;}"
+        "[data-testid='collapsedControl']{display:none !important;}"
+        "button[data-testid='stSidebarCollapseButton']{display:none !important;}"
+        "</style>",
+        unsafe_allow_html=True
     )
 
-    st.markdown(hero_html, unsafe_allow_html=True)
+    # Big, impactful header: logo + large title + site description.
+    render_home_head()
 
-    # The Home uses the same builder as the other pages: the pool is
-    # identical, here just full page (without the "compact" class).
-    home_pool_html = (
-        '<div class="home-pool">'
-        '<div class="home-pool-head">'
-        f'{brand_html("World records · Rankings · Athletes · Nations")}'
-        '<div class="home-pool-sub">'
-        'Eight lanes, one pool. Hover a lane to send the swimmer up, '
-        'then click to dive into that section.'
-        '</div>'
-        f'{home_stats_html()}'
-        '</div>'
-        f'<div class="home-lanes">{build_pool_lanes()}</div>'
-        f'{POOL_FOOT}'
-        '</div>'
+    # The pool is the only navigation: eight lanes filling the page.
+    st.markdown(
+        f'<div class="fullbleed"><div class="home-lanes">{build_pool_lanes()}</div></div>',
+        unsafe_allow_html=True
     )
-
-    st.markdown(home_pool_html, unsafe_allow_html=True)
 
 
 # ============================================================
