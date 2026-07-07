@@ -734,6 +734,154 @@ st.markdown(
         .home-tagline { font-size: 20px; }
     }
 
+    /* ============================================================
+       CINEMATIC HOME HERO — full-bleed, dark, poster style
+    ============================================================ */
+
+    .home-cine {
+        position: relative;
+        overflow: hidden;
+        min-height: 56vh;
+        display: flex;
+        align-items: center;
+        background: #06222B;
+        margin-bottom: 12px;
+    }
+
+    .cine-bg { position: absolute; inset: 0; z-index: 0; }
+    .cine-bg img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        filter: brightness(0.5) saturate(0.85) contrast(1.05);
+    }
+
+    .cine-overlay {
+        position: absolute; inset: 0; z-index: 1;
+        background:
+            linear-gradient(90deg, rgba(4,22,28,0.97) 0%, rgba(4,22,28,0.86) 28%, rgba(4,22,28,0.45) 55%, rgba(4,22,28,0.35) 100%),
+            linear-gradient(180deg, rgba(4,22,28,0.35) 0%, rgba(4,22,28,0.15) 45%, rgba(4,22,28,0.55) 100%);
+    }
+
+    .cine-inner {
+        position: relative;
+        z-index: 4;
+        width: 100%;
+        max-width: 1560px;
+        margin: 0 auto;
+        padding: 5vh clamp(26px, 6vw, 96px);
+        display: grid;
+        grid-template-columns: 1.12fr 0.88fr;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .cine-kicker {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.17em;
+        text-transform: uppercase;
+        color: #6FD3DE;
+        margin-bottom: 16px;
+    }
+
+    .cine-kicker .brand-logo { width: 42px; height: 42px; flex: none; }
+
+    .cine-title {
+        margin: 0;
+        font-family: 'Anton', system-ui, sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        color: #E7B94A;
+        font-size: clamp(66px, 9.4vw, 134px);
+        line-height: 0.82;
+        letter-spacing: 0.01em;
+        transform: skewX(-8deg);
+        transform-origin: left;
+        text-shadow: 0 10px 34px rgba(0,0,0,0.55);
+    }
+
+    .cine-title .gold { color: #E7B94A; }
+
+    .cine-tag {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 18px 0 14px 0;
+        font-family: 'Anton', system-ui, sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        font-size: clamp(20px, 2.7vw, 34px);
+        line-height: 1;
+        color: #6FD3DE;
+        transform: skewX(-8deg);
+        transform-origin: left;
+    }
+
+    .cine-tag .chev {
+        color: #FFFFFF;
+        font-family: 'Barlow', system-ui, sans-serif;
+        font-weight: 800;
+        font-size: 0.6em;
+        letter-spacing: -0.06em;
+    }
+
+    .cine-desc {
+        margin: 0;
+        max-width: 560px;
+        color: #C7DBDE;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+
+    .cine-desc b { color: #FFFFFF; }
+
+    .cine-cards {
+        position: relative;
+        height: 44vh;
+        min-height: 300px;
+    }
+
+    .cine-card {
+        position: absolute;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 3px solid rgba(255,255,255,0.92);
+        box-shadow: 0 34px 60px -22px rgba(0,0,0,0.65);
+    }
+
+    .cine-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .cine-card.c1 { width: 46%; height: 76%; top: 6%; left: 6%; transform: rotate(-6deg); z-index: 2; }
+    .cine-card.c2 { width: 46%; height: 86%; top: 10%; left: 46%; transform: rotate(5deg); z-index: 3; }
+
+    .cine-chev {
+        position: absolute;
+        z-index: 5;
+        color: #FFFFFF;
+        font-family: 'Barlow', system-ui, sans-serif;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        font-size: 26px;
+        opacity: 0.95;
+        text-shadow: 0 4px 14px rgba(0,0,0,0.5);
+    }
+
+    .cine-chev.tr { top: 56px; right: 40px; }
+    .cine-chev.br { bottom: 20px; left: 50%; transform: translateX(-50%); }
+
+    @media (max-width: 900px) {
+        .cine-inner { grid-template-columns: 1fr; padding: 4vh 24px; }
+        .cine-cards { display: none; }
+        .cine-title { font-size: 62px; }
+        .home-cine { min-height: 48vh; }
+    }
+
     </style>
     """,
     unsafe_allow_html=True
@@ -1619,37 +1767,43 @@ def page_header(title, subtitle="", image_file=None, alt="Swimming", ratio="120%
 
 
 def render_home_head():
-    """Poster-style Home header that fills the whole top: logo + kicker line,
-    then a two-column body — big two-tone title, tagline, waves and description
-    on the left, and a swimming photo on the right to fill the space."""
-    side = ASSETS_DIR / "home_side.jpg"
-    if side.exists():
-        media = f'<div class="home-media"><img src="{_img_data_uri(side)}" alt="Underwater swimmers"/></div>'
-    else:
-        media = '<div class="home-media"><div class="img-ph-label">Add <b>assets/home_side.jpg</b></div></div>'
+    """Full-bleed cinematic Home hero (dark poster style): dark swim photo,
+    big skewed white title, cyan tagline, tilted photo cards and chevrons."""
+
+    def uri(name):
+        p = ASSETS_DIR / name
+        return _img_data_uri(p) if p.exists() else ""
+
+    bg = uri("home_side.jpg")
+    c1 = uri("athletes.jpg")
+    c2 = uri("nations.jpg")
+
+    bg_html = f'<div class="cine-bg"><img src="{bg}" alt=""/></div>' if bg else ''
+    card1 = f'<div class="cine-card c1"><img src="{c1}" alt=""/></div>' if c1 else ''
+    card2 = f'<div class="cine-card c2"><img src="{c2}" alt=""/></div>' if c2 else ''
+    cards = f'<div class="cine-cards">{card1}{card2}</div>' if (c1 or c2) else '<div></div>'
 
     html = (
-        '<div class="home-head">'
-        '<div class="home-topline">'
-        f'<div class="home-logo">{LOGO_SVG}</div>'
-        '<div class="home-kicker">World records &middot; Rankings &middot; Athletes &middot; Nations</div>'
-        '<div class="home-chevrons">&#8250;&#8250;&#8250;</div>'
-        '</div>'
-        '<div class="home-main">'
-        '<div class="home-text">'
-        '<h1 class="home-title">Swim <span class="l2">Records</span> Explorer</h1>'
-        '<div class="home-tagline">'
+        '<div class="fullbleed home-cine">'
+        f'{bg_html}'
+        '<div class="cine-overlay"></div>'
+        '<div class="cine-chev tr">&#187;&#187;&#187;&#187;&#187;</div>'
+        '<div class="cine-chev br">&#187;&#187;&#187;&#187;&#187;</div>'
+        '<div class="cine-inner">'
+        '<div class="cine-text">'
+        f'<div class="cine-kicker">{LOGO_SVG}<span>World records &middot; Rankings &middot; Athletes &middot; Nations</span></div>'
+        '<h1 class="cine-title">Swim <span class="gold">Records</span><br>Explorer</h1>'
+        '<div class="cine-tag">'
         'Let\'s dive in and swim through records '
-        '<span class="chev">&#8250;&#8250;&#8250;</span>'
+        '<span class="chev">&#187;&#187;&#187;</span>'
         '</div>'
-        '<div class="home-waves"><span></span><span></span><span></span></div>'
-        '<p class="home-desc">'
+        '<p class="cine-desc">'
         'A century of official <b>world records</b>, all-time <b>top-200</b> rankings, and '
         'the swimmers, nations and pools behind every mark — plus a game to test yourself. '
         'Pick a lane below to dive in.'
         '</p>'
         '</div>'
-        f'{media}'
+        f'{cards}'
         '</div>'
         '</div>'
     )
