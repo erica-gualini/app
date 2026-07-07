@@ -633,10 +633,47 @@ st.markdown(
         line-height: 0.86;
         letter-spacing: 0.01em;
         color: #0C4A5A;
-        font-size: clamp(52px, 8.6vw, 108px);
+        font-size: clamp(46px, 6.4vw, 88px);
     }
 
     .home-title .l2 { color: #C9A24B; }
+
+    /* two-column body: text on the left, photo on the right (fills the space) */
+    .home-main {
+        display: grid;
+        grid-template-columns: 1.3fr 0.82fr;
+        gap: 34px;
+        align-items: stretch;
+        margin-top: 2px;
+    }
+
+    .home-media {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        min-height: 240px;
+        border: 1px solid #D2E6E5;
+        box-shadow: 0 22px 46px -28px rgba(12,74,90,0.55);
+        background: #CFE6E6;
+    }
+
+    .home-media img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .home-media .img-ph-label {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
 
     .home-tagline {
         display: flex;
@@ -686,12 +723,13 @@ st.markdown(
         font-weight: 500;
         color: #3E5964;
         line-height: 1.5;
-        max-width: 960px;
     }
 
     .home-desc b { color: #0C4A5A; }
 
-    @media (max-width: 650px) {
+    @media (max-width: 850px) {
+        .home-main { grid-template-columns: 1fr; gap: 18px; }
+        .home-media { min-height: 200px; }
         .home-title { font-size: 46px; }
         .home-tagline { font-size: 20px; }
     }
@@ -1581,8 +1619,15 @@ def page_header(title, subtitle="", image_file=None, alt="Swimming", ratio="120%
 
 
 def render_home_head():
-    """Free, poster-style Home header that fills the top: logo + kicker line,
-    a big two-tone title (no box), the dive-in tagline, waves and description."""
+    """Poster-style Home header that fills the whole top: logo + kicker line,
+    then a two-column body — big two-tone title, tagline, waves and description
+    on the left, and a swimming photo on the right to fill the space."""
+    side = ASSETS_DIR / "home_side.jpg"
+    if side.exists():
+        media = f'<div class="home-media"><img src="{_img_data_uri(side)}" alt="Underwater swimmers"/></div>'
+    else:
+        media = '<div class="home-media"><div class="img-ph-label">Add <b>assets/home_side.jpg</b></div></div>'
+
     html = (
         '<div class="home-head">'
         '<div class="home-topline">'
@@ -1590,6 +1635,8 @@ def render_home_head():
         '<div class="home-kicker">World records &middot; Rankings &middot; Athletes &middot; Nations</div>'
         '<div class="home-chevrons">&#8250;&#8250;&#8250;</div>'
         '</div>'
+        '<div class="home-main">'
+        '<div class="home-text">'
         '<h1 class="home-title">Swim <span class="l2">Records</span> Explorer</h1>'
         '<div class="home-tagline">'
         'Let\'s dive in and swim through records '
@@ -1601,6 +1648,9 @@ def render_home_head():
         'the swimmers, nations and pools behind every mark — plus a game to test yourself. '
         'Pick a lane below to dive in.'
         '</p>'
+        '</div>'
+        f'{media}'
+        '</div>'
         '</div>'
     )
     st.markdown(html, unsafe_allow_html=True)
