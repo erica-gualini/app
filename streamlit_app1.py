@@ -1570,8 +1570,8 @@ PAGES = [
     "Athletes Hall of Fame",
     "Nations & Places",
     "Compare Events",
-    "Data & Methods",
-    "Game"
+    "Game",
+    "Data & Methods"
 ]
 
 PAGE_LABELS = {
@@ -1581,8 +1581,8 @@ PAGE_LABELS = {
     "Athletes Hall of Fame": "Athletes",
     "Nations & Places": "Nations",
     "Compare Events": "Compare",
-    "Data & Methods": "Methods",
-    "Game": "Game"
+    "Game": "Game",
+    "Data & Methods": "Methods"
 }
 
 PAGE_TAGS = {
@@ -1592,8 +1592,8 @@ PAGE_TAGS = {
     "Athletes Hall of Fame": "Legends",
     "Nations & Places": "Maps & flags",
     "Compare Events": "Race match",
-    "Data & Methods": "Behind data",
-    "Game": "Play & guess"
+    "Game": "Play & guess",
+    "Data & Methods": "Behind data"
 }
 
 # Read selected page from the URL.
@@ -2645,119 +2645,10 @@ elif page == "Compare Events":
     )
 
 
-# ============================================================
-# PAGE 7 - DATA & METHODS
-# ============================================================
-
-elif page == "Data & Methods":
-
-    section(
-        "Data & Methods",
-        "This page explains how the app uses the two datasets and what limitations should be considered."
-    )
-
-    st.markdown(
-        """
-        <div class="info-box">
-        <b>Dataset 1 — World records history</b><br>
-        Used to visualize the historical progression of world records across gender, course, distance and stroke.
-        It contains athlete name, nationality, date, meet, location, time in seconds and whether the record is current.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.dataframe(
-        pd.DataFrame(
-            {
-                "Property": [
-                    "Rows",
-                    "Events",
-                    "Athletes",
-                    "Nationalities",
-                    "Courses",
-                    "Years"
-                ],
-                "Value": [
-                    len(wr),
-                    wr["event_label"].nunique(),
-                    wr["name"].nunique(),
-                    wr["nationality"].nunique(),
-                    ", ".join(safe_unique(wr["course"])),
-                    f"{int(wr['year'].min())}–{int(wr['year'].max())}" if wr["year"].notna().any() else "-"
-                ]
-            }
-        ),
-        use_container_width=True,
-        hide_index=True
-    )
-
-    st.markdown(
-        """
-        <div class="info-box">
-        <b>Dataset 2 — All-time top 200 performances</b><br>
-        Used to explore depth of elite performance beyond a single record.
-        It contains ranking order, athlete, team, event description, time, date and competition location.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.dataframe(
-        pd.DataFrame(
-            {
-                "Property": [
-                    "Rows",
-                    "Events",
-                    "Athletes",
-                    "Teams",
-                    "Cities",
-                    "Years"
-                ],
-                "Value": [
-                    len(top),
-                    top["event_label"].nunique(),
-                    top["athlete"].nunique(),
-                    top["team_name"].nunique(),
-                    top["city"].nunique(),
-                    f"{int(top['year'].min())}–{int(top['year'].max())}" if top["year"].notna().any() else "-"
-                ]
-            }
-        ),
-        use_container_width=True,
-        hide_index=True
-    )
-
-    section("Interpretation rules")
-
-    st.markdown(
-        """
-        <div class="warning-box">
-        <b>1. Elite data only.</b><br>
-        The app does not represent all swimming races ever performed. It focuses on world records and top-200 all-time performances.
-        <br><br>
-        <b>2. Same athlete can appear multiple times.</b><br>
-        Entries represent performances or record events, not unique athletes.
-        <br><br>
-        <b>3. Long course and short course are not directly equivalent.</b><br>
-        The app allows comparison, but interpretation should consider that LC and SC are different competition contexts.
-        <br><br>
-        <b>4. Lower time is better.</b><br>
-        Timeline charts reverse the y-axis to make performance improvement visually intuitive.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    with st.expander("World records raw preview"):
-        st.dataframe(wr.head(100), use_container_width=True)
-
-    with st.expander("Top performances raw preview"):
-        st.dataframe(top.head(100), use_container_width=True)
 
 
 # ============================================================
-# PAGE 8 - GAME (SWIM RECORD TOE)
+# PAGE 7 - GAME (SWIM RECORD TOE)
 # ============================================================
 
 elif page == "Game":
@@ -3100,3 +2991,114 @@ elif page == "Game":
             swimmers, events, places and historical record moments.
             """
         )
+
+
+# ============================================================
+# PAGE 8 - DATA & METHODS
+# ============================================================
+
+elif page == "Data & Methods":
+
+    section(
+        "Data & Methods",
+        "This page explains how the app uses the two datasets and what limitations should be considered."
+    )
+
+    st.markdown(
+        """
+        <div class="info-box">
+        <b>Dataset 1 — World records history</b><br>
+        Used to visualize the historical progression of world records across gender, course, distance and stroke.
+        It contains athlete name, nationality, date, meet, location, time in seconds and whether the record is current.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.dataframe(
+        pd.DataFrame(
+            {
+                "Property": [
+                    "Rows",
+                    "Events",
+                    "Athletes",
+                    "Nationalities",
+                    "Courses",
+                    "Years"
+                ],
+                "Value": [
+                    len(wr),
+                    wr["event_label"].nunique(),
+                    wr["name"].nunique(),
+                    wr["nationality"].nunique(),
+                    ", ".join(safe_unique(wr["course"])),
+                    f"{int(wr['year'].min())}–{int(wr['year'].max())}" if wr["year"].notna().any() else "-"
+                ]
+            }
+        ),
+        use_container_width=True,
+        hide_index=True
+    )
+
+    st.markdown(
+        """
+        <div class="info-box">
+        <b>Dataset 2 — All-time top 200 performances</b><br>
+        Used to explore depth of elite performance beyond a single record.
+        It contains ranking order, athlete, team, event description, time, date and competition location.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.dataframe(
+        pd.DataFrame(
+            {
+                "Property": [
+                    "Rows",
+                    "Events",
+                    "Athletes",
+                    "Teams",
+                    "Cities",
+                    "Years"
+                ],
+                "Value": [
+                    len(top),
+                    top["event_label"].nunique(),
+                    top["athlete"].nunique(),
+                    top["team_name"].nunique(),
+                    top["city"].nunique(),
+                    f"{int(top['year'].min())}–{int(top['year'].max())}" if top["year"].notna().any() else "-"
+                ]
+            }
+        ),
+        use_container_width=True,
+        hide_index=True
+    )
+
+    section("Interpretation rules")
+
+    st.markdown(
+        """
+        <div class="warning-box">
+        <b>1. Elite data only.</b><br>
+        The app does not represent all swimming races ever performed. It focuses on world records and top-200 all-time performances.
+        <br><br>
+        <b>2. Same athlete can appear multiple times.</b><br>
+        Entries represent performances or record events, not unique athletes.
+        <br><br>
+        <b>3. Long course and short course are not directly equivalent.</b><br>
+        The app allows comparison, but interpretation should consider that LC and SC are different competition contexts.
+        <br><br>
+        <b>4. Lower time is better.</b><br>
+        Timeline charts reverse the y-axis to make performance improvement visually intuitive.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    with st.expander("World records raw preview"):
+        st.dataframe(wr.head(100), use_container_width=True)
+
+    with st.expander("Top performances raw preview"):
+        st.dataframe(top.head(100), use_container_width=True)
