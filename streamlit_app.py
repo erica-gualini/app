@@ -22,7 +22,7 @@ st.set_page_config(
     page_title="Swim Records Explorer",
     page_icon="🏊",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
 px.defaults.template = "plotly_white"
@@ -1056,8 +1056,8 @@ def plotly_clean_layout(fig, height=480, title=None):
         title=title,
         title_font=dict(size=22, color=NAVY),
         font=dict(family="Arial", size=13, color=NAVY),
-        paper_bgcolor="white",
-        plot_bgcolor="white",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
         margin=dict(l=30, r=30, t=70, b=40),
         legend=dict(
             orientation="h",
@@ -1067,8 +1067,8 @@ def plotly_clean_layout(fig, height=480, title=None):
             x=1
         )
     )
-    fig.update_xaxes(showgrid=True, gridcolor="#E7EEF2", zeroline=False)
-    fig.update_yaxes(showgrid=True, gridcolor="#E7EEF2", zeroline=False)
+    fig.update_xaxes(showgrid=True, gridcolor="rgba(5,43,68,0.10)", zeroline=False)
+    fig.update_yaxes(showgrid=True, gridcolor="rgba(5,43,68,0.10)", zeroline=False)
     return fig
 
 
@@ -1835,9 +1835,6 @@ if page != "Home":
 if page != "Home":
     with st.sidebar:
         st.markdown("## 🏊 Filters")
-        st.caption("Use this panel only when a page requires filtering.")
-        st.markdown("---")
-        st.caption("Gold = current record / best performance. Blue = long course. Aqua = short course.")
 
 
 # ============================================================
@@ -2351,14 +2348,7 @@ elif page == "Athletes Hall of Fame":
 
 elif page == "Nations & Places":
 
-    page_header(
-        "Nations & Places",
-        "Discover which nations and locations appear most frequently in swimming record history and all-time rankings.",
-        image_file="nations.jpg",
-        alt="Underwater backstroke swimmer",
-        ratio="126%"
-    )
-
+    # Filters (rendered in the sidebar) applied first so the map/charts react live.
     filtered_wr = apply_common_filters(
         wr,
         gender=True,
@@ -2372,93 +2362,153 @@ elif page == "Nations & Places":
         st.warning("No world record data available for the selected filters.")
         st.stop()
 
-    c1, c2, c3 = st.columns(3)
+    # --- Nationality cleaning + ISO-3 mapping (needed for the world map) ---
+    # Fixes the "Â\xa0" mojibake and maps names (incl. historical states) to ISO-3.
+    NAT_TO_ISO3 = {
+        "Argentina": "ARG", "Australia": "AUS", "Australasia": "AUS", "Austria": "AUT",
+        "Belarus": "BLR", "Belgium": "BEL", "Brazil": "BRA", "Canada": "CAN",
+        "Cayman Islands": "CYM", "China": "CHN", "Costa Rica": "CRI", "Croatia": "HRV",
+        "Denmark": "DNK", "East Germany": "DEU", "West Germany": "DEU", "Germany": "DEU",
+        "Finland": "FIN", "France": "FRA", "Great Britain": "GBR", "Hong Kong": "HKG",
+        "Hungary": "HUN", "Ireland": "IRL", "Italy": "ITA", "Jamaica": "JAM", "Japan": "JPN",
+        "Lithuania": "LTU", "Mexico": "MEX", "Netherlands": "NLD", "New Zealand": "NZL",
+        "Poland": "POL", "Romania": "ROU", "Russia": "RUS", "Soviet Union": "RUS",
+        "Unified Team at the Olympics": "RUS", "Serbia": "SRB", "Serbia and Montenegro": "SRB",
+        "Slovakia": "SVK", "South Africa": "ZAF", "Spain": "ESP", "Sweden": "SWE",
+        "Switzerland": "CHE", "Trinidad and Tobago": "TTO", "Turkey": "TUR", "USA": "USA",
+        "United States": "USA", "United States(Cali Condors)": "USA", "Ukraine": "UKR",
+        "Zimbabwe": "ZWE",
+    }
+    ISO3_TO_NAME = {
+        "USA": "United States", "AUS": "Australia", "DEU": "Germany", "RUS": "Russia",
+        "GBR": "Great Britain", "NLD": "Netherlands", "JPN": "Japan", "CHN": "China",
+        "SWE": "Sweden", "HUN": "Hungary", "CAN": "Canada", "FRA": "France",
+        "ITA": "Italy", "ESP": "Spain", "BRA": "Brazil", "ZAF": "South Africa",
+        "NZL": "New Zealand", "POL": "Poland", "ROU": "Romania", "UKR": "Ukraine",
+        "SRB": "Serbia", "AUT": "Austria", "BEL": "Belgium", "DNK": "Denmark",
+        "FIN": "Finland", "CHE": "Switzerland", "IRL": "Ireland", "HRV": "Croatia",
+        "SVK": "Slovakia", "LTU": "Lithuania", "BLR": "Belarus", "ARG": "Argentina",
+        "MEX": "Mexico", "CRI": "Costa Rica", "JAM": "Jamaica", "TTO": "Trinidad and Tobago",
+        "TUR": "Turkey", "HKG": "Hong Kong", "CYM": "Cayman Islands", "ZWE": "Zimbabwe",
+    }
 
-    with c1:
-        st.metric("Nations in WR data", filtered_wr["nationality"].nunique())
+    def clean_nationality(s):
+        if not isinstance(s, str):
+            return ""
+        return s.replace("\xa0", " ").replace("Â", "").strip()
 
-    with c2:
-        st.metric("Record locations", filtered_wr["location"].nunique())
+    filtered_wr = filtered_wr.copy()
+    filtered_wr["nat_clean"] = filtered_wr["nationality"].apply(clean_nationality)
+    filtered_wr["iso3"] = filtered_wr["nat_clean"].map(NAT_TO_ISO3)
 
-    with c3:
-        st.metric("Meets", filtered_wr["meet"].nunique())
+    # On-page hint so users notice the sidebar filters.
+    st.info(
+        "Use the **Filters** in the sidebar on the left (gender, course, stroke, distance) "
+        "— the map and charts below update live."
+    )
+
+    # --- Build the world map data (WR entries per nation) ---
+    map_data = (
+        filtered_wr.dropna(subset=["iso3"])
+        .groupby("iso3")
+        .size()
+        .reset_index(name="world_record_entries")
+    )
+    map_data["country"] = map_data["iso3"].map(ISO3_TO_NAME).fillna(map_data["iso3"])
+
+    fig_map = px.choropleth(
+        map_data,
+        locations="iso3",                 # mark = country area
+        color="world_record_entries",     # channel = colour (sequential)
+        hover_name="country",
+        color_continuous_scale=[[0.0, "#7FD4E0"], [0.5, BLUE], [1.0, NAVY]],
+        labels={"world_record_entries": "WR entries"},
+    )
+    fig_map.update_traces(marker_line_color="white", marker_line_width=0.6)
+    fig_map.update_geos(
+        showframe=False,
+        showcoastlines=False,
+        showland=True, landcolor="#EDEFF2",     # no-data land = light grey
+        showocean=True, oceancolor="#CFE3EE",   # ocean = soft blue
+        showcountries=True, countrycolor="white",
+        projection_type="natural earth",
+    )
+    fig_map.update_geos(bgcolor="rgba(0,0,0,0)")
+    fig_map.update_layout(
+        height=430,
+        margin=dict(l=0, r=0, t=6, b=0),
+        font=dict(family="Arial", size=13, color=NAVY),
+        paper_bgcolor="rgba(0,0,0,0)",
+        coloraxis_colorbar=dict(title="WR entries"),
+    )
+
+    # --- Editorial header: title + description + MAP on the left, photo on the right ---
+    head_txt, head_img = st.columns([1.45, 1], gap="large")
+
+    with head_txt:
+        st.markdown("<div class='section-title'>Nations &amp; Places</div>", unsafe_allow_html=True)
+        st.markdown("<div class='wave-rule'></div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='section-subtitle'>Which countries produced the most world records? "
+            "The map shows the all-time <b>volume of records by nation</b> — darker means more "
+            "records. Historical states (East/West Germany, USSR) are folded into their modern "
+            "country.</div>",
+            unsafe_allow_html=True,
+        )
+        st.plotly_chart(fig_map, use_container_width=True)
+
+    with head_img:
+        st.markdown(
+            swim_figure("nations.jpg", alt="Underwater backstroke swimmer", ratio="126%"),
+            unsafe_allow_html=True,
+        )
+
+    # --- Two non-redundant breakdowns: who holds records now, and where they were set ---
+    st.markdown("### Reading the numbers behind the map")
+    st.caption(
+        "The map answers *which nations* dominate overall. These two charts add what a map "
+        "reads less precisely: the exact ranking of who holds records **today**, and the "
+        "**pools and cities** where records are actually set."
+    )
 
     col_a, col_b = st.columns(2)
 
     with col_a:
-        nation_wr = (
-            filtered_wr.groupby("nationality")
-            .size()
-            .reset_index(name="world_record_entries")
-            .sort_values("world_record_entries", ascending=False)
-            .head(20)
-        )
-
-        fig = px.bar(
-            nation_wr,
-            x="world_record_entries",
-            y="nationality",
-            orientation="h",
-            color_discrete_sequence=[BLUE],
-            title="Most represented nationalities in world record history"
-        )
-        fig.update_layout(yaxis=dict(autorange="reversed"))
-        fig = plotly_clean_layout(fig, height=560)
-        st.plotly_chart(fig, use_container_width=True)
-
-    with col_b:
         current_nations = (
-            wr[wr["is_current_bool"] == True]
-            .groupby("nationality")
+            filtered_wr[filtered_wr["is_current_bool"] == True]
+            .dropna(subset=["iso3"])
+            .assign(country=lambda d: d["iso3"].map(ISO3_TO_NAME).fillna(d["nat_clean"]))
+            .groupby("country")
             .size()
             .reset_index(name="current_records")
             .sort_values("current_records", ascending=False)
-            .head(20)
+            .head(15)
         )
 
         fig = px.bar(
             current_nations,
             x="current_records",
-            y="nationality",
+            y="country",
             orientation="h",
             color_discrete_sequence=[GOLD],
-            title="Current world records by nationality"
         )
-        fig.update_layout(yaxis=dict(autorange="reversed"))
-        fig = plotly_clean_layout(fig, height=560)
+        fig.update_layout(
+            yaxis=dict(autorange="reversed"),
+            showlegend=False,
+            xaxis_title="Current world records held",
+            yaxis_title="",
+        )
+        fig = plotly_clean_layout(fig, height=520, title="Who holds world records today")
         st.plotly_chart(fig, use_container_width=True)
 
-    col_c, col_d = st.columns(2)
-
-    with col_c:
-        top_nations = (
-            top.groupby("team_name")
-            .size()
-            .reset_index(name="top_200_entries")
-            .sort_values("top_200_entries", ascending=False)
-            .head(20)
-        )
-
-        fig = px.bar(
-            top_nations,
-            x="top_200_entries",
-            y="team_name",
-            orientation="h",
-            color_discrete_sequence=[AQUA],
-            title="Most represented teams in top-200 rankings"
-        )
-        fig.update_layout(yaxis=dict(autorange="reversed"))
-        fig = plotly_clean_layout(fig, height=560)
-        st.plotly_chart(fig, use_container_width=True)
-
-    with col_d:
+    with col_b:
         locations = (
-            filtered_wr[filtered_wr["location"] != ""]
+            filtered_wr[filtered_wr["location"].astype(str).str.strip() != ""]
             .groupby("location")
             .size()
             .reset_index(name="records")
             .sort_values("records", ascending=False)
-            .head(20)
+            .head(15)
         )
 
         fig = px.bar(
@@ -2466,17 +2516,21 @@ elif page == "Nations & Places":
             x="records",
             y="location",
             orientation="h",
-            color_discrete_sequence=[NAVY],
-            title="Locations where world records were set"
+            color_discrete_sequence=[BLUE],
         )
-        fig.update_layout(yaxis=dict(autorange="reversed"))
-        fig = plotly_clean_layout(fig, height=560)
+        fig.update_layout(
+            yaxis=dict(autorange="reversed"),
+            showlegend=False,
+            xaxis_title="World records set at this location",
+            yaxis_title="",
+        )
+        fig = plotly_clean_layout(fig, height=520, title="Where records are set")
         st.plotly_chart(fig, use_container_width=True)
 
     st.markdown(
         """
         <div class="small-caption">
-        Interpretation note: these charts show representation inside the available datasets.
+        Interpretation note: these views show representation inside the available datasets.
         They should not be read as a complete medal table or as a full ranking of national swimming systems.
         </div>
         """,
