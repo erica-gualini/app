@@ -122,7 +122,7 @@ st.markdown(
     }
 
     .fact-box {
-        margin: -14px 0 28px 0;
+        margin: -38px 0 28px 0;
         max-width: 680px;
         background: linear-gradient(135deg, #FFFFFF 0%, #EAF6F5 100%);
         border: 1px solid #D8E9E8;
@@ -1991,10 +1991,12 @@ elif page == "World Record Timeline":
 
     with col_txt:
         st.markdown(
-            "<div class='section-title'>World Record Timeline</div>",
+            """
+            <div class="section-title">World Record Timeline</div>
+            <div class="wave-rule"></div>
+            """,
             unsafe_allow_html=True
         )
-        st.markdown("<div class='wave-rule'></div>", unsafe_allow_html=True)
 
         st.markdown(
             """
