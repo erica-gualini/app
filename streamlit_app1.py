@@ -96,9 +96,9 @@ st.markdown(
         opacity: 0.5;
     }
 
-    /* ============================================================
-       SECTION HEADERS — bold condensed poster style (per the deck)
-    ============================================================ */
+    ============================================================
+    SECTION HEADERS — bold condensed poster style (per the deck)
+    ============================================================
 
     .section-title {
         font-family: 'Anton', system-ui, sans-serif;
@@ -121,9 +121,98 @@ st.markdown(
         line-height: 1.55;
     }
 
-    /* ============================================================
+    .fact-box {
+        margin: -14px 0 28px 0;
+        max-width: 680px;
+        background: linear-gradient(135deg, #FFFFFF 0%, #EAF6F5 100%);
+        border: 1px solid #D8E9E8;
+        border-left: 6px solid #C9A24B;
+        border-radius: 18px;
+        padding: 18px 22px;
+        box-shadow: 0 18px 38px -28px rgba(12,74,90,0.55);
+    }
+
+    .timeline-record-card {
+        background: linear-gradient(135deg, #FFFFFF 0%, #EAF6F5 100%);
+        border: 1px solid #D8E9E8;
+        border-left: 6px solid #C9A24B;
+        border-radius: 18px;
+        padding: 16px 20px;
+        margin-top: 2px;
+        box-shadow: 0 16px 34px -26px rgba(12,74,90,0.55);
+    }
+
+    .timeline-control-row {
+        margin-top: 18px;
+        margin-bottom: 28px;
+    }
+
+    .timeline-metrics-row {
+        margin-top: 10px;
+        margin-bottom: 26px;
+    }
+
+    .timeline-chart-spacer {
+        height: 10px;
+    }
+
+
+    .timeline-record-kicker {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #C9A24B;
+        margin-bottom: 6px;
+    } 
+
+    .timeline-record-main {
+        font-family: 'Anton', system-ui, sans-serif;
+        font-size: 30px;
+        line-height: 1.05;
+        color: #0C4A5A;
+        text-transform: uppercase;
+    }
+
+    .timeline-record-sub {
+        margin-top: 7px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #3E5964;
+        line-height: 1.4;
+    }
+
+    .timeline-selector-note {
+        font-size: 13px;
+        font-weight: 500;
+        color: #5A7480;
+        margin-top: -6px;
+        margin-bottom: 8px;
+    }
+
+    .fact-kicker {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #C9A24B;
+        margin-bottom: 7px;
+    }
+
+    .fact-text {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        color: #24343B;
+    }
+
+    .fact-text b {
+        color: #0C4A5A;
+    }
+
+    ============================================================
        HOME TOP BAND — title + short description + doodles
-    ============================================================ */
+    ============================================================    
 
     .swim-band {
         position: relative;
@@ -1051,24 +1140,49 @@ def first_existing_column(df, candidates):
 
 
 def plotly_clean_layout(fig, height=480, title=None):
+    if title is not None:
+        fig.update_layout(title=title)
+
     fig.update_layout(
         height=height,
-        title=title,
-        title_font=dict(size=22, color=NAVY),
         font=dict(family="Arial", size=13, color=NAVY),
+        title_font=dict(size=22, color=NAVY),
         paper_bgcolor="white",
-        plot_bgcolor="white",
-        margin=dict(l=30, r=30, t=70, b=40),
+        plot_bgcolor="#F6FBFC",
+        margin=dict(l=42, r=36, t=96, b=54),
         legend=dict(
             orientation="h",
             yanchor="bottom",
             y=1.02,
             xanchor="right",
-            x=1
+            x=1,
+            font=dict(color=NAVY, size=12)
+        ),
+        hoverlabel=dict(
+            bgcolor="white",
+            bordercolor="#D8E9E8",
+            font=dict(color=NAVY, size=13)
         )
     )
-    fig.update_xaxes(showgrid=True, gridcolor="#E7EEF2", zeroline=False)
-    fig.update_yaxes(showgrid=True, gridcolor="#E7EEF2", zeroline=False)
+
+    fig.update_xaxes(
+        showgrid=True,
+        gridcolor="#DDEAF0",
+        zeroline=False,
+        title_font=dict(color=NAVY, size=14),
+        tickfont=dict(color=NAVY, size=12),
+        linecolor="#D8E9E8"
+    )
+
+    fig.update_yaxes(
+        showgrid=True,
+        gridcolor="#DDEAF0",
+        zeroline=False,
+        title_font=dict(color=NAVY, size=14),
+        tickfont=dict(color=NAVY, size=12),
+        linecolor="#D8E9E8"
+    )
+
     return fig
 
 
@@ -1570,8 +1684,8 @@ PAGES = [
     "Athletes Hall of Fame",
     "Nations & Places",
     "Compare Events",
-    "Data & Methods",
-    "Game"
+    "Game",
+    "Data & Methods"
 ]
 
 PAGE_LABELS = {
@@ -1581,8 +1695,8 @@ PAGE_LABELS = {
     "Athletes Hall of Fame": "Athletes",
     "Nations & Places": "Nations",
     "Compare Events": "Compare",
-    "Data & Methods": "Methods",
-    "Game": "Game"
+    "Game": "Game",
+    "Data & Methods": "Methods"
 }
 
 PAGE_TAGS = {
@@ -1592,8 +1706,8 @@ PAGE_TAGS = {
     "Athletes Hall of Fame": "Legends",
     "Nations & Places": "Maps & flags",
     "Compare Events": "Race match",
-    "Data & Methods": "Behind data",
-    "Game": "Play & guess"
+    "Game": "Play & guess",
+    "Data & Methods": "Behind data"
 }
 
 # Read selected page from the URL.
@@ -1873,13 +1987,49 @@ if page == "Home":
 
 elif page == "World Record Timeline":
 
-    page_header(
-        "World Record Timeline",
-        "Follow how the fastest official world record in each event changed over time. Lower seconds mean faster performance.",
-        image_file="timeline.jpg",
-        alt="Vintage Olympic swimming start",
-        ratio="70%"
-    )
+    col_txt, col_img = st.columns([1.45, 1], gap="large")
+
+    with col_txt:
+        st.markdown(
+            "<div class='section-title'>World Record Timeline</div>",
+            unsafe_allow_html=True
+        )
+        st.markdown("<div class='wave-rule'></div>", unsafe_allow_html=True)
+
+        st.markdown(
+            """
+            <div class='section-subtitle'>
+            Follow how the fastest official world record in each event changed over time.
+            Lower seconds mean faster performance.
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            """
+            <div class="fact-box">
+                <div class="fact-kicker">Did you know?</div>
+                <div class="fact-text">
+                At the first modern Olympic Games in <b>Athens 1896</b>, swimming was not held in a pool:
+                the races took place in the open waters of the <b>Bay of Zea</b>, with water reported at about
+                <b>13°C</b>. From cold open water to today’s controlled pools, every record in this page is a step
+                in the evolution of swimming speed.
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    with col_img:
+        st.markdown(
+            swim_figure(
+                "timeline.jpg",
+                alt="Vintage Olympic swimming start",
+                ratio="70%"
+            ),
+            unsafe_allow_html=True
+        )
 
     filtered = apply_common_filters(
         wr,
@@ -1890,26 +2040,80 @@ elif page == "World Record Timeline":
         key_prefix="timeline"
     )
 
-    with st.sidebar:
-        st.markdown("### Event selection")
-        available_events = safe_unique(filtered["event_label"])
-        selected_event = st.selectbox(
-            "Choose one event",
-            available_events,
-            index=0 if available_events else None
-        )
-
-    data = filtered[filtered["event_label"] == selected_event].copy()
-    data = data.sort_values("date")
-
-    if data.empty:
+    if filtered.empty:
         st.warning("No data available for the selected filters.")
         st.stop()
 
-    first_record = data.dropna(subset=["seconds"]).iloc[0]
-    last_record = data.dropna(subset=["seconds"]).iloc[-1]
-    improvement = first_record["seconds"] - last_record["seconds"]
+    available_events = safe_unique(filtered["event_label"])
+
+    st.markdown("<div class='timeline-control-row'>", unsafe_allow_html=True)
+
+    selector_col, record_col = st.columns([1, 1.45], gap="large")
+
+    with selector_col:
+        selected_event = st.selectbox(
+            "Choose a race to explore",
+            available_events,
+            index=0 if available_events else None,
+            key="timeline_event_selector"
+        )
+
+        st.markdown(
+            """
+            <div class="timeline-selector-note">
+            Select one event and follow every historical step that led to the current world record.
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    data = filtered[filtered["event_label"] == selected_event].copy()
+    data = data.dropna(subset=["seconds"]).sort_values("date")
+
+    if data.empty:
+        st.warning("No data available for the selected race.")
+        st.stop()
+
+    current_rows = data[data["is_current_bool"] == True].copy()
+
+    if not current_rows.empty:
+        current_record = current_rows.sort_values("date").iloc[-1]
+    else:
+        current_record = data.sort_values("date").iloc[-1]
+
+    first_record = data.iloc[0]
+    improvement = first_record["seconds"] - current_record["seconds"]
     improvement_pct = improvement / first_record["seconds"] * 100 if first_record["seconds"] else np.nan
+
+    current_time = clean_text(current_record["time"])
+    current_name = clean_text(current_record["name"])
+    current_nat = clean_text(current_record["nationality"])
+    current_meet = clean_text(current_record["meet"])
+    current_location = clean_text(current_record["location"])
+
+    if pd.notna(current_record["date"]):
+        current_date_label = current_record["date"].strftime("%d %b %Y")
+    else:
+        current_date_label = "Unknown date"
+
+    with record_col:
+        st.markdown(
+            f"""
+            <div class="timeline-record-card">
+                <div class="timeline-record-kicker">Current world record</div>
+                <div class="timeline-record-main">{current_time} · {current_name}</div>
+                <div class="timeline-record-sub">
+                    {selected_event}<br>
+                    {current_nat} · {current_date_label} · {current_meet} · {current_location}
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    st.markdown("<div class='timeline-metrics-row'>", unsafe_allow_html=True)
 
     c1, c2, c3, c4 = st.columns(4)
 
@@ -1917,56 +2121,148 @@ elif page == "World Record Timeline":
         st.metric("Selected event", selected_event)
 
     with c2:
-        st.metric("Number of records", len(data))
+        st.metric("Record entries", len(data))
 
     with c3:
         st.metric("Total improvement", f"{improvement:.2f} s")
 
     with c4:
-        st.metric("Improvement %", f"{improvement_pct:.1f}%")
+        st.metric("Improvement", f"{improvement_pct:.1f}%")
 
-    fig = px.line(
-        data,
-        x="date",
-        y="seconds",
-        markers=True,
-        color="course",
-        color_discrete_map=COURSE_COLORS,
-        hover_data={
-            "name": True,
-            "nationality": True,
-            "time": True,
-            "meet": True,
-            "location": True,
-            "date": "|%d %b %Y",
-            "seconds": ":.2f"
-        },
-        title=f"Record progression — {selected_event}"
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    st.markdown("<div class='timeline-chart-spacer'></div>", unsafe_allow_html=True)
+
+    chart_data = data.copy()
+
+    chart_data["date_label"] = chart_data["date"].apply(
+        lambda x: x.strftime("%d %b %Y") if pd.notna(x) else "Unknown date"
     )
 
-    current_data = data[data["is_current_bool"] == True]
+    for col in ["event_label", "time", "name", "nationality", "meet", "location", "course"]:
+        chart_data[col] = chart_data[col].astype(str).apply(clean_text)
+        chart_data.loc[chart_data[col] == "", col] = "—"
 
-    if not current_data.empty:
-        fig.add_trace(
-            go.Scatter(
-                x=current_data["date"],
-                y=current_data["seconds"],
-                mode="markers+text",
-                marker=dict(size=17, color=GOLD, symbol="star"),
-                text=["Current record"] * len(current_data),
-                textposition="top center",
-                name="Current record",
-                hovertext=current_data["name"] + " — " + current_data["time"],
-                hoverinfo="text"
+    chart_data["current_point"] = chart_data.index == current_record.name
+
+    custom_cols = [
+        "event_label",
+        "time",
+        "date_label",
+        "name",
+        "nationality",
+        "meet",
+        "location",
+        "course"
+    ]
+
+    chart_title = (
+        f"<b>{selected_event}</b><br>"
+        f"<span style='font-size:14px;color:#52616B'>"
+        f"Current world record: <b>{current_time}</b> · {current_name} · {current_nat} · {current_date_label}"
+        f"</span>"
+    )
+
+    fig = go.Figure()
+
+    fig.add_trace(
+        go.Scatter(
+            x=chart_data["date"],
+            y=chart_data["seconds"],
+            mode="lines+markers",
+            name="World record progression",
+            line=dict(color=BLUE, width=3),
+            marker=dict(
+                size=8,
+                color=BLUE,
+                line=dict(color="white", width=1.4)
+            ),
+            customdata=chart_data[custom_cols].to_numpy(),
+            hovertemplate=(
+                "<b>%{customdata[0]}</b><br><br>"
+                "Time: <b>%{customdata[1]}</b> (%{y:.2f} s)<br>"
+                "Date: %{customdata[2]}<br>"
+                "Swimmer: %{customdata[3]}<br>"
+                "Nationality: %{customdata[4]}<br>"
+                "Course: %{customdata[7]}<br>"
+                "Meet: %{customdata[5]}<br>"
+                "Location: %{customdata[6]}"
+                "<extra></extra>"
             )
         )
+    )
+
+    fig.add_trace(
+        go.Scatter(
+            x=[current_record["date"]],
+            y=[current_record["seconds"]],
+            mode="markers+text",
+            name="Current record",
+            marker=dict(
+                size=21,
+                color=GOLD,
+                symbol="star",
+                line=dict(color="white", width=1.5)
+            ),
+            text=["Current WR"],
+            textposition="top center",
+            customdata=pd.DataFrame(
+                [[
+                    selected_event,
+                    current_time,
+                    current_date_label,
+                    current_name,
+                    current_nat,
+                    current_meet,
+                    current_location,
+                    clean_text(current_record["course"])
+                ]],
+                columns=custom_cols
+            ).to_numpy(),
+            hovertemplate=(
+                "<b>Current world record</b><br><br>"
+                "Event: %{customdata[0]}<br>"
+                "Time: <b>%{customdata[1]}</b> (%{y:.2f} s)<br>"
+                "Date: %{customdata[2]}<br>"
+                "Swimmer: %{customdata[3]}<br>"
+                "Nationality: %{customdata[4]}<br>"
+                "Course: %{customdata[7]}<br>"
+                "Meet: %{customdata[5]}<br>"
+                "Location: %{customdata[6]}"
+                "<extra></extra>"
+            )
+        )
+    )
+
+    fig.add_hline(
+        y=current_record["seconds"],
+        line_dash="dot",
+        line_color=GOLD,
+        opacity=0.75,
+        annotation_text=f"Current WR · {current_time}",
+        annotation_position="top left",
+        annotation_font=dict(color=GOLD, size=12)
+    )
+
+    fig.update_layout(
+        title=dict(
+            text=chart_title,
+            x=0.02,
+            xanchor="left"
+        )
+    )
+
+    fig.update_xaxes(
+        title="Year of world record",
+        tickformat="%Y"
+    )
 
     fig.update_yaxes(
         autorange="reversed",
         title="Time in seconds — lower is faster"
     )
-    fig.update_xaxes(title="Date")
-    fig = plotly_clean_layout(fig, height=600)
+
+    fig = plotly_clean_layout(fig, height=650)
     st.plotly_chart(fig, use_container_width=True)
 
     st.markdown(
@@ -2645,119 +2941,10 @@ elif page == "Compare Events":
     )
 
 
-# ============================================================
-# PAGE 7 - DATA & METHODS
-# ============================================================
-
-elif page == "Data & Methods":
-
-    section(
-        "Data & Methods",
-        "This page explains how the app uses the two datasets and what limitations should be considered."
-    )
-
-    st.markdown(
-        """
-        <div class="info-box">
-        <b>Dataset 1 — World records history</b><br>
-        Used to visualize the historical progression of world records across gender, course, distance and stroke.
-        It contains athlete name, nationality, date, meet, location, time in seconds and whether the record is current.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.dataframe(
-        pd.DataFrame(
-            {
-                "Property": [
-                    "Rows",
-                    "Events",
-                    "Athletes",
-                    "Nationalities",
-                    "Courses",
-                    "Years"
-                ],
-                "Value": [
-                    len(wr),
-                    wr["event_label"].nunique(),
-                    wr["name"].nunique(),
-                    wr["nationality"].nunique(),
-                    ", ".join(safe_unique(wr["course"])),
-                    f"{int(wr['year'].min())}–{int(wr['year'].max())}" if wr["year"].notna().any() else "-"
-                ]
-            }
-        ),
-        use_container_width=True,
-        hide_index=True
-    )
-
-    st.markdown(
-        """
-        <div class="info-box">
-        <b>Dataset 2 — All-time top 200 performances</b><br>
-        Used to explore depth of elite performance beyond a single record.
-        It contains ranking order, athlete, team, event description, time, date and competition location.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.dataframe(
-        pd.DataFrame(
-            {
-                "Property": [
-                    "Rows",
-                    "Events",
-                    "Athletes",
-                    "Teams",
-                    "Cities",
-                    "Years"
-                ],
-                "Value": [
-                    len(top),
-                    top["event_label"].nunique(),
-                    top["athlete"].nunique(),
-                    top["team_name"].nunique(),
-                    top["city"].nunique(),
-                    f"{int(top['year'].min())}–{int(top['year'].max())}" if top["year"].notna().any() else "-"
-                ]
-            }
-        ),
-        use_container_width=True,
-        hide_index=True
-    )
-
-    section("Interpretation rules")
-
-    st.markdown(
-        """
-        <div class="warning-box">
-        <b>1. Elite data only.</b><br>
-        The app does not represent all swimming races ever performed. It focuses on world records and top-200 all-time performances.
-        <br><br>
-        <b>2. Same athlete can appear multiple times.</b><br>
-        Entries represent performances or record events, not unique athletes.
-        <br><br>
-        <b>3. Long course and short course are not directly equivalent.</b><br>
-        The app allows comparison, but interpretation should consider that LC and SC are different competition contexts.
-        <br><br>
-        <b>4. Lower time is better.</b><br>
-        Timeline charts reverse the y-axis to make performance improvement visually intuitive.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    with st.expander("World records raw preview"):
-        st.dataframe(wr.head(100), use_container_width=True)
-
-    with st.expander("Top performances raw preview"):
-        st.dataframe(top.head(100), use_container_width=True)
 
 
 # ============================================================
-# PAGE 8 - GAME (SWIM RECORD TOE)
+# PAGE 7 - GAME (SWIM RECORD TOE)
 # ============================================================
 
 elif page == "Game":
@@ -3100,3 +3287,114 @@ elif page == "Game":
             swimmers, events, places and historical record moments.
             """
         )
+
+
+# ============================================================
+# PAGE 8 - DATA & METHODS
+# ============================================================
+
+elif page == "Data & Methods":
+
+    section(
+        "Data & Methods",
+        "This page explains how the app uses the two datasets and what limitations should be considered."
+    )
+
+    st.markdown(
+        """
+        <div class="info-box">
+        <b>Dataset 1 — World records history</b><br>
+        Used to visualize the historical progression of world records across gender, course, distance and stroke.
+        It contains athlete name, nationality, date, meet, location, time in seconds and whether the record is current.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.dataframe(
+        pd.DataFrame(
+            {
+                "Property": [
+                    "Rows",
+                    "Events",
+                    "Athletes",
+                    "Nationalities",
+                    "Courses",
+                    "Years"
+                ],
+                "Value": [
+                    len(wr),
+                    wr["event_label"].nunique(),
+                    wr["name"].nunique(),
+                    wr["nationality"].nunique(),
+                    ", ".join(safe_unique(wr["course"])),
+                    f"{int(wr['year'].min())}–{int(wr['year'].max())}" if wr["year"].notna().any() else "-"
+                ]
+            }
+        ),
+        use_container_width=True,
+        hide_index=True
+    )
+
+    st.markdown(
+        """
+        <div class="info-box">
+        <b>Dataset 2 — All-time top 200 performances</b><br>
+        Used to explore depth of elite performance beyond a single record.
+        It contains ranking order, athlete, team, event description, time, date and competition location.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.dataframe(
+        pd.DataFrame(
+            {
+                "Property": [
+                    "Rows",
+                    "Events",
+                    "Athletes",
+                    "Teams",
+                    "Cities",
+                    "Years"
+                ],
+                "Value": [
+                    len(top),
+                    top["event_label"].nunique(),
+                    top["athlete"].nunique(),
+                    top["team_name"].nunique(),
+                    top["city"].nunique(),
+                    f"{int(top['year'].min())}–{int(top['year'].max())}" if top["year"].notna().any() else "-"
+                ]
+            }
+        ),
+        use_container_width=True,
+        hide_index=True
+    )
+
+    section("Interpretation rules")
+
+    st.markdown(
+        """
+        <div class="warning-box">
+        <b>1. Elite data only.</b><br>
+        The app does not represent all swimming races ever performed. It focuses on world records and top-200 all-time performances.
+        <br><br>
+        <b>2. Same athlete can appear multiple times.</b><br>
+        Entries represent performances or record events, not unique athletes.
+        <br><br>
+        <b>3. Long course and short course are not directly equivalent.</b><br>
+        The app allows comparison, but interpretation should consider that LC and SC are different competition contexts.
+        <br><br>
+        <b>4. Lower time is better.</b><br>
+        Timeline charts reverse the y-axis to make performance improvement visually intuitive.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    with st.expander("World records raw preview"):
+        st.dataframe(wr.head(100), use_container_width=True)
+
+    with st.expander("Top performances raw preview"):
+        st.dataframe(top.head(100), use_container_width=True)
