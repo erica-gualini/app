@@ -1116,6 +1116,7 @@ st.markdown(
         justify-content: center;
         box-shadow: 0 16px 34px -24px rgba(12,74,90,0.65);
     }
+
     </style>
     """,
     unsafe_allow_html=True
@@ -1705,14 +1706,18 @@ def prepare_swim_game_data(df):
     return game_df
 
 
-def build_swim_game_grid(game_df, row_col, col_col, attempts=1500):
-    """
-    Build a 3x3 grid.
-    It tries to find rows and columns where every intersection has at least one valid swimmer.
+def build_swim_game_grid(game_df, row_col, col_col, min_answers=3, attempts=400):
+    """Build a 3x3 board where *every* cell has at least `min_answers` swimmers.
+
+    The old version accepted boards with empty intersections, which produced dead
+    "No data" cells: the board could never be filled, so a draw was impossible.
+    It also allowed cells with a single valid swimmer, which deadlocked the game
+    as soon as that swimmer had been used. Here the search is graded: it insists
+    on three answers per cell, then relaxes to two, then to one, and only gives
+    up if no board exists at all.
     """
     pair_counts = (
-        game_df
-        .dropna(subset=[row_col, col_col, "name"])
+        game_df.dropna(subset=[row_col, col_col, "name"])
         .groupby([row_col, col_col])["name"]
         .nunique()
         .reset_index(name="valid_answers")
@@ -1721,55 +1726,25 @@ def build_swim_game_grid(game_df, row_col, col_col, attempts=1500):
     if pair_counts.empty:
         return [], [], 0
 
-    # Use the most connected values to avoid impossible boards.
-    candidate_rows = (
-        pair_counts.groupby(row_col)["valid_answers"]
-        .sum()
-        .sort_values(ascending=False)
-        .head(35)
-        .index
-        .tolist()
-    )
+    for threshold in (min_answers, 2, 1):
+        eligible = pair_counts[pair_counts["valid_answers"] >= threshold]
+        if eligible.empty:
+            continue
 
-    candidate_cols = (
-        pair_counts.groupby(col_col)["valid_answers"]
-        .sum()
-        .sort_values(ascending=False)
-        .head(35)
-        .index
-        .tolist()
-    )
+        matrix = eligible.pivot(index=row_col, columns=col_col, values="valid_answers").notna()
+        usable_rows = [r for r in matrix.index if matrix.loc[r].sum() >= 3]
 
-    if len(candidate_rows) < 3 or len(candidate_cols) < 3:
-        return [], [], 0
+        if len(usable_rows) < 3:
+            continue
 
-    best_rows = None
-    best_cols = None
-    best_score = -1
+        for _ in range(attempts):
+            rows = random.sample(usable_rows, 3)
+            shared_cols = [c for c in matrix.columns if matrix.loc[rows, c].all()]
+            if len(shared_cols) >= 3:
+                cols = random.sample(shared_cols, 3)
+                return rows, cols, threshold
 
-    for _ in range(attempts):
-        rows = random.sample(candidate_rows, 3)
-        cols = random.sample(candidate_cols, 3)
-
-        score = 0
-        for r in rows:
-            for c in cols:
-                exists = (
-                    (pair_counts[row_col] == r)
-                    & (pair_counts[col_col] == c)
-                ).any()
-                if exists:
-                    score += 1
-
-        if score > best_score:
-            best_rows = rows
-            best_cols = cols
-            best_score = score
-
-        if score == 9:
-            break
-
-    return best_rows, best_cols, best_score
+    return [], [], 0
 
 
 def get_cell_answers(game_df, row_value, col_value, row_col, col_col):
@@ -1799,22 +1774,13 @@ def validate_swim_answer(game_df, answer, row_value, col_value, row_col, col_col
     if not valid_answers:
         return False, None, []
 
-    normalized_map = {
-        normalize_answer(name): name
-        for name in valid_answers
-    }
-
+    normalized_map = {normalize_answer(name): name for name in valid_answers}
     user_norm = normalize_answer(answer)
 
     if user_norm in normalized_map:
         return True, normalized_map[user_norm], valid_answers
 
-    close = get_close_matches(
-        user_norm,
-        list(normalized_map.keys()),
-        n=1,
-        cutoff=0.84
-    )
+    close = get_close_matches(user_norm, list(normalized_map.keys()), n=1, cutoff=0.84)
 
     if close:
         return True, normalized_map[close[0]], valid_answers
@@ -1822,38 +1788,68 @@ def validate_swim_answer(game_df, answer, row_value, col_value, row_col, col_col
     return False, None, valid_answers
 
 
+WIN_LINES = [
+    [(0, 0), (0, 1), (0, 2)],
+    [(1, 0), (1, 1), (1, 2)],
+    [(2, 0), (2, 1), (2, 2)],
+    [(0, 0), (1, 0), (2, 0)],
+    [(0, 1), (1, 1), (2, 1)],
+    [(0, 2), (1, 2), (2, 2)],
+    [(0, 0), (1, 1), (2, 2)],
+    [(0, 2), (1, 1), (2, 0)],
+]
+
+
 def check_swim_game_winner(board):
-    """Return winner symbol, Draw, or None."""
-    lines = []
+    """Return (winner, winning_line). Winner is a mark, "Draw", or None.
 
-    lines.extend(board)
-    lines.extend([[board[0][j], board[1][j], board[2][j]] for j in range(3)])
-    lines.append([board[0][0], board[1][1], board[2][2]])
-    lines.append([board[0][2], board[1][1], board[2][0]])
-
-    for line in lines:
-        if line[0] != "" and line[0] == line[1] == line[2]:
-            return line[0]
+    The winning line is returned so the board can be struck through, the way it
+    is done on paper.
+    """
+    for line in WIN_LINES:
+        marks = [board[i][j] for i, j in line]
+        if marks[0] != "" and marks[0] == marks[1] == marks[2]:
+            return marks[0], line
 
     if all(board[i][j] != "" for i in range(3) for j in range(3)):
-        return "Draw"
+        return "Draw", None
 
-    return None
+    return None, None
+
+
+def swim_game_has_moves(game_df, rows, cols, row_col, col_col, board, used_names):
+    """True if at least one empty cell still has an unused valid swimmer.
+
+    Without this check the game could silently deadlock: every remaining cell
+    solvable only by swimmers who had already been named.
+    """
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] != "":
+                continue
+            answers = get_cell_answers(game_df, rows[i], cols[j], row_col, col_col)
+            if any(normalize_answer(a) not in used_names for a in answers):
+                return True
+    return False
 
 
 def reset_swim_record_toe(game_df, row_col, col_col):
-    rows, cols, score = build_swim_game_grid(game_df, row_col, col_col)
+    rows, cols, threshold = build_swim_game_grid(game_df, row_col, col_col)
 
     st.session_state.swim_toe_rows = rows
     st.session_state.swim_toe_cols = cols
-    st.session_state.swim_toe_score = score
+    st.session_state.swim_toe_threshold = threshold
     st.session_state.swim_toe_board = [["" for _ in range(3)] for _ in range(3)]
     st.session_state.swim_toe_answers = [["" for _ in range(3)] for _ in range(3)]
     st.session_state.swim_toe_turn = "❌"
     st.session_state.swim_toe_winner = None
+    st.session_state.swim_toe_win_line = None
     st.session_state.swim_toe_selected = None
     st.session_state.swim_toe_used_names = []
     st.session_state.swim_toe_feedback = ""
+    st.session_state.swim_toe_feedback_kind = ""
+    st.session_state.swim_toe_hint = ""
+    st.session_state.swim_toe_misses = {"❌": 0, "⭕": 0}
 
 
 # ============================================================
@@ -2153,6 +2149,63 @@ if page == "Home":
         "</style>",
         unsafe_allow_html=True
     )
+
+    # One-off notice: this site is dense with charts and reads badly on a phone.
+    # The modal-dialog API has changed name and behaviour across Streamlit
+    # releases (st.dialog, st.experimental_dialog, and versions where the
+    # decorator exists but fails on open()). Rather than depend on it, each
+    # option is tried and any failure falls through to a plain in-page card,
+    # which works on every version.
+    if not st.session_state.get("desktop_notice_shown", False):
+
+        def _desktop_notice_body():
+            st.markdown(
+                "This site is built around large, interactive charts — world maps, "
+                "small multiples, radar plots and a tic-tac-toe board.\n\n"
+                "On a phone they get cramped and the sidebar filters are tucked away. "
+                "**For the full experience, open it on a laptop or desktop.**\n\n"
+                "You are very welcome to keep browsing on mobile — just expect some "
+                "horizontal scrolling."
+            )
+            if st.button("Got it, let me in", use_container_width=True, key="desktop_notice_ok"):
+                st.session_state.desktop_notice_shown = True
+                st.rerun()
+
+        notice_rendered = False
+
+        for dialog_attr in ("dialog", "experimental_dialog"):
+            dialog_factory = getattr(st, dialog_attr, None)
+            if not callable(dialog_factory):
+                continue
+            try:
+                dialog_factory("Best viewed on a computer")(_desktop_notice_body)()
+                notice_rendered = True
+                break
+            except Exception as exc:
+                # st.rerun() and st.stop() signal themselves by raising, so those
+                # must pass straight through instead of being treated as a
+                # broken dialog API.
+                if type(exc).__name__ in ("RerunException", "StopException"):
+                    raise
+                # This Streamlit build cannot open a modal; try the next option.
+                continue
+
+        if not notice_rendered:
+            st.markdown(
+                "<div class='info-box' style='max-width:820px;margin:8px auto 4px auto;'>"
+                "<b>Best viewed on a computer</b><br>"
+                "This site is built around large interactive charts and a sidebar of filters. "
+                "On a phone they get cramped. For the full experience, open it on a laptop "
+                "or desktop — you can keep browsing on mobile, just expect some horizontal "
+                "scrolling."
+                "</div>",
+                unsafe_allow_html=True
+            )
+            _, mid, _ = st.columns([1, 1, 1])
+            with mid:
+                if st.button("Got it, let me in", use_container_width=True, key="desktop_notice_ok_inline"):
+                    st.session_state.desktop_notice_shown = True
+                    st.rerun()
 
     # Big, impactful header: logo + large title + site description.
     render_home_head()
@@ -3922,24 +3975,12 @@ elif page == "Game":
 
     page_header(
         "Swim Record Toe",
-        "A swimming take on tic-tac-toe: pick a square, connect its row and column criteria, "
-        "then name a swimmer who really set a world record matching both. Claim three lanes in a row to win.",
+        "Tic-tac-toe, played with the record book. Every square is the meeting point of a row rule "
+        "and a column rule, and you claim it by naming a swimmer who really set a world record "
+        "satisfying both. Three in a row wins the pool.",
         image_file="game.jpg",
         alt="Swimming goggles by the pool",
         ratio="70%"
-    )
-
-    st.markdown(
-        """
-        <div class="info-box">
-        <b>How to play</b><br>
-        1. Choose a free square in the pool grid.<br>
-        2. Look at the row and column criteria that meet in that square.<br>
-        3. Type the swimmer's name or pick it from the dropdown.<br>
-        4. If the answer exists in the world record dataset, you claim the lane with ❌ or ⭕.
-        </div>
-        """,
-        unsafe_allow_html=True
     )
 
     game_df = prepare_swim_game_data(wr)
@@ -3948,37 +3989,45 @@ elif page == "Game":
         st.error("The game cannot start because the world record dataset has no usable swimmer names.")
         st.stop()
 
+    st.markdown(
+        "<div class='info-box'>"
+        "<b>The rules</b>"
+        "<ol>"
+        "<li>Two players share one screen. <b>❌</b> starts, then <b>⭕</b>.</li>"
+        "<li>Click a free square. Its row rule and column rule are shown above and beside it.</li>"
+        "<li>Name a swimmer who set a world record meeting <b>both</b> rules. Type it or pick it "
+        "from the list. Small spelling slips are forgiven.</li>"
+        "<li><b>Right answer:</b> you claim the square. <b>Wrong answer:</b> you lose your turn — "
+        "so guess carefully.</li>"
+        "<li>Each swimmer can be used <b>only once</b> per game, by either player.</li>"
+        "<li>Three in a row — across, down or diagonally — wins, and the line gets struck through. "
+        "Fill the board with no line and it is a draw.</li>"
+        "</ol>"
+        "</div>",
+        unsafe_allow_html=True
+    )
+
+    # Gender and course only hold two values each, so they can never fill three
+    # rows or three columns. Offering them guaranteed a broken board.
     row_options = {
         "Specific event": "event_label",
         "Event family": "event_family",
         "Stroke": "stroke",
-        "Gender": "gender"
     }
 
     col_options = {
-        "Record location / pool": "record_place",
         "Nationality": "nationality",
         "Decade": "decade",
-        "Course": "course"
+        "Record location / pool": "record_place",
     }
 
     c_setup_1, c_setup_2, c_setup_3 = st.columns([1, 1, 0.7])
 
     with c_setup_1:
-        row_label = st.selectbox(
-            "Rows define",
-            list(row_options.keys()),
-            index=0,
-            key="swim_toe_row_label"
-        )
+        row_label = st.selectbox("Rows are", list(row_options.keys()), index=1, key="swim_toe_row_label")
 
     with c_setup_2:
-        col_label = st.selectbox(
-            "Columns define",
-            list(col_options.keys()),
-            index=0,
-            key="swim_toe_col_label"
-        )
+        col_label = st.selectbox("Columns are", list(col_options.keys()), index=0, key="swim_toe_col_label")
 
     row_col = row_options[row_label]
     col_col = col_options[col_label]
@@ -3986,14 +4035,13 @@ elif page == "Game":
     with c_setup_3:
         st.write("")
         st.write("")
-        new_game = st.button("New game", use_container_width=True)
+        new_game = st.button("New game", use_container_width=True, key="swim_toe_new")
 
     state_missing = (
         "swim_toe_board" not in st.session_state
         or "swim_toe_rows" not in st.session_state
-        or "swim_toe_cols" not in st.session_state
+        or "swim_toe_win_line" not in st.session_state
     )
-
     axes_changed = (
         st.session_state.get("swim_toe_row_col") != row_col
         or st.session_state.get("swim_toe_col_col") != col_col
@@ -4009,19 +4057,35 @@ elif page == "Game":
     board = st.session_state.swim_toe_board
 
     if not rows or not cols:
-        st.warning("Not enough data to build a 3x3 game board with these criteria. Try another row or column setting.")
+        st.warning("These two rules cannot produce a full board. Try another combination.")
         st.stop()
 
-    if st.session_state.swim_toe_score < 9:
-        st.markdown(
-            """
-            <div class="warning-box">
-            This board contains one or more very difficult cells.
-            Try another <b>New game</b>, or switch from location to nationality/decade for an easier board.
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+    # Answers per cell are needed all over the page: compute them once per run.
+    cell_answers = {
+        (i, j): get_cell_answers(game_df, rows[i], cols[j], row_col, col_col)
+        for i in range(3) for j in range(3)
+    }
+
+    used_names = st.session_state.swim_toe_used_names
+    winner = st.session_state.swim_toe_winner
+
+    # A game can run out of legal moves before the board is full.
+    if winner is None and not swim_game_has_moves(game_df, rows, cols, row_col, col_col, board, used_names):
+        st.session_state.swim_toe_winner = "Draw"
+        st.session_state.swim_toe_win_line = None
+        winner = "Draw"
+
+    # ---------------- Scoreboard ----------------
+    claimed = sum(1 for i in range(3) for j in range(3) if board[i][j] != "")
+    turn = st.session_state.swim_toe_turn
+    misses = st.session_state.swim_toe_misses
+
+    if winner is None:
+        status_text = "Race still open"
+    elif winner == "Draw":
+        status_text = "Draw"
+    else:
+        status_text = f"{winner} wins"
 
     c_turn_1, c_turn_2, c_turn_3 = st.columns(3)
 
@@ -4030,17 +4094,13 @@ elif page == "Game":
             f"""
             <div class="game-turn-card">
             <div class="gt-label">Current turn</div>
-            <div class="gt-value" style="font-size:34px;">{st.session_state.swim_toe_turn}</div>
+            <div class="gt-value" style="font-size:34px;">{turn if winner is None else "—"}</div>
             </div>
             """,
             unsafe_allow_html=True
         )
 
     with c_turn_2:
-        claimed = sum(
-            1 for i in range(3) for j in range(3)
-            if st.session_state.swim_toe_board[i][j] != ""
-        )
         st.markdown(
             f"""
             <div class="game-turn-card">
@@ -4052,13 +4112,6 @@ elif page == "Game":
         )
 
     with c_turn_3:
-        if st.session_state.swim_toe_winner is None:
-            status_text = "Race still open"
-        elif st.session_state.swim_toe_winner == "Draw":
-            status_text = "Draw"
-        else:
-            status_text = f"{st.session_state.swim_toe_winner} wins"
-
         st.markdown(
             f"""
             <div class="game-turn-card">
@@ -4069,192 +4122,268 @@ elif page == "Game":
             unsafe_allow_html=True
         )
 
-    st.markdown("")
+    st.caption(f"Missed turns — ❌ {misses['❌']} · ⭕ {misses['⭕']}")
 
-    # Header row
-    header_cols = st.columns(4)
-    header_cols[0].markdown("<div class='game-empty-corner'></div>", unsafe_allow_html=True)
-
-    for j in range(3):
-        header_cols[j + 1].markdown(
-            f"<div class='game-axis-label'>{cols[j]}</div>",
-            unsafe_allow_html=True
+    if st.session_state.swim_toe_threshold < 3:
+        st.caption(
+            "Heads up: with these two rules some squares have very few valid swimmers. "
+            "Press **New game** or switch rules for a friendlier board."
         )
 
-    # Game grid
-    for i in range(3):
-        grid_cols = st.columns(4)
-
-        grid_cols[0].markdown(
-            f"<div class='game-row-label'>{rows[i]}</div>",
-            unsafe_allow_html=True
-        )
-
+    # ---------------- The board ----------------
+    if winner is None:
+        header_cols = st.columns(4)
+        header_cols[0].markdown("<div class='game-empty-corner'></div>", unsafe_allow_html=True)
         for j in range(3):
-            current_mark = board[i][j]
-            valid_answers = get_cell_answers(game_df, rows[i], cols[j], row_col, col_col)
+            header_cols[j + 1].markdown(f"<div class='game-axis-label'>{cols[j]}</div>", unsafe_allow_html=True)
 
-            if current_mark != "":
-                label = f"{current_mark}\n{st.session_state.swim_toe_answers[i][j]}"
-                disabled = True
-            elif not valid_answers:
-                label = "No data"
-                disabled = True
-            else:
-                label = "Dive in"
+        for i in range(3):
+            grid_cols = st.columns(4)
+            grid_cols[0].markdown(f"<div class='game-row-label'>{rows[i]}</div>", unsafe_allow_html=True)
 
-                if st.session_state.swim_toe_selected == (i, j):
+            for j in range(3):
+                mark = board[i][j]
+
+                if mark != "":
+                    label = f"{mark}\n{st.session_state.swim_toe_answers[i][j]}"
+                    disabled = True
+                elif st.session_state.swim_toe_selected == (i, j):
                     label = "Selected"
+                    disabled = False
+                else:
+                    label = "Dive in"
+                    disabled = False
 
-                disabled = st.session_state.swim_toe_winner is not None
+                if grid_cols[j + 1].button(
+                    label,
+                    key=f"swim_toe_cell_{i}_{j}",
+                    use_container_width=True,
+                    disabled=disabled
+                ):
+                    st.session_state.swim_toe_selected = (i, j)
+                    st.session_state.swim_toe_feedback = ""
+                    st.session_state.swim_toe_hint = ""
+                    st.rerun()
+    else:
+        # Game over: redraw the board as a single hand-drawn picture, with the
+        # winning line struck through, the way you would on paper.
+        line = st.session_state.swim_toe_win_line
+        cell = 150
+        pad = 26
+        size = cell * 3 + pad * 2
 
-            if grid_cols[j + 1].button(
-                label,
-                key=f"swim_toe_cell_{i}_{j}",
-                use_container_width=True,
-                disabled=disabled
-            ):
-                st.session_state.swim_toe_selected = (i, j)
-                st.session_state.swim_toe_feedback = ""
-                st.rerun()
+        def centre(i, j):
+            return pad + cell * j + cell / 2, pad + cell * i + cell / 2
 
-    winner = st.session_state.swim_toe_winner
+        marks_svg = ""
+        for i in range(3):
+            for j in range(3):
+                mark = board[i][j]
+                if not mark:
+                    continue
+                cx, cy = centre(i, j)
+                if mark == "❌":
+                    r = 38
+                    marks_svg += (
+                        f"<line x1='{cx-r}' y1='{cy-r}' x2='{cx+r}' y2='{cy+r}' "
+                        f"stroke='{NAVY}' stroke-width='11' stroke-linecap='round'/>"
+                        f"<line x1='{cx+r}' y1='{cy-r}' x2='{cx-r}' y2='{cy+r}' "
+                        f"stroke='{NAVY}' stroke-width='11' stroke-linecap='round'/>"
+                    )
+                else:
+                    marks_svg += (
+                        f"<circle cx='{cx}' cy='{cy}' r='40' fill='none' "
+                        f"stroke='{BLUE}' stroke-width='11'/>"
+                    )
 
-    if winner is not None:
+        grid_svg = ""
+        for k in (1, 2):
+            x = pad + cell * k
+            y = pad + cell * k
+            grid_svg += (
+                f"<line x1='{x}' y1='{pad-8}' x2='{x}' y2='{size-pad+8}' "
+                f"stroke='{NAVY}' stroke-width='9' stroke-linecap='round'/>"
+                f"<line x1='{pad-8}' y1='{y}' x2='{size-pad+8}' y2='{y}' "
+                f"stroke='{NAVY}' stroke-width='9' stroke-linecap='round'/>"
+            )
+
+        strike_svg = ""
+        if line:
+            (i1, j1), (i3, j3) = line[0], line[2]
+            x1, y1 = centre(i1, j1)
+            x2, y2 = centre(i3, j3)
+            dx, dy = x2 - x1, y2 - y1
+            norm = (dx ** 2 + dy ** 2) ** 0.5 or 1
+            ext = 42
+            x1 -= dx / norm * ext
+            y1 -= dy / norm * ext
+            x2 += dx / norm * ext
+            y2 += dy / norm * ext
+            strike_svg = (
+                f"<line x1='{x1:.0f}' y1='{y1:.0f}' x2='{x2:.0f}' y2='{y2:.0f}' "
+                f"stroke='{GOLD}' stroke-width='13' stroke-linecap='round' opacity='0.95'/>"
+            )
+
+        st.markdown(
+            f"<div style='display:flex;justify-content:center;margin:6px 0 10px 0;'>"
+            f"<svg viewBox='0 0 {size} {size}' width='430' height='430' "
+            f"xmlns='http://www.w3.org/2000/svg'>{grid_svg}{marks_svg}{strike_svg}</svg>"
+            f"</div>",
+            unsafe_allow_html=True
+        )
+
         if winner == "Draw":
             st.success("The race ends in a draw. No more free lanes.")
         else:
             st.success(f"{winner} wins the pool battle!")
+            st.balloons()
 
+        with st.expander("See who claimed what"):
+            for i in range(3):
+                for j in range(3):
+                    if board[i][j]:
+                        st.write(f"**{board[i][j]}** · {rows[i]} × {cols[j]} → {st.session_state.swim_toe_answers[i][j]}")
+
+        if st.button("Play again", key="swim_toe_again", use_container_width=False):
+            reset_swim_record_toe(game_df, row_col, col_col)
+            st.rerun()
+
+    # ---------------- Feedback from the previous move ----------------
+    # Streamlit reruns after every click, so a message printed before the rerun
+    # would flash and vanish. It is stored in state and shown on the next run.
+    if st.session_state.swim_toe_feedback:
+        kind = st.session_state.swim_toe_feedback_kind
+        if kind == "success":
+            st.success(st.session_state.swim_toe_feedback)
+        elif kind == "error":
+            st.error(st.session_state.swim_toe_feedback)
+        else:
+            st.warning(st.session_state.swim_toe_feedback)
+        st.session_state.swim_toe_feedback = ""
+
+    # ---------------- Answering ----------------
     selected = st.session_state.swim_toe_selected
 
-    if selected is not None and st.session_state.swim_toe_winner is None:
-
+    if selected is not None and winner is None:
         i, j = selected
-        row_value = rows[i]
-        col_value = cols[j]
-
-        valid_answers = get_cell_answers(game_df, row_value, col_value, row_col, col_col)
+        row_value, col_value = rows[i], cols[j]
+        valid_answers = cell_answers[(i, j)]
+        remaining = [a for a in valid_answers if normalize_answer(a) not in used_names]
 
         st.markdown(
-            f"""
-            <div class="info-box">
-            <b>Selected square:</b> {row_value} × {col_value}<br>
-            Write the swimmer manually or choose a name from the dropdown.
-            </div>
-            """,
+            f"<div class='info-box'>"
+            f"<b>{turn}, name a swimmer</b><br>"
+            f"Who set a world record in <b>{row_value}</b> and <b>{col_value}</b>?"
+            f"</div>",
             unsafe_allow_html=True
-        )
-
-        all_swimmers = (
-            game_df["name"]
-            .dropna()
-            .astype(str)
-            .apply(clean_text)
-            .drop_duplicates()
-            .sort_values()
-            .tolist()
         )
 
         c_ans_1, c_ans_2 = st.columns(2)
 
         with c_ans_1:
             typed_answer = st.text_input(
-                "Write swimmer name",
+                "Type the name",
                 placeholder="Example: Michael Phelps",
                 key=f"typed_answer_{i}_{j}"
             )
 
         with c_ans_2:
+            all_swimmers = sorted(
+                {clean_text(n) for n in game_df["name"].dropna().astype(str)} - set()
+            )
             dropdown_answer = st.selectbox(
-                "Or choose swimmer from dropdown",
+                "…or pick from every swimmer in the record book",
                 [""] + all_swimmers,
                 index=0,
                 key=f"dropdown_answer_{i}_{j}"
             )
 
-        answer_to_check = typed_answer.strip() if typed_answer.strip() else dropdown_answer.strip()
+        answer_to_check = typed_answer.strip() or dropdown_answer.strip()
 
-        c_submit_1, c_submit_2, c_submit_3 = st.columns([1, 1, 1])
+        c1, c2, c3 = st.columns([1, 1, 1])
 
-        with c_submit_1:
-            submit_answer = st.button("Submit answer", use_container_width=True)
-
-        with c_submit_2:
-            clear_selection = st.button("Cancel selection", use_container_width=True)
-
-        with c_submit_3:
-            reveal_hint = st.button("Small hint", use_container_width=True)
+        with c1:
+            submit_answer = st.button("Submit", use_container_width=True, key=f"submit_{i}_{j}")
+        with c2:
+            clear_selection = st.button("Pick another square", use_container_width=True, key=f"cancel_{i}_{j}")
+        with c3:
+            reveal_hint = st.button("Hint", use_container_width=True, key=f"hint_{i}_{j}")
 
         if clear_selection:
             st.session_state.swim_toe_selected = None
-            st.session_state.swim_toe_feedback = ""
+            st.session_state.swim_toe_hint = ""
             st.rerun()
 
-        if reveal_hint:
-            if valid_answers:
-                st.info(f"Hint: there are {len(valid_answers)} valid swimmer(s) for this square.")
-            else:
-                st.warning("No valid swimmer exists for this square in the dataset.")
+        if reveal_hint and remaining:
+            initials = sorted({a[0].upper() for a in remaining})
+            st.session_state.swim_toe_hint = (
+                f"{len(remaining)} swimmer(s) still fit this square. "
+                f"Their surnames or first names begin with: {', '.join(initials)}."
+            )
+
+        if st.session_state.swim_toe_hint:
+            st.info(st.session_state.swim_toe_hint)
 
         if submit_answer:
             if answer_to_check == "":
-                st.warning("Write or select a swimmer before submitting.")
-            elif normalize_answer(answer_to_check) in st.session_state.swim_toe_used_names:
-                st.warning("This swimmer has already been used in this game. Try another name.")
+                st.session_state.swim_toe_feedback = "Type or choose a swimmer before submitting."
+                st.session_state.swim_toe_feedback_kind = "warning"
+                st.rerun()
+
+            elif normalize_answer(answer_to_check) in used_names:
+                st.session_state.swim_toe_feedback = (
+                    f"{answer_to_check} has already been used in this game. That does not cost you "
+                    f"your turn — pick another swimmer."
+                )
+                st.session_state.swim_toe_feedback_kind = "warning"
+                st.rerun()
+
             else:
-                is_correct, matched_name, possible_answers = validate_swim_answer(
-                    game_df,
-                    answer_to_check,
-                    row_value,
-                    col_value,
-                    row_col,
-                    col_col
+                is_correct, matched_name, _ = validate_swim_answer(
+                    game_df, answer_to_check, row_value, col_value, row_col, col_col
                 )
 
                 if is_correct:
-                    st.session_state.swim_toe_board[i][j] = st.session_state.swim_toe_turn
+                    st.session_state.swim_toe_board[i][j] = turn
                     st.session_state.swim_toe_answers[i][j] = matched_name
                     st.session_state.swim_toe_used_names.append(normalize_answer(matched_name))
 
-                    new_winner = check_swim_game_winner(st.session_state.swim_toe_board)
+                    new_winner, win_line = check_swim_game_winner(st.session_state.swim_toe_board)
                     st.session_state.swim_toe_winner = new_winner
+                    st.session_state.swim_toe_win_line = win_line
 
                     if new_winner is None:
-                        st.session_state.swim_toe_turn = "⭕" if st.session_state.swim_toe_turn == "❌" else "❌"
+                        st.session_state.swim_toe_turn = "⭕" if turn == "❌" else "❌"
 
-                    st.session_state.swim_toe_selected = None
-                    st.success(f"Correct! {matched_name} claims the lane.")
-                    st.rerun()
-
+                    st.session_state.swim_toe_feedback = f"Correct — {matched_name} claims that square."
+                    st.session_state.swim_toe_feedback_kind = "success"
                 else:
-                    st.error("Wrong answer for this square. Try again.")
+                    st.session_state.swim_toe_misses[turn] += 1
+                    st.session_state.swim_toe_turn = "⭕" if turn == "❌" else "❌"
+                    st.session_state.swim_toe_feedback = (
+                        f"{answer_to_check} does not fit {row_value} × {col_value}. "
+                        f"{turn} loses the turn."
+                    )
+                    st.session_state.swim_toe_feedback_kind = "error"
 
-                    with st.expander("Show possible valid answers for this square"):
-                        if possible_answers:
-                            st.write(", ".join(possible_answers[:20]))
-                        else:
-                            st.write("No valid answers available in the dataset.")
+                st.session_state.swim_toe_selected = None
+                st.session_state.swim_toe_hint = ""
+                st.rerun()
 
     st.markdown("---")
 
-    with st.expander("Used swimmers in this game"):
-        if st.session_state.swim_toe_used_names:
-            shown_used = [
-                st.session_state.swim_toe_answers[i][j]
-                for i in range(3)
-                for j in range(3)
-                if st.session_state.swim_toe_answers[i][j] != ""
-            ]
-            st.write(", ".join(shown_used))
-        else:
-            st.write("No swimmer used yet.")
+    with st.expander("Swimmers already used"):
+        shown_used = [
+            st.session_state.swim_toe_answers[i][j]
+            for i in range(3) for j in range(3)
+            if st.session_state.swim_toe_answers[i][j] != ""
+        ]
+        st.write(", ".join(shown_used) if shown_used else "Nobody yet.")
 
-    with st.expander("Why this game belongs in the app"):
+    with st.expander("Why this game belongs in the web site"):
         st.markdown(
-            """
-            This game turns passive exploration into active recall.
-            After browsing the records, users can test whether they remember the links between
-            swimmers, events, places and historical record moments.
-            """
+            "Browsing a chart is passive; naming a swimmer is not. The grid forces the two rules of "
+            "a square to be held in mind at once — an event and a nationality, a stroke and a decade — "
+            "which is exactly the kind of cross-referencing the rest of this site invites you to do "
+            "with your eyes. Every accepted answer is a real row in the world record dataset."
         )
