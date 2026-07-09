@@ -885,6 +885,237 @@ st.markdown(
     .home-cine { min-height: 48vh; }
 }
 
+
+    .fact-box {
+        margin: -14px 0 28px 0;
+        max-width: 680px;
+        background: linear-gradient(135deg, #FFFFFF 0%, #EAF6F5 100%);
+        border: 1px solid #D8E9E8;
+        border-left: 6px solid #C9A24B;
+        border-radius: 18px;
+        padding: 18px 22px;
+        box-shadow: 0 18px 38px -28px rgba(12,74,90,0.55);
+    }
+
+    .timeline-record-card {
+        background: linear-gradient(135deg, #FFFFFF 0%, #EAF6F5 100%);
+        border: 1px solid #D8E9E8;
+        border-left: 6px solid #C9A24B;
+        border-radius: 18px;
+        padding: 16px 20px;
+        margin-top: 2px;
+        box-shadow: 0 16px 34px -26px rgba(12,74,90,0.55);
+    }
+
+    .timeline-control-row {
+        margin-top: 18px;
+        margin-bottom: 28px;
+    }
+
+    .timeline-metrics-row {
+        margin-top: 10px;
+        margin-bottom: 26px;
+    }
+
+    .timeline-chart-spacer {
+        height: 10px;
+    }
+
+
+    .timeline-record-kicker {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #C9A24B;
+        margin-bottom: 6px;
+    } 
+
+    .timeline-record-main {
+        font-family: 'Anton', system-ui, sans-serif;
+        font-size: 30px;
+        line-height: 1.05;
+        color: #0C4A5A;
+        text-transform: uppercase;
+    }
+
+    .timeline-record-sub {
+        margin-top: 7px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #3E5964;
+        line-height: 1.4;
+    }
+
+    .timeline-selector-note {
+        font-size: 13px;
+        font-weight: 500;
+        color: #5A7480;
+        margin-top: -6px;
+        margin-bottom: 8px;
+    }
+
+    .fact-kicker {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #C9A24B;
+        margin-bottom: 7px;
+    }
+
+    .fact-text {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        color: #24343B;
+    }
+
+    .fact-text b {
+        color: #0C4A5A;
+    }
+
+    .glossary-wrap {
+        max-width: 1100px;
+        margin: 34px auto 10px auto;
+        padding: 0 8px;
+    }
+
+    .glossary-title {
+        font-family: 'Anton', system-ui, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        font-size: 26px;
+        color: #0C4A5A;
+        margin-bottom: 4px;
+    }
+
+    .glossary-intro {
+        font-size: 14.5px;
+        font-weight: 500;
+        color: #5A7480;
+        margin-bottom: 16px;
+    }
+
+    .glossary-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .glossary-item {
+        flex: 1 1 240px;
+        background: linear-gradient(135deg, #FFFFFF 0%, #EAF6F5 100%);
+        border: 1px solid #D8E9E8;
+        border-left: 5px solid #C9A24B;
+        border-radius: 14px;
+        padding: 12px 16px;
+    }
+
+    .glossary-term {
+        font-family: 'Anton', system-ui, sans-serif;
+        font-size: 19px;
+        color: #0C4A5A;
+        letter-spacing: 0.02em;
+    }
+
+    .glossary-def {
+        font-size: 13.5px;
+        font-weight: 500;
+        color: #3E5964;
+        line-height: 1.45;
+        margin-top: 3px;
+    }
+
+    .athlete-card {
+        background: linear-gradient(135deg, #FFFFFF 0%, #EAF6F5 100%);
+        border: 1px solid #D8E9E8;
+        border-left: 6px solid #C9A24B;
+        border-radius: 18px;
+        padding: 20px 24px;
+        margin: 6px 0 18px 0;
+        box-shadow: 0 18px 38px -28px rgba(12,74,90,0.55);
+    }
+
+    .athlete-card-kicker {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #C9A24B;
+        margin-bottom: 6px;
+    }
+
+    .athlete-card-name {
+        font-family: 'Anton', system-ui, sans-serif;
+        font-size: 34px;
+        line-height: 1.05;
+        color: #0C4A5A;
+        text-transform: uppercase;
+    }
+
+    .athlete-card-meta {
+        margin-top: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #3E5964;
+        line-height: 1.5;
+    }
+
+    .athlete-stat-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+    }
+
+    .athlete-stat {
+        flex: 1 1 110px;
+        background: rgba(255,255,255,0.75);
+        border: 1px solid #D8E9E8;
+        border-radius: 12px;
+        padding: 10px 12px;
+        text-align: center;
+    }
+
+    .athlete-stat-value {
+        font-family: 'Anton', system-ui, sans-serif;
+        font-size: 24px;
+        color: #0C4A5A;
+        line-height: 1.1;
+    }
+
+    .athlete-stat-label {
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        color: #5A7480;
+        margin-top: 4px;
+    }
+
+    .vs-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        min-height: 160px;
+    }
+
+    .vs-badge-inner {
+        font-family: 'Anton', system-ui, sans-serif;
+        font-size: 46px;
+        color: #C9A24B;
+        background: #FFFFFF;
+        border: 3px solid #C9A24B;
+        border-radius: 50%;
+        width: 92px;
+        height: 92px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 16px 34px -24px rgba(12,74,90,0.65);
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -895,23 +1126,68 @@ st.markdown(
 # UTILITY FUNCTIONS
 # ============================================================
 
+def fix_mojibake(value):
+    """Repair double-encoded text (UTF-8 read as cp1252/latin-1).
+
+    The source files contain artefacts like "ZoltAn" or "4x100m" where the
+    original accented characters were mangled. Re-encoding and decoding
+    restores them. Applied repeatedly because some strings were mangled twice.
+    """
+    for _ in range(3):
+        if not any(marker in value for marker in ("\u00c3", "\u00c2", "\u00e2\u20ac")):
+            break
+        repaired = None
+        for encoding in ("cp1252", "latin-1"):
+            try:
+                repaired = value.encode(encoding).decode("utf-8")
+                break
+            except (UnicodeEncodeError, UnicodeDecodeError):
+                continue
+        if repaired is None or repaired == value:
+            break
+        value = repaired
+    return value
+
+
 def clean_text(value):
-    """Clean text values, including common mojibake like Â."""
+    """Clean text values, repairing mojibake and collapsing whitespace."""
     if pd.isna(value):
         return ""
-    value = str(value)
-    value = value.replace("Â", "")
+    value = fix_mojibake(str(value))
     value = value.replace("\xa0", " ")
-    value = value.replace("Ã©", "é")
-    value = value.replace("Ã¨", "è")
-    value = value.replace("Ã¶", "ö")
-    value = value.replace("Ã¼", "ü")
-    value = value.replace("Ã¡", "á")
-    value = value.replace("Ã­", "í")
-    value = value.replace("Ã³", "ó")
-    value = value.replace("Ã£", "ã")
     value = re.sub(r"\s+", " ", value)
     return value.strip()
+
+
+def athlete_key(value):
+    """A single identity key shared by both datasets.
+
+    The world record file writes "Jonty Skinner", the top-200 file writes
+    "SKINNER, Jonty". Without this key the same swimmer never matches across
+    the two sources. Accents are folded so "Zoltan" and "Zoltán" agree.
+    """
+    if not isinstance(value, str):
+        return ""
+    text = clean_text(value)
+    text = "".join(
+        ch for ch in unicodedata.normalize("NFKD", text)
+        if not unicodedata.combining(ch)
+    )
+    if "," in text:
+        last, first = text.split(",", 1)
+        text = f"{first.strip()} {last.strip()}"
+    text = re.sub(r"[^A-Za-z ]", " ", text)
+    return re.sub(r"\s+", " ", text).strip().lower()
+
+
+def pretty_name(value):
+    """Turn 'SKINNER, Jonty' into 'Jonty Skinner'; leave normal names alone."""
+    text = clean_text(value)
+    if "," in text:
+        last, first = text.split(",", 1)
+        text = f"{first.strip()} {last.strip()}"
+    parts = [p.capitalize() if p.isupper() else p for p in text.split()]
+    return " ".join(parts)
 
 
 def snake_case(col):
@@ -1101,7 +1377,6 @@ def apply_common_filters(df, gender=True, course=True, stroke=True, distance=Tru
     filtered = df.copy()
 
     with st.sidebar:
-        st.markdown("### Filters")
 
         if gender and "gender" in filtered.columns:
             genders = safe_unique(filtered["gender"])
@@ -1159,7 +1434,9 @@ def load_world_records():
     df.columns = [snake_case(c) for c in df.columns]
 
     for col in df.columns:
-        if df[col].dtype == "object":
+        # pandas >= 3 returns StringDtype (not object) for text columns, so a
+        # plain object check would silently skip cleaning them.
+        if df[col].dtype == "object" or pd.api.types.is_string_dtype(df[col]):
             df[col] = df[col].apply(clean_text)
 
     if "seconds" not in df.columns:
@@ -1243,6 +1520,16 @@ def load_world_records():
         + ")"
     )
 
+    # Relay rows store four swimmers concatenated in a single "name" cell
+    # (e.g. "Steve Clark (52.9)Mike Austin..."). Flag them so athlete-level
+    # views can exclude them instead of treating the blob as one person.
+    if "event" in df.columns:
+        df["is_relay"] = df["event"].astype(str).str.contains("Relay", case=False, na=False)
+    else:
+        df["is_relay"] = False
+
+    df["athlete_key"] = np.where(df["is_relay"], "", df["name"].apply(athlete_key))
+
     df = df.sort_values(["event_label", "date", "seconds"], ascending=[True, True, True])
 
     return df
@@ -1257,7 +1544,9 @@ def load_top_performances():
     df.columns = [snake_case(c) for c in df.columns]
 
     for col in df.columns:
-        if df[col].dtype == "object":
+        # pandas >= 3 returns StringDtype (not object) for text columns, so a
+        # plain object check would silently skip cleaning them.
+        if df[col].dtype == "object" or pd.api.types.is_string_dtype(df[col]):
             df[col] = df[col].apply(clean_text)
 
     desc_col = first_existing_column(df, ["event_description", "event_name", "event"])
@@ -1320,6 +1609,9 @@ def load_top_performances():
 
     df["time_label"] = df["time_seconds"].apply(format_time)
 
+    df["is_relay"] = df["event_label"].astype(str).str.contains("Relay", case=False, na=False)
+    df["athlete_key"] = np.where(df["is_relay"], "", df["athlete"].apply(athlete_key))
+
     df = df.sort_values(["event_label", "rank", "time_seconds"], ascending=[True, True, True])
 
     return df
@@ -1367,6 +1659,11 @@ def normalize_answer(value):
 def prepare_swim_game_data(df):
     """Prepare world record data for the tic-tac-toe quiz."""
     game_df = df.copy()
+
+    # Relay rows hold four swimmers in one cell, so they can never be a valid
+    # single-name answer in the quiz.
+    if "is_relay" in game_df.columns:
+        game_df = game_df[~game_df["is_relay"]].copy()
 
     game_df = game_df[game_df["name"].astype(str).str.strip() != ""].copy()
     game_df = game_df[game_df["event_label"].astype(str).str.strip() != ""].copy()
@@ -1621,7 +1918,7 @@ def build_pool_lanes():
         active_class = " active" if page == page_name else ""
         page_url = quote(page_name, safe="")
         lanes += (
-            f'<a class="home-lane{active_class}" href="?page={page_url}">'
+            f'<a class="home-lane{active_class}" href="?page={page_url}" target="_self">'
             f'<span class="hl-line"></span>'
             f'<span class="hl-btn">'
             f'<span class="hl-name">{PAGE_LABELS[page_name]}</span>'
@@ -1682,7 +1979,9 @@ def brand_html(tagline):
 
 def home_stats_html():
     """Scoreboard-style chips with a few real numbers from the datasets."""
-    names = {clean_text(x) for x in wr["name"].dropna()} | {clean_text(x) for x in top["athlete"].dropna()}
+    names = set(wr.loc[wr["athlete_key"] != "", "athlete_key"]) | set(
+        top.loc[top["athlete_key"] != "", "athlete_key"]
+    )
     names = {n for n in names if n}
 
     chips = [
@@ -1863,6 +2162,38 @@ if page == "Home":
         unsafe_allow_html=True
     )
 
+    # Glossary: the acronyms used across every page, explained once, up front.
+    glossary = [
+        ("LC", "Long course. Races swum in a 50-metre Olympic pool. Times are usually slower, "
+               "because there are fewer turns to push off from."),
+        ("SC", "Short course. Races swum in a 25-metre pool. More walls means more push-offs, "
+               "so times are typically faster than long course."),
+        ("WR", "World record. The fastest time ever officially recognised for an event. "
+               "Records are kept separately for long and short course."),
+        ("IM", "Individual medley. One swimmer covers all four strokes in a single race, "
+               "in the order butterfly, backstroke, breaststroke, freestyle."),
+        ("Relay", "A team race: four swimmers each swim an equal leg. Relay records belong to the "
+                  "team, so they are excluded from the individual athlete pages."),
+        ("Top 200", "The 200 fastest performances ever recorded in an event. Unlike a world record, "
+                    "one swimmer can appear many times."),
+    ]
+
+    items = "".join(
+        f"<div class='glossary-item'><div class='glossary-term'>{term}</div>"
+        f"<div class='glossary-def'>{definition}</div></div>"
+        for term, definition in glossary
+    )
+
+    st.markdown(
+        "<div class='glossary-wrap'>"
+        "<div class='glossary-title'>Reading the numbers</div>"
+        "<div class='glossary-intro'>A few abbreviations appear on every page. "
+        "Here is what they mean.</div>"
+        f"<div class='glossary-grid'>{items}</div>"
+        "</div>",
+        unsafe_allow_html=True
+    )
+
 
 # ============================================================
 # PAGE 2 - WORLD RECORD TIMELINE
@@ -1870,13 +2201,34 @@ if page == "Home":
 
 elif page == "World Record Timeline":
 
-    page_header(
-        "World Record Timeline",
-        "Follow how the fastest official world record in each event changed over time. Lower seconds mean faster performance.",
-        image_file="timeline.jpg",
-        alt="Vintage Olympic swimming start",
-        ratio="70%"
-    )
+    # --- Editorial header: identical markup to page_header so it matches other sections ---
+    col_txt, col_img = st.columns([1.45, 1], gap="large")
+
+    with col_txt:
+        st.markdown("<div class='section-title'>World Record Timeline</div>", unsafe_allow_html=True)
+        st.markdown("<div class='wave-rule'></div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='section-subtitle'>Follow how the fastest official world record in each "
+            "event changed over time. Lower seconds mean faster performance.</div>",
+            unsafe_allow_html=True,
+        )
+        st.markdown(
+            "<div class=\"fact-box\">"
+            "<div class=\"fact-kicker\">Did you know?</div>"
+            "<div class=\"fact-text\">At the first modern Olympic Games in <b>Athens 1896</b>, "
+            "swimming was not held in a pool: the races took place in the open waters of the "
+            "<b>Bay of Zea</b>, with water reported at about <b>13&deg;C</b>. From cold open water "
+            "to today's controlled pools, every record on this page is a step in the evolution of "
+            "swimming speed.</div>"
+            "</div>",
+            unsafe_allow_html=True,
+        )
+
+    with col_img:
+        st.markdown(
+            swim_figure("timeline.jpg", alt="Vintage Olympic swimming start", ratio="70%"),
+            unsafe_allow_html=True,
+        )
 
     filtered = apply_common_filters(
         wr,
@@ -1887,93 +2239,233 @@ elif page == "World Record Timeline":
         key_prefix="timeline"
     )
 
-    with st.sidebar:
-        st.markdown("### Event selection")
-        available_events = safe_unique(filtered["event_label"])
-        selected_event = st.selectbox(
-            "Choose one event",
-            available_events,
-            index=0 if available_events else None
-        )
-
-    data = filtered[filtered["event_label"] == selected_event].copy()
-    data = data.sort_values("date")
-
-    if data.empty:
+    if filtered.empty:
         st.warning("No data available for the selected filters.")
         st.stop()
 
-    first_record = data.dropna(subset=["seconds"]).iloc[0]
-    last_record = data.dropna(subset=["seconds"]).iloc[-1]
-    improvement = first_record["seconds"] - last_record["seconds"]
-    improvement_pct = improvement / first_record["seconds"] * 100 if first_record["seconds"] else np.nan
-
-    c1, c2, c3, c4 = st.columns(4)
-
-    with c1:
-        st.metric("Selected event", selected_event)
-
-    with c2:
-        st.metric("Number of records", len(data))
-
-    with c3:
-        st.metric("Total improvement", f"{improvement:.2f} s")
-
-    with c4:
-        st.metric("Improvement %", f"{improvement_pct:.1f}%")
-
-    fig = px.line(
-        data,
-        x="date",
-        y="seconds",
-        markers=True,
-        color="course",
-        color_discrete_map=COURSE_COLORS,
-        hover_data={
-            "name": True,
-            "nationality": True,
-            "time": True,
-            "meet": True,
-            "location": True,
-            "date": "|%d %b %Y",
-            "seconds": ":.2f"
-        },
-        title=f"Record progression — {selected_event}"
+    # On-page hint so users notice the sidebar filters (same as Nations & Places).
+    st.info(
+        "Use the **Filters** in the sidebar on the left (gender, course, stroke, distance) "
+        "— the chart and table below update live."
     )
 
-    current_data = data[data["is_current_bool"] == True]
+    available_events = safe_unique(filtered["event_label"])
 
-    if not current_data.empty:
-        fig.add_trace(
-            go.Scatter(
-                x=current_data["date"],
-                y=current_data["seconds"],
-                mode="markers+text",
-                marker=dict(size=17, color=GOLD, symbol="star"),
-                text=["Current record"] * len(current_data),
-                textposition="top center",
-                name="Current record",
-                hovertext=current_data["name"] + " — " + current_data["time"],
-                hoverinfo="text"
+    st.markdown("<div class='timeline-control-row'>", unsafe_allow_html=True)
+
+    selector_col, record_col = st.columns([1, 1.45], gap="large")
+
+    with selector_col:
+        selected_event = st.selectbox(
+            "Choose a race to explore",
+            available_events,
+            index=0 if available_events else None,
+            key="timeline_event_selector"
+        )
+
+        st.markdown(
+            "<div class=\"timeline-selector-note\">Select one event and follow every historical "
+            "step that led to the current world record.</div>",
+            unsafe_allow_html=True,
+        )
+
+    data = filtered[filtered["event_label"] == selected_event].copy()
+    data = data.dropna(subset=["seconds"]).sort_values("date")
+
+    if data.empty:
+        st.warning("No data available for the selected race.")
+        st.stop()
+
+    current_rows = data[data["is_current_bool"] == True].copy()
+
+    if not current_rows.empty:
+        current_record = current_rows.sort_values("date").iloc[-1]
+    else:
+        current_record = data.sort_values("date").iloc[-1]
+
+    first_record = data.iloc[0]
+    improvement = first_record["seconds"] - current_record["seconds"]
+    improvement_pct = improvement / first_record["seconds"] * 100 if first_record["seconds"] else np.nan
+
+    current_time = clean_text(current_record["time"])
+    current_name = clean_text(current_record["name"])
+    current_nat = clean_text(current_record["nationality"])
+    current_meet = clean_text(current_record["meet"])
+    current_location = clean_text(current_record["location"])
+
+    if pd.notna(current_record["date"]):
+        current_date_label = current_record["date"].strftime("%d %b %Y")
+    else:
+        current_date_label = "Unknown date"
+
+    with record_col:
+        st.markdown(
+            f"<div class=\"timeline-record-card\">"
+            f"<div class=\"timeline-record-kicker\">Current world record</div>"
+            f"<div class=\"timeline-record-main\">{current_time} &middot; {current_name}</div>"
+            f"<div class=\"timeline-record-sub\">{selected_event}<br>"
+            f"{current_nat} &middot; {current_date_label} &middot; {current_meet} &middot; {current_location}</div>"
+            f"</div>",
+            unsafe_allow_html=True,
+        )
+
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # Metrics: 3 columns (the long event name lived here before and got truncated with "…").
+    st.markdown("<div class='timeline-metrics-row'>", unsafe_allow_html=True)
+
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        st.metric("Record entries", len(data))
+
+    with c2:
+        st.metric("Total improvement", f"{improvement:.2f} s")
+
+    with c3:
+        st.metric("Improvement", f"{improvement_pct:.1f}%")
+
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    st.markdown("<div class='timeline-chart-spacer'></div>", unsafe_allow_html=True)
+
+    chart_data = data.copy()
+
+    chart_data["date_label"] = chart_data["date"].apply(
+        lambda x: x.strftime("%d %b %Y") if pd.notna(x) else "Unknown date"
+    )
+
+    for col in ["event_label", "time", "name", "nationality", "meet", "location", "course"]:
+        chart_data[col] = chart_data[col].astype(str).apply(clean_text)
+        chart_data.loc[chart_data[col] == "", col] = "—"
+
+    chart_data["current_point"] = chart_data.index == current_record.name
+
+    custom_cols = [
+        "event_label",
+        "time",
+        "date_label",
+        "name",
+        "nationality",
+        "meet",
+        "location",
+        "course"
+    ]
+
+    chart_title = (
+        f"<b>{selected_event}</b><br>"
+        f"<span style='font-size:14px;color:#52616B'>"
+        f"Current world record: <b>{current_time}</b> · {current_name} · {current_nat} · {current_date_label}"
+        f"</span>"
+    )
+
+    fig = go.Figure()
+
+    fig.add_trace(
+        go.Scatter(
+            x=chart_data["date"],
+            y=chart_data["seconds"],
+            mode="lines+markers",
+            name="World record progression",
+            line=dict(color=BLUE, width=3),
+            marker=dict(
+                size=8,
+                color=BLUE,
+                line=dict(color="white", width=1.4)
+            ),
+            customdata=chart_data[custom_cols].to_numpy(),
+            hovertemplate=(
+                "<b>%{customdata[0]}</b><br><br>"
+                "Time: <b>%{customdata[1]}</b> (%{y:.2f} s)<br>"
+                "Date: %{customdata[2]}<br>"
+                "Swimmer: %{customdata[3]}<br>"
+                "Nationality: %{customdata[4]}<br>"
+                "Course: %{customdata[7]}<br>"
+                "Meet: %{customdata[5]}<br>"
+                "Location: %{customdata[6]}"
+                "<extra></extra>"
             )
         )
+    )
+
+    fig.add_trace(
+        go.Scatter(
+            x=[current_record["date"]],
+            y=[current_record["seconds"]],
+            mode="markers+text",
+            name="Current record",
+            marker=dict(
+                size=21,
+                color=GOLD,
+                symbol="star",
+                line=dict(color="white", width=1.5)
+            ),
+            text=["Current WR"],
+            textposition="top center",
+            customdata=pd.DataFrame(
+                [[
+                    selected_event,
+                    current_time,
+                    current_date_label,
+                    current_name,
+                    current_nat,
+                    current_meet,
+                    current_location,
+                    clean_text(current_record["course"])
+                ]],
+                columns=custom_cols
+            ).to_numpy(),
+            hovertemplate=(
+                "<b>Current world record</b><br><br>"
+                "Event: %{customdata[0]}<br>"
+                "Time: <b>%{customdata[1]}</b> (%{y:.2f} s)<br>"
+                "Date: %{customdata[2]}<br>"
+                "Swimmer: %{customdata[3]}<br>"
+                "Nationality: %{customdata[4]}<br>"
+                "Course: %{customdata[7]}<br>"
+                "Meet: %{customdata[5]}<br>"
+                "Location: %{customdata[6]}"
+                "<extra></extra>"
+            )
+        )
+    )
+
+    fig.add_hline(
+        y=current_record["seconds"],
+        line_dash="dot",
+        line_color=GOLD,
+        opacity=0.75,
+        annotation_text=f"Current WR · {current_time}",
+        annotation_position="top left",
+        annotation_font=dict(color=GOLD, size=12)
+    )
+
+    fig.update_layout(
+        title=dict(
+            text=chart_title,
+            x=0.02,
+            xanchor="left"
+        )
+    )
+
+    fig.update_xaxes(
+        title="Year of world record",
+        tickformat="%Y"
+    )
 
     fig.update_yaxes(
         autorange="reversed",
         title="Time in seconds — lower is faster"
     )
-    fig.update_xaxes(title="Date")
-    fig = plotly_clean_layout(fig, height=600)
+
+    fig = plotly_clean_layout(fig, height=650)
     st.plotly_chart(fig, use_container_width=True)
 
     st.markdown(
-        """
-        <div class="small-caption">
-        Design note: the y-axis is reversed because in swimming a lower time represents a better performance.
-        The gold marker highlights the current world record.
-        </div>
-        """,
-        unsafe_allow_html=True
+        "<div class=\"small-caption\">Design note: the y-axis is reversed because in swimming a "
+        "lower time represents a better performance. The gold marker highlights the current world "
+        "record.</div>",
+        unsafe_allow_html=True,
     )
 
     st.dataframe(
@@ -1995,7 +2487,6 @@ elif page == "World Record Timeline":
         hide_index=True
     )
 
-
 # ============================================================
 # PAGE 3 - ALL-TIME TOP 200 RANKINGS
 # ============================================================
@@ -2004,10 +2495,13 @@ elif page == "All-Time Top 200 Rankings":
 
     page_header(
         "All-Time Top 200 Rankings",
-        "Go beyond the world record and explore the depth of elite swimming performances.",
+        "A world record is a single number: one swimmer, one day. The top-200 tells a different "
+        "story — how crowded the summit really is. In most events the 200 fastest swims in history "
+        "are separated by barely a couple of seconds. This page is about that depth: how tightly "
+        "packed the elite are, when their times were swum, and who keeps coming back.",
         image_file="top200.jpg",
         alt="Underwater view of swimmers",
-        ratio="122%"
+        ratio="70%"
     )
 
     filtered = apply_common_filters(
@@ -2032,93 +2526,165 @@ elif page == "All-Time Top 200 Rankings":
 
         max_rank = int(filtered["rank"].max()) if filtered["rank"].notna().any() else 200
         rank_limit = st.slider(
-            "Show top N",
+            "Rows to list in the table",
             min_value=5,
             max_value=min(200, max_rank),
             value=30,
             step=5
         )
 
-    data = filtered[
-        (filtered["event_label"] == selected_event)
-        & (filtered["rank"] <= rank_limit)
-    ].copy()
+    st.info(
+        "Use the **Filters** and **Ranking selection** panels in the sidebar on the left to change "
+        "event — every chart below updates live."
+    )
 
-    if data.empty:
+    # The distribution charts always use the full ranking; only the table is trimmed.
+    event_data = filtered[filtered["event_label"] == selected_event].dropna(subset=["time_seconds"]).copy()
+
+    if event_data.empty:
         st.warning("No ranking data available for the selected filters.")
         st.stop()
 
-    data = data.sort_values(["rank", "time_seconds"])
+    event_data = event_data.sort_values(["rank", "time_seconds"])
+    event_data["year"] = event_data["date"].dt.year
 
-    best_time = data["time_seconds"].min()
-    data["gap_from_best"] = data["time_seconds"] - best_time
-    data["chart_label"] = (
-        "#" + data["rank"].astype(int).astype(str)
-        + " — "
-        + data["athlete"].astype(str)
-    )
+    table_data = event_data[event_data["rank"] <= rank_limit].copy()
+
+    best_time = event_data["time_seconds"].min()
+    slowest_time = event_data["time_seconds"].max()
+    field_spread = slowest_time - best_time
+    best_row = event_data.iloc[0]
 
     c1, c2, c3, c4 = st.columns(4)
 
     with c1:
-        st.metric("Event", selected_event)
+        st.metric("Fastest ever", format_time(best_time))
 
     with c2:
-        st.metric("Best time", format_time(best_time))
+        st.metric("Whole field spans", f"{field_spread:.2f} s")
 
     with c3:
-        st.metric("Athletes shown", data["athlete"].nunique())
+        st.metric("Different athletes", event_data["athlete"].nunique())
 
     with c4:
-        st.metric("Nations shown", data["team_name"].nunique())
+        st.metric("Different nations", event_data["team_name"].nunique())
 
-    fig = px.bar(
-        data.sort_values("rank"),
-        x="gap_from_best",
-        y="chart_label",
-        orientation="h",
-        color="gap_from_best",
-        color_continuous_scale=[[0, GOLD], [1, BLUE]],
-        hover_data={
-            "athlete": True,
-            "time_label": True,
-            "rank": True,
-            "team_name": True,
-            "city": True,
-            "date": True,
-            "gap_from_best": ":.2f"
-        },
-        title=f"Gap from the best time — {selected_event}"
+    # ------------------------------------------------------------------
+    # 1. HOW TIGHT IS THE FIELD?  Box-and-whisker with every swim drawn on top.
+    #    Each dot is one performance: nothing is aggregated away, and position
+    #    along a common axis is the most accurately read visual channel.
+    # ------------------------------------------------------------------
+    st.markdown("### How tight is the elite field?")
+    st.caption(
+        f"Every one of the {len(event_data)} fastest swims ever recorded in this event, placed on a "
+        f"single time axis. The box covers the middle half of them; the whiskers reach the rest. "
+        f"Each dot is one swim — hover to see who."
     )
-    fig.update_layout(yaxis=dict(autorange="reversed"), coloraxis_showscale=False)
-    fig.update_xaxes(title="Gap from best time, seconds")
-    fig.update_yaxes(title="")
-    fig = plotly_clean_layout(fig, height=max(520, 22 * len(data)))
-    st.plotly_chart(fig, use_container_width=True)
 
-    col_a, col_b = st.columns([1, 1])
+    swarm = go.Figure()
+    swarm.add_trace(go.Box(
+        x=event_data["time_seconds"],
+        name="",
+        boxpoints="all",
+        jitter=0.6,
+        pointpos=0,
+        marker=dict(color=BLUE, size=6, opacity=0.55),
+        line=dict(color=NAVY),
+        fillcolor="rgba(34,184,207,0.18)",
+        customdata=np.stack(
+            [event_data["athlete"], event_data["time_label"], event_data["rank"], event_data["team_name"]],
+            axis=-1
+        ),
+        hovertemplate="<b>%{customdata[0]}</b><br>%{customdata[1]} · rank %{customdata[2]}"
+                      "<br>%{customdata[3]}<extra></extra>",
+        showlegend=False,
+    ))
+    swarm.add_trace(go.Scatter(
+        x=[best_time],
+        y=[0],
+        mode="markers",
+        marker=dict(color=GOLD, size=18, symbol="star", line=dict(color="white", width=1.4)),
+        name="Fastest ever",
+        hovertemplate=f"<b>{clean_text(best_row['athlete'])}</b><br>"
+                      f"{clean_text(best_row['time_label'])} · the fastest ever<extra></extra>",
+    ))
+    swarm.update_xaxes(title="Time in seconds — further left is faster")
+    swarm.update_yaxes(showticklabels=False, title="")
+    swarm = plotly_clean_layout(swarm, height=360, title=f"{selected_event}")
+    st.plotly_chart(swarm, use_container_width=True)
+
+    st.markdown(
+        f"<div class='small-caption'>The gold star is the fastest swim of all time in this event "
+        f"({clean_text(best_row['athlete'])}, {clean_text(best_row['time_label'])}). Everything else "
+        f"crowds in behind it: the 200th-fastest swim in history is only "
+        f"<b>{field_spread:.2f} seconds</b> slower. Bars or bins would hide that crowding, so every "
+        f"performance is drawn individually.</div>",
+        unsafe_allow_html=True
+    )
+
+    # ------------------------------------------------------------------
+    # 2. WHEN were these swims performed?
+    # ------------------------------------------------------------------
+    st.markdown("### When were these swims performed?")
+
+    suit_era = event_data[event_data["year"].between(2008, 2009)]
+    suit_share = len(suit_era) / len(event_data) * 100 if len(event_data) else 0
+
+    st.caption(
+        "Each dot is the same swim as above, now placed by the date it happened. A flat cloud means "
+        "the event has barely moved; a downward drift means the whole elite got faster."
+    )
+
+    era = go.Figure()
+    era.add_trace(go.Scatter(
+        x=event_data["date"],
+        y=event_data["time_seconds"],
+        mode="markers",
+        marker=dict(color=BLUE, size=7, opacity=0.65, line=dict(color="white", width=0.6)),
+        customdata=np.stack([event_data["athlete"], event_data["time_label"], event_data["rank"]], axis=-1),
+        hovertemplate="<b>%{customdata[0]}</b><br>%{customdata[1]} · rank %{customdata[2]}"
+                      "<br>%{x|%d %b %Y}<extra></extra>",
+        showlegend=False,
+    ))
+    era.add_vrect(
+        x0="2008-01-01", x1="2009-12-31",
+        fillcolor=GOLD, opacity=0.16, line_width=0,
+        annotation_text="Polyurethane suits", annotation_position="top left",
+        annotation_font=dict(color=DARK_GREY, size=12),
+    )
+    era.update_xaxes(title="Date of the swim")
+    era.update_yaxes(autorange="reversed", title="Time in seconds — lower is faster")
+    era = plotly_clean_layout(era, height=440, title="The all-time top 200, placed in history")
+    st.plotly_chart(era, use_container_width=True)
+
+    st.markdown(
+        f"<div class='small-caption'>The shaded band marks 2008–2009, when full-body polyurethane "
+        f"suits were legal; they were banned from 2010. In this event "
+        f"<b>{len(suit_era)} of the {len(event_data)} best swims ever ({suit_share:.0f}%)</b> come "
+        f"from those two seasons alone. It is a reminder that a ranking table records the conditions "
+        f"of a performance as much as the athlete.</div>",
+        unsafe_allow_html=True
+    )
+
+    # ------------------------------------------------------------------
+    # 3. WHO recurs, and WHICH nations have depth?
+    # ------------------------------------------------------------------
+    st.markdown("### Who gets here, and who gets here often")
+    st.caption(
+        "On the left, the swimmers with most performances inside this top 200 — depth belongs to "
+        "athletes who repeat, not only to record holders. On the right, the same question asked of "
+        "nations: a short box means a country's swimmers cluster tightly near the top."
+    )
+
+    col_a, col_b = st.columns(2)
 
     with col_a:
-        fig_hist = px.histogram(
-            filtered[filtered["event_label"] == selected_event],
-            x="time_seconds",
-            nbins=30,
-            color_discrete_sequence=[AQUA],
-            title="Distribution of top-200 times"
-        )
-        fig_hist.update_xaxes(title="Time in seconds")
-        fig_hist.update_yaxes(title="Number of performances")
-        fig_hist = plotly_clean_layout(fig_hist, height=420)
-        st.plotly_chart(fig_hist, use_container_width=True)
-
-    with col_b:
         athlete_counts = (
-            filtered[filtered["event_label"] == selected_event]
-            .groupby("athlete")
+            event_data.groupby("athlete")
             .size()
             .reset_index(name="entries")
             .sort_values("entries", ascending=False)
-            .head(15)
+            .head(12)
         )
 
         fig_ath = px.bar(
@@ -2127,14 +2693,43 @@ elif page == "All-Time Top 200 Rankings":
             y="athlete",
             orientation="h",
             color_discrete_sequence=[BLUE],
-            title="Most recurring athletes in this event top 200"
         )
-        fig_ath.update_layout(yaxis=dict(autorange="reversed"))
-        fig_ath = plotly_clean_layout(fig_ath, height=420)
+        fig_ath.update_layout(yaxis=dict(autorange="reversed"), showlegend=False)
+        fig_ath.update_xaxes(title="Swims inside this top 200")
+        fig_ath.update_yaxes(title="")
+        fig_ath = plotly_clean_layout(fig_ath, height=460, title="Most recurring swimmers")
         st.plotly_chart(fig_ath, use_container_width=True)
 
+    with col_b:
+        nation_order = event_data["team_name"].value_counts().head(6).index.tolist()
+        nation_data = event_data[event_data["team_name"].isin(nation_order)]
+
+        fig_nat = px.box(
+            nation_data,
+            x="time_seconds",
+            y="team_name",
+            orientation="h",
+            category_orders={"team_name": nation_order},
+            color_discrete_sequence=[AQUA],
+            points="all",
+        )
+        fig_nat.update_traces(marker=dict(size=5, opacity=0.5, color=BLUE), line=dict(color=NAVY))
+        fig_nat.update_layout(showlegend=False)
+        fig_nat.update_xaxes(title="Time in seconds — further left is faster")
+        fig_nat.update_yaxes(title="")
+        fig_nat = plotly_clean_layout(fig_nat, height=460, title="Which nations have depth")
+        st.plotly_chart(fig_nat, use_container_width=True)
+
+    # ------------------------------------------------------------------
+    # 4. The exact numbers. A table is the right tool for looking up a value.
+    # ------------------------------------------------------------------
+    st.markdown(f"### The first {len(table_data)} places, exactly")
+    st.caption(
+        "Charts show shape; a table shows values. Use the slider in the sidebar to lengthen this list."
+    )
+
     st.dataframe(
-        data[
+        table_data[
             [
                 "rank", "athlete", "time_label", "time_seconds",
                 "team_name", "team_code", "date", "city", "country_code"
@@ -2165,144 +2760,352 @@ elif page == "Athletes Hall of Fame":
 
     page_header(
         "Athletes Hall of Fame",
-        "Explore the swimmers who appear most often in world record history and all-time rankings.",
+        "Every swimmer here has an identity card built from two different sources: the world record "
+        "book, which tracks who pushed the limit, and the all-time top-200 rankings, which show how "
+        "consistently fast a swimmer really was. Pick an athlete in the sidebar, then scroll down to "
+        "put two of them head to head.",
         image_file="athletes.jpg",
         alt="Swimmer racing butterfly",
-        ratio="128%"
+        ratio="70%"
     )
 
-    wr_names = set(wr["name"].dropna().unique())
-    top_names = set(top["athlete"].dropna().unique())
-    all_names = sorted([x for x in wr_names.union(top_names) if clean_text(x) != ""])
+    # ------------------------------------------------------------------
+    # Identity keys and relay handling are built once in the loaders, so every
+    # page shares them. Relay rows pack four swimmers into a single cell, so
+    # they are excluded from every athlete-level view.
+    # ------------------------------------------------------------------
+    wr_a = wr[~wr["is_relay"] & (wr["athlete_key"] != "")].copy()
+    top_a = top[~top["is_relay"] & (top["athlete_key"] != "")].copy()
 
+    # Display name: prefer the world-record spelling, else prettify the top-200 one.
+    top_pairs = (
+        top_a.loc[top_a["athlete_key"] != "", ["athlete_key", "athlete"]]
+        .drop_duplicates("athlete_key")
+    )
+    wr_pairs = (
+        wr_a.loc[wr_a["athlete_key"] != "", ["athlete_key", "name"]]
+        .drop_duplicates("athlete_key")
+    )
+    display_names = {r.athlete_key: pretty_name(r.athlete) for r in top_pairs.itertuples()}
+    display_names.update({r.athlete_key: clean_text(r.name) for r in wr_pairs.itertuples()})
+
+    all_keys = sorted([k for k in display_names if k], key=lambda k: display_names[k])
+
+    def build_profile(key):
+        """Everything the identity card needs, gathered from both datasets."""
+        a_wr = wr_a[wr_a["athlete_key"] == key]
+        a_top = top_a[top_a["athlete_key"] == key]
+
+        nationality = "—"
+        if not a_wr.empty:
+            nats = a_wr["nationality"].apply(clean_text).replace("", np.nan).dropna()
+            if not nats.empty:
+                nationality = nats.mode().iloc[0]
+        if nationality == "—" and not a_top.empty:
+            teams = a_top["team_name"].apply(clean_text).replace("", np.nan).dropna()
+            if not teams.empty:
+                nationality = teams.mode().iloc[0]
+
+        birth_year = None
+        if not a_top.empty and "athlete_birth_date" in a_top.columns:
+            births = pd.to_datetime(a_top["athlete_birth_date"], errors="coerce").dropna()
+            if not births.empty:
+                birth_year = int(births.iloc[0].year)
+
+        years = []
+        if not a_wr.empty:
+            years += a_wr["date"].dropna().dt.year.tolist()
+        if not a_top.empty:
+            years += a_top["date"].dropna().dt.year.tolist()
+        career = f"{min(years)}–{max(years)}" if years else "—"
+
+        best_rank = "—"
+        if not a_top.empty and a_top["rank"].notna().any():
+            best_rank = int(a_top["rank"].min())
+
+        signature = "—"
+        if not a_top.empty:
+            signature = a_top["event_label"].value_counts().index[0]
+        elif not a_wr.empty:
+            signature = a_wr["event_label"].value_counts().index[0]
+
+        return {
+            "key": key,
+            "name": display_names.get(key, key.title()),
+            "nationality": nationality,
+            "birth_year": birth_year,
+            "career": career,
+            "wr_entries": len(a_wr),
+            "current_wr": int(a_wr["is_current_bool"].sum()) if not a_wr.empty else 0,
+            "top_entries": len(a_top),
+            "best_rank": best_rank,
+            "signature": signature,
+            "wr_rows": a_wr,
+            "top_rows": a_top,
+        }
+
+    def render_id_card(p, kicker="Athlete identity card"):
+        birth = f"Born {p['birth_year']}" if p["birth_year"] else "Birth year not recorded"
+        st.markdown(
+            f"<div class='athlete-card'>"
+            f"<div class='athlete-card-kicker'>{kicker}</div>"
+            f"<div class='athlete-card-name'>{p['name']}</div>"
+            f"<div class='athlete-card-meta'>"
+            f"{p['nationality']} &middot; {birth} &middot; Active {p['career']}<br>"
+            f"Signature event: <b>{p['signature']}</b>"
+            f"</div>"
+            f"<div class='athlete-stat-grid'>"
+            f"<div class='athlete-stat'><div class='athlete-stat-value'>{p['wr_entries']}</div>"
+            f"<div class='athlete-stat-label'>World records set</div></div>"
+            f"<div class='athlete-stat'><div class='athlete-stat-value'>{p['current_wr']}</div>"
+            f"<div class='athlete-stat-label'>Still standing</div></div>"
+            f"<div class='athlete-stat'><div class='athlete-stat-value'>{p['top_entries']}</div>"
+            f"<div class='athlete-stat-label'>Top-200 swims</div></div>"
+            f"<div class='athlete-stat'><div class='athlete-stat-value'>{p['best_rank']}</div>"
+            f"<div class='athlete-stat-label'>Best all-time rank</div></div>"
+            f"</div></div>",
+            unsafe_allow_html=True,
+        )
+
+    # ------------------------------------------------------------------
+    # Athlete selection
+    # ------------------------------------------------------------------
     with st.sidebar:
         st.markdown("### Athlete selection")
         search = st.text_input("Search athlete", "")
         if search:
-            filtered_names = [n for n in all_names if search.lower() in n.lower()]
+            shown_keys = [k for k in all_keys if search.lower() in display_names[k].lower()]
         else:
-            filtered_names = all_names
+            shown_keys = all_keys
 
-        selected_athlete = st.selectbox(
+        selected_key = st.selectbox(
             "Choose athlete",
-            filtered_names,
-            index=0 if filtered_names else None
+            shown_keys,
+            index=0 if shown_keys else None,
+            format_func=lambda k: display_names.get(k, k),
+            key="athlete_pick"
         )
 
-    if not selected_athlete:
-        st.warning("No athlete selected.")
-        st.stop()
-
-    athlete_wr = wr[wr["name"] == selected_athlete].copy()
-    athlete_top = top[top["athlete"] == selected_athlete].copy()
-
-    c1, c2, c3, c4 = st.columns(4)
-
-    with c1:
-        st.metric("World record entries", len(athlete_wr))
-
-    with c2:
-        st.metric("Current world records", int(athlete_wr["is_current_bool"].sum()) if not athlete_wr.empty else 0)
-
-    with c3:
-        st.metric("Top-200 entries", len(athlete_top))
-
-    with c4:
-        best_rank = int(athlete_top["rank"].min()) if not athlete_top.empty and athlete_top["rank"].notna().any() else "-"
-        st.metric("Best top-200 rank", best_rank)
-
-    st.markdown(
-        f"""
-        <div class="info-box">
-        <b>{selected_athlete}</b> profile combines two sources:
-        world record progression entries and top-200 all-time ranking appearances.
-        </div>
-        """,
-        unsafe_allow_html=True
+    st.info(
+        "Use the **Athlete selection** panel in the sidebar on the left to search and pick a "
+        "swimmer — the identity card and charts below update live."
     )
 
-    col_a, col_b = st.columns([1.1, 1])
+    if not selected_key:
+        st.warning("No athlete matches your search.")
+        st.stop()
+
+    profile = build_profile(selected_key)
+    athlete_wr = profile["wr_rows"].sort_values("date")
+    athlete_top = profile["top_rows"]
+
+    render_id_card(profile)
+
+    # ------------------------------------------------------------------
+    # 1. SMALL MULTIPLES.
+    #    A swimmer's records span events of wildly different length: Phelps set
+    #    marks at 49 seconds and at 251 seconds. Forcing both onto one y-axis
+    #    makes the short events a flat line at the bottom. Replicating one small
+    #    panel per event, each with its own scale, is the standard remedy.
+    # ------------------------------------------------------------------
+    st.markdown("### How this swimmer moved each record")
+
+    if not athlete_wr.empty:
+        panel_events = athlete_wr["event_label"].value_counts().head(6).index.tolist()
+        panels = athlete_wr[athlete_wr["event_label"].isin(panel_events)].sort_values("date")
+
+        st.caption(
+            f"One panel per event, because a 50-metre sprint and a 400-metre medley cannot share a "
+            f"vertical axis. Inside each panel the line falls as {profile['name']} took time off the "
+            f"world record. Each panel keeps its own scale, so read the shape of the descent, not "
+            f"the height."
+        )
+
+        fig_sm = px.line(
+            panels,
+            x="date",
+            y="seconds",
+            facet_col="event_label",
+            facet_col_wrap=3,
+            markers=True,
+            color_discrete_sequence=[BLUE],
+            custom_data=["time", "meet", "location"],
+        )
+        fig_sm.update_yaxes(matches=None, showticklabels=True, title="")
+        fig_sm.update_xaxes(matches=None, title="")
+        fig_sm.update_traces(
+            line=dict(width=2.4),
+            marker=dict(size=7, line=dict(color="white", width=1)),
+            hovertemplate="%{customdata[0]} · %{x|%b %Y}<br>%{customdata[1]}<extra></extra>",
+        )
+        # Facet titles arrive as "event_label=Men 200m Butterfly (LC)".
+        fig_sm.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1], font=dict(size=12)))
+
+        rows_needed = int(np.ceil(len(panel_events) / 3))
+        fig_sm = plotly_clean_layout(fig_sm, height=200 + 190 * rows_needed, title=None)
+        fig_sm.update_layout(showlegend=False)
+        st.plotly_chart(fig_sm, use_container_width=True)
+
+        st.caption(
+            "Seconds on every vertical axis, earlier dates to the left. A steep step means one swim "
+            "took a large chunk off the record; a gentle slope means it was chipped away."
+        )
+    else:
+        st.info("This athlete never held a world record in the world record dataset.")
+
+    # ------------------------------------------------------------------
+    # 2. Two questions that need a reference, not a raw number.
+    # ------------------------------------------------------------------
+    st.markdown("### Measured against the best there has ever been")
+    st.caption(
+        "On the left, how close this swimmer's personal best comes to the fastest swim ever recorded "
+        "in each event. Zero means they own it. On the right, all 200 of the fastest swims ever in "
+        "their signature event, with their own swims picked out."
+    )
+
+    col_a, col_b = st.columns([1, 1])
 
     with col_a:
-        if not athlete_wr.empty:
-            athlete_wr = athlete_wr.sort_values("date")
+        if not athlete_top.empty:
+            event_best = top.groupby("event_label")["time_seconds"].min()
+            personal_best = athlete_top.groupby("event_label")["time_seconds"].min()
+            reference = event_best.reindex(personal_best.index)
 
-            fig = px.scatter(
-                athlete_wr,
-                x="date",
-                y="seconds",
-                color="course",
-                color_discrete_map=COURSE_COLORS,
-                size=np.where(athlete_wr["is_current_bool"], 18, 9),
-                hover_data=["event_label", "time", "nationality", "meet", "location"],
-                title=f"World record timeline — {selected_athlete}"
+            gap = pd.DataFrame({
+                "event_label": personal_best.index,
+                "pct_behind": (personal_best - reference) / reference * 100,
+                "personal_best": personal_best.values,
+            }).sort_values("pct_behind").head(12)
+
+            gap["is_best_ever"] = gap["pct_behind"] <= 0.001
+            gap["bar_color"] = np.where(gap["is_best_ever"], GOLD, BLUE)
+
+            fig_gap = go.Figure()
+            fig_gap.add_trace(go.Bar(
+                x=gap["pct_behind"],
+                y=gap["event_label"],
+                orientation="h",
+                marker_color=gap["bar_color"],
+                customdata=np.stack([gap["personal_best"]], axis=-1),
+                hovertemplate="%{y}<br>Personal best %{customdata[0]:.2f} s"
+                              "<br>%{x:.2f}% behind the all-time best<extra></extra>",
+                showlegend=False,
+            ))
+            fig_gap.add_vline(
+                x=0, line_color=GOLD, line_width=2,
+                annotation_text="Fastest ever", annotation_position="top",
+                annotation_font=dict(color=DARK_GREY, size=11),
             )
-            fig.update_yaxes(autorange="reversed", title="Time in seconds — lower is faster")
-            fig.update_xaxes(title="Date")
-            fig = plotly_clean_layout(fig, height=500)
-            st.plotly_chart(fig, use_container_width=True)
+            fig_gap.update_layout(yaxis=dict(autorange="reversed"))
+            fig_gap.update_xaxes(title="Percent behind the fastest swim ever in that event")
+            fig_gap.update_yaxes(title="")
+            fig_gap = plotly_clean_layout(fig_gap, height=480, title="Distance from the summit")
+            st.plotly_chart(fig_gap, use_container_width=True)
+
+            owned = int(gap["is_best_ever"].sum())
+            if owned:
+                st.caption(
+                    f"A gold bar of zero length means {profile['name']} is the fastest human ever "
+                    f"recorded in that event ({owned} of them here)."
+                )
+            else:
+                st.caption(
+                    "Percent, not seconds: it is the only unit that lets a sprint and a distance "
+                    "race be judged against the same reference."
+                )
         else:
-            st.info("This athlete has no world record entries in the world record dataset.")
+            st.info("This athlete has no entries in the all-time top-200 dataset.")
 
     with col_b:
         if not athlete_top.empty:
-            event_counts = (
-                athlete_top.groupby("event_label")
-                .size()
-                .reset_index(name="entries")
-                .sort_values("entries", ascending=False)
-            )
+            signature = athlete_top["event_label"].value_counts().index[0]
+            field = top[top["event_label"] == signature].dropna(subset=["time_seconds"])
+            mine = athlete_top[athlete_top["event_label"] == signature].dropna(subset=["time_seconds"])
 
-            fig = px.bar(
-                event_counts,
-                x="entries",
-                y="event_label",
-                orientation="h",
-                color_discrete_sequence=[GOLD],
-                title=f"Top-200 appearances by event"
+            fig_field = go.Figure()
+            fig_field.add_trace(go.Box(
+                x=field["time_seconds"],
+                name="",
+                boxpoints="all",
+                jitter=0.6,
+                pointpos=0,
+                marker=dict(color="rgba(82,97,107,0.30)", size=6),
+                line=dict(color=DARK_GREY),
+                fillcolor="rgba(34,184,207,0.10)",
+                hoverinfo="skip",
+                showlegend=False,
+            ))
+            fig_field.add_trace(go.Scatter(
+                x=mine["time_seconds"],
+                y=np.zeros(len(mine)),
+                mode="markers",
+                marker=dict(color=GOLD, size=11, line=dict(color="white", width=1.2)),
+                name=profile["name"],
+                customdata=np.stack([mine["time_label"], mine["rank"]], axis=-1),
+                hovertemplate="%{customdata[0]} · rank %{customdata[1]}<extra></extra>",
+            ))
+            fig_field.update_xaxes(title="Time in seconds — further left is faster")
+            fig_field.update_yaxes(showticklabels=False, title="")
+            fig_field = plotly_clean_layout(fig_field, height=480, title=f"Inside the top 200: {signature}")
+            st.plotly_chart(fig_field, use_container_width=True)
+
+            st.caption(
+                f"{len(mine)} of the 200 fastest swims ever in this event belong to "
+                f"{profile['name']} (best rank {int(mine['rank'].min())})."
             )
-            fig.update_layout(yaxis=dict(autorange="reversed"))
-            fig.update_yaxes(title="")
-            fig = plotly_clean_layout(fig, height=500)
-            st.plotly_chart(fig, use_container_width=True)
         else:
-            st.info("This athlete has no top-200 entries in the all-time ranking dataset.")
-
+            st.info("No top-200 entries, so there is no field to place this swimmer in.")
+    # ------------------------------------------------------------------
+    # Global context
+    # ------------------------------------------------------------------
     section(
         "Global athlete rankings",
-        "These rankings show recurring names, not necessarily a final judgement of absolute greatness."
+        "How the selected swimmer compares with the names that recur most often across the whole "
+        "archive. These charts count appearances, so they reward longevity as much as raw speed."
     )
 
     col_1, col_2 = st.columns(2)
 
     with col_1:
         wr_rank = (
-            wr.groupby("name")
+            wr_a[wr_a["athlete_key"] != ""]
+            .groupby("athlete_key")
             .size()
             .reset_index(name="world_record_entries")
             .sort_values("world_record_entries", ascending=False)
             .head(15)
         )
+        wr_rank["athlete"] = wr_rank["athlete_key"].map(display_names)
+        wr_rank["highlight"] = np.where(
+            wr_rank["athlete_key"] == selected_key, "Selected athlete", "Other athletes"
+        )
 
         fig = px.bar(
             wr_rank,
             x="world_record_entries",
-            y="name",
+            y="athlete",
             orientation="h",
-            color_discrete_sequence=[BLUE],
-            title="Most world record entries"
+            color="highlight",
+            color_discrete_map={"Selected athlete": GOLD, "Other athletes": BLUE},
         )
-        fig.update_layout(yaxis=dict(autorange="reversed"))
-        fig = plotly_clean_layout(fig, height=520)
+        fig.update_layout(yaxis=dict(autorange="reversed"), legend_title_text="")
+        fig.update_xaxes(title="World records set")
+        fig.update_yaxes(title="")
+        fig = plotly_clean_layout(fig, height=520, title="Most world records set")
         st.plotly_chart(fig, use_container_width=True)
 
     with col_2:
         top_rank = (
-            top.groupby("athlete")
+            top_a[top_a["athlete_key"] != ""]
+            .groupby("athlete_key")
             .size()
             .reset_index(name="top_200_entries")
             .sort_values("top_200_entries", ascending=False)
             .head(15)
+        )
+        top_rank["athlete"] = top_rank["athlete_key"].map(display_names)
+        top_rank["highlight"] = np.where(
+            top_rank["athlete_key"] == selected_key, "Selected athlete", "Other athletes"
         )
 
         fig = px.bar(
@@ -2310,12 +3113,18 @@ elif page == "Athletes Hall of Fame":
             x="top_200_entries",
             y="athlete",
             orientation="h",
-            color_discrete_sequence=[AQUA],
-            title="Most top-200 entries"
+            color="highlight",
+            color_discrete_map={"Selected athlete": GOLD, "Other athletes": AQUA},
         )
-        fig.update_layout(yaxis=dict(autorange="reversed"))
-        fig = plotly_clean_layout(fig, height=520)
+        fig.update_layout(yaxis=dict(autorange="reversed"), legend_title_text="")
+        fig.update_xaxes(title="Swims inside the all-time top 200")
+        fig.update_yaxes(title="")
+        fig = plotly_clean_layout(fig, height=520, title="Most all-time top-200 swims")
         st.plotly_chart(fig, use_container_width=True)
+
+    st.caption(
+        "If the selected swimmer appears in a chart, the bar is highlighted in gold."
+    )
 
     with st.expander("Athlete world record entries"):
         if not athlete_wr.empty:
@@ -2341,7 +3150,140 @@ elif page == "Athletes Hall of Fame":
         else:
             st.write("No top-200 entries.")
 
+    # ------------------------------------------------------------------
+    # HEAD TO HEAD
+    # ------------------------------------------------------------------
+    section(
+        "Head to head",
+        "Pick two swimmers and compare them directly. The chart below only uses events both of them "
+        "actually swam, so the two bars always measure the same thing in the same unit."
+    )
 
+    pick_l, pick_vs, pick_r = st.columns([1, 0.22, 1], gap="medium")
+
+    default_left = all_keys.index(selected_key) if selected_key in all_keys else 0
+    default_right = 1 if len(all_keys) > 1 else 0
+    if default_right == default_left and len(all_keys) > 1:
+        default_right = 0 if default_left != 0 else 1
+
+    with pick_l:
+        key_left = st.selectbox(
+            "First swimmer",
+            all_keys,
+            index=default_left,
+            format_func=lambda k: display_names.get(k, k),
+            key="vs_left"
+        )
+
+    with pick_r:
+        key_right = st.selectbox(
+            "Second swimmer",
+            all_keys,
+            index=default_right,
+            format_func=lambda k: display_names.get(k, k),
+            key="vs_right"
+        )
+
+    if key_left == key_right:
+        st.warning("Choose two different swimmers to see the comparison.")
+    else:
+        p_left = build_profile(key_left)
+        p_right = build_profile(key_right)
+
+        card_l, card_vs, card_r = st.columns([1, 0.22, 1], gap="medium")
+
+        with card_l:
+            render_id_card(p_left, kicker="Challenger")
+
+        with card_vs:
+            st.markdown(
+                "<div class='vs-badge'><div class='vs-badge-inner'>VS</div></div>",
+                unsafe_allow_html=True,
+            )
+
+        with card_r:
+            render_id_card(p_right, kicker="Challenger")
+
+        # --- Same reference, same unit: how far each sits from the all-time best ---
+        event_best = top.groupby("event_label")["time_seconds"].min()
+
+        def gap_per_event(p):
+            rows = p["top_rows"].dropna(subset=["time_seconds"])
+            if rows.empty:
+                return pd.Series(dtype=float)
+            personal = rows.groupby("event_label")["time_seconds"].min()
+            reference = event_best.reindex(personal.index)
+            return (personal - reference) / reference * 100
+
+        gap_l = gap_per_event(p_left)
+        gap_r = gap_per_event(p_right)
+        shared_events = sorted(set(gap_l.index) & set(gap_r.index))
+
+        if not shared_events:
+            st.info(
+                "These two swimmers share no event inside the all-time top-200 dataset, so a "
+                "like-for-like comparison is not possible. The identity cards above still "
+                "summarise each career."
+            )
+        else:
+            duel = pd.DataFrame({
+                "event_label": shared_events,
+                "left": gap_l[shared_events].values,
+                "right": gap_r[shared_events].values,
+            })
+
+            fig = go.Figure()
+
+            for _, row in duel.iterrows():
+                fig.add_trace(go.Scatter(
+                    x=[row["left"], row["right"]],
+                    y=[row["event_label"], row["event_label"]],
+                    mode="lines",
+                    line=dict(color="rgba(82,97,107,0.35)", width=4),
+                    showlegend=False,
+                    hoverinfo="skip",
+                ))
+
+            fig.add_trace(go.Scatter(
+                x=duel["left"], y=duel["event_label"], mode="markers",
+                name=p_left["name"],
+                marker=dict(size=15, color=BLUE, line=dict(color="white", width=1.4)),
+                hovertemplate="%{y}<br>" + p_left["name"] + ": %{x:.2f}% behind<extra></extra>",
+            ))
+            fig.add_trace(go.Scatter(
+                x=duel["right"], y=duel["event_label"], mode="markers",
+                name=p_right["name"],
+                marker=dict(size=15, color=GOLD, line=dict(color="white", width=1.4)),
+                hovertemplate="%{y}<br>" + p_right["name"] + ": %{x:.2f}% behind<extra></extra>",
+            ))
+
+            fig.add_vline(
+                x=0, line_color=NAVY, line_width=2, line_dash="dot",
+                annotation_text="Fastest ever", annotation_position="top",
+                annotation_font=dict(color=DARK_GREY, size=11),
+            )
+            fig.update_xaxes(title="Percent behind the fastest swim ever in that event — left is better")
+            fig.update_yaxes(title="")
+            fig = plotly_clean_layout(
+                fig,
+                height=200 + 80 * len(duel),
+                title="How far each one sits from the all-time best"
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+            wins_l = int((duel["left"] < duel["right"]).sum())
+            wins_r = int((duel["right"] < duel["left"]).sum())
+
+            st.markdown(
+                f"<div class='small-caption'>Across the {len(duel)} shared "
+                f"event{'s' if len(duel) != 1 else ''}, <b>{p_left['name']}</b> is the closer to the "
+                f"all-time best {wins_l} time{'s' if wins_l != 1 else ''} and "
+                f"<b>{p_right['name']}</b> {wins_r} time{'s' if wins_r != 1 else ''}. "
+                f"Both swimmers are measured against the same fixed reference — the fastest swim ever "
+                f"recorded in each event — so the horizontal gap between two dots is the real "
+                f"difference between them, whatever the length of the race.</div>",
+                unsafe_allow_html=True,
+            )
 # ============================================================
 # PAGE 5 - NATIONS & PLACES
 # ============================================================
@@ -2363,7 +3305,7 @@ elif page == "Nations & Places":
         st.stop()
 
     # --- Nationality cleaning + ISO-3 mapping (needed for the world map) ---
-    # Fixes the "Â\xa0" mojibake and maps names (incl. historical states) to ISO-3.
+    
     NAT_TO_ISO3 = {
         "Argentina": "ARG", "Australia": "AUS", "Australasia": "AUS", "Austria": "AUT",
         "Belarus": "BLR", "Belgium": "BEL", "Brazil": "BRA", "Canada": "CAN",
@@ -2392,14 +3334,8 @@ elif page == "Nations & Places":
         "TUR": "Turkey", "HKG": "Hong Kong", "CYM": "Cayman Islands", "ZWE": "Zimbabwe",
     }
 
-    def clean_nationality(s):
-        if not isinstance(s, str):
-            return ""
-        return s.replace("\xa0", " ").replace("Â", "").strip()
-
     filtered_wr = filtered_wr.copy()
-    filtered_wr["nat_clean"] = filtered_wr["nationality"].apply(clean_nationality)
-    filtered_wr["iso3"] = filtered_wr["nat_clean"].map(NAT_TO_ISO3)
+    filtered_wr["iso3"] = filtered_wr["nationality"].map(NAT_TO_ISO3)
 
     # On-page hint so users notice the sidebar filters.
     st.info(
@@ -2477,7 +3413,7 @@ elif page == "Nations & Places":
         current_nations = (
             filtered_wr[filtered_wr["is_current_bool"] == True]
             .dropna(subset=["iso3"])
-            .assign(country=lambda d: d["iso3"].map(ISO3_TO_NAME).fillna(d["nat_clean"]))
+            .assign(country=lambda d: d["iso3"].map(ISO3_TO_NAME).fillna(d["nationality"]))
             .groupby("country")
             .size()
             .reset_index(name="current_records")
@@ -2546,7 +3482,11 @@ elif page == "Compare Events":
 
     section(
         "Compare Events",
-        "Compare how different swimming events evolved: number of record changes, time improvement and record age."
+        "A 50m sprint and a 1500m distance race are not measured on the same clock: one lasts twenty "
+        "seconds, the other a quarter of an hour. To compare how they evolved we have to strip away "
+        "the absolute times and ask the same questions of each: how often has this record fallen, "
+        "how much faster has it become, and how long has the current mark survived? Pick the events "
+        "you want to put side by side."
     )
 
     filtered = apply_common_filters(
@@ -2558,34 +3498,43 @@ elif page == "Compare Events":
         key_prefix="compare"
     )
 
+    # Relay records belong to a team of four, not to a single event progression,
+    # so they are left out of an event-to-event comparison.
+    filtered = filtered[~filtered["is_relay"]]
+    filtered = filtered.dropna(subset=["seconds", "date"])
+
     if filtered.empty:
         st.warning("No data available for the selected filters.")
         st.stop()
 
+    st.info(
+        "Use the **Filters** in the sidebar on the left to narrow the pool of events, then choose "
+        "which ones to compare in the selector below."
+    )
+
+    # ------------------------------------------------------------------
+    # One row per event: the four questions above, answered numerically.
+    # ------------------------------------------------------------------
     summary_rows = []
 
-    for event, group in filtered.dropna(subset=["seconds"]).groupby("event_label"):
+    for event, group in filtered.groupby("event_label"):
         group = group.sort_values("date")
 
-        if group.empty:
+        if len(group) < 3:
             continue
 
         first = group.iloc[0]
         last = group.iloc[-1]
-        improvement_s = first["seconds"] - last["seconds"]
-        improvement_pct = improvement_s / first["seconds"] * 100 if first["seconds"] else np.nan
 
         current_rows = group[group["is_current_bool"] == True]
         if not current_rows.empty:
-            current_date = current_rows.iloc[-1]["date"]
-            current_holder = current_rows.iloc[-1]["name"]
-            current_time = current_rows.iloc[-1]["time"]
+            current = current_rows.iloc[-1]
         else:
-            current_date = last["date"]
-            current_holder = last["name"]
-            current_time = last["time"]
+            current = last
 
-        age_years = (pd.Timestamp.today() - current_date).days / 365.25 if not pd.isna(current_date) else np.nan
+        current_date = current["date"]
+        age_years = (pd.Timestamp.today() - current_date).days / 365.25 if pd.notna(current_date) else np.nan
+        history_years = (last["date"] - first["date"]).days / 365.25
 
         summary_rows.append(
             {
@@ -2593,13 +3542,13 @@ elif page == "Compare Events":
                 "records": len(group),
                 "first_year": first["year"],
                 "latest_year": last["year"],
-                "first_seconds": first["seconds"],
-                "latest_seconds": last["seconds"],
-                "improvement_s": improvement_s,
-                "improvement_pct": improvement_pct,
+                "improvement_s": first["seconds"] - last["seconds"],
+                "improvement_pct": (first["seconds"] - last["seconds"]) / first["seconds"] * 100
+                if first["seconds"] else np.nan,
                 "current_record_age_years": age_years,
-                "current_holder": current_holder,
-                "current_time": current_time
+                "history_years": history_years,
+                "current_holder": clean_text(current["name"]),
+                "current_time": clean_text(current["time"]),
             }
         )
 
@@ -2609,79 +3558,220 @@ elif page == "Compare Events":
         st.warning("No comparable event summary available.")
         st.stop()
 
+    oldest = summary.sort_values("current_record_age_years", ascending=False).iloc[0]
+    biggest = summary.sort_values("improvement_pct", ascending=False).iloc[0]
+
     c1, c2, c3 = st.columns(3)
 
     with c1:
         st.metric("Events compared", len(summary))
 
     with c2:
-        st.metric("Average record changes", f"{summary['records'].mean():.1f}")
+        st.metric("Oldest current record", f"{oldest['current_record_age_years']:.1f} years")
 
     with c3:
-        oldest = summary.sort_values("current_record_age_years", ascending=False).iloc[0]
-        st.metric("Oldest current record", oldest["event_label"])
+        st.metric("Biggest improvement", f"{biggest['improvement_pct']:.1f}%")
 
-    col_a, col_b = st.columns(2)
-
-    with col_a:
-        fig = px.bar(
-            summary.sort_values("records", ascending=False).head(25),
-            x="records",
-            y="event_label",
-            orientation="h",
-            color_discrete_sequence=[BLUE],
-            title="Events with the most world record changes"
-        )
-        fig.update_layout(yaxis=dict(autorange="reversed"))
-        fig.update_xaxes(title="Number of historical records")
-        fig.update_yaxes(title="")
-        fig = plotly_clean_layout(fig, height=620)
-        st.plotly_chart(fig, use_container_width=True)
-
-    with col_b:
-        fig = px.bar(
-            summary.sort_values("improvement_pct", ascending=False).head(25),
-            x="improvement_pct",
-            y="event_label",
-            orientation="h",
-            color_discrete_sequence=[AQUA],
-            title="Largest percentage improvement from first to latest record"
-        )
-        fig.update_layout(yaxis=dict(autorange="reversed"))
-        fig.update_xaxes(title="Improvement %")
-        fig.update_yaxes(title="")
-        fig = plotly_clean_layout(fig, height=620)
-        st.plotly_chart(fig, use_container_width=True)
-
-    section(
-        "Record age",
-        "Some records fall frequently, while others survive for many years."
+    st.caption(
+        f"The longest-standing mark belongs to **{oldest['event_label']}** "
+        f"({clean_text(oldest['current_holder'])}). The event that has improved most since its first "
+        f"recorded world record is **{biggest['event_label']}**."
     )
 
-    fig = px.scatter(
-        summary,
-        x="records",
-        y="current_record_age_years",
-        size="improvement_pct",
-        color="improvement_pct",
-        color_continuous_scale=[[0, BLUE], [1, GOLD]],
-        hover_data=[
-            "event_label",
-            "current_holder",
-            "current_time",
-            "first_year",
-            "latest_year",
-            "improvement_pct"
-        ],
-        title="Record changes vs current record age"
+    # ------------------------------------------------------------------
+    # Selection interface (two or more events), as prescribed for a
+    # comparison task: pick the subjects first, then compare them.
+    # ------------------------------------------------------------------
+    all_events = sorted(summary["event_label"].tolist())
+
+    preferred = [
+        e for e in [
+            "Men 100m Freestyle (LC)",
+            "Women 100m Freestyle (LC)",
+            "Men 1500m Freestyle (LC)",
+            "Men 50m Freestyle (LC)",
+        ] if e in all_events
+    ]
+    default_events = preferred if preferred else all_events[:3]
+
+    chosen = st.multiselect(
+        "Events to compare (two to six work best)",
+        all_events,
+        default=default_events,
+        key="compare_events_pick"
     )
-    fig.update_xaxes(title="Number of record changes")
-    fig.update_yaxes(title="Current record age, years")
-    fig = plotly_clean_layout(fig, height=600)
-    st.plotly_chart(fig, use_container_width=True)
+
+    if len(chosen) < 2:
+        st.warning("Choose at least two events to compare.")
+        st.stop()
+
+    if len(chosen) > 6:
+        st.info("Showing the first six events — beyond that the lines become hard to follow.")
+        chosen = chosen[:6]
+
+    series_colors = [BLUE, GOLD, AQUA, NAVY, RED, DARK_GREY]
+    color_of = {event: series_colors[i % len(series_colors)] for i, event in enumerate(chosen)}
+
+    # ------------------------------------------------------------------
+    # 1. Progression on a shared scale.
+    #    Each event is indexed to its own first world record = 100, which is the
+    #    only way a 20-second sprint and a 15-minute race can share a y-axis.
+    # ------------------------------------------------------------------
+    st.markdown("### How far each record has travelled")
+    st.caption(
+        "Every event starts at 100: its own first world record. A line falling to 70 means the "
+        "record is now 30% faster than when the archive began. Grey lines are the other events, "
+        "kept as background so each selection can be read against the whole field."
+    )
+
+    fig_index = go.Figure()
+
+    for event, group in filtered.groupby("event_label"):
+        if event in chosen or len(group) < 3:
+            continue
+        group = group.sort_values("date")
+        base = group["seconds"].iloc[0]
+        if not base:
+            continue
+        fig_index.add_trace(go.Scatter(
+            x=group["date"],
+            y=group["seconds"] / base * 100,
+            mode="lines",
+            line=dict(color="rgba(82,97,107,0.12)", width=1),
+            showlegend=False,
+            hoverinfo="skip",
+        ))
+
+    for event in chosen:
+        group = filtered[filtered["event_label"] == event].sort_values("date")
+        base = group["seconds"].iloc[0]
+        fig_index.add_trace(go.Scatter(
+            x=group["date"],
+            y=group["seconds"] / base * 100,
+            mode="lines+markers",
+            name=event,
+            line=dict(color=color_of[event], width=2.6),
+            marker=dict(size=5, color=color_of[event]),
+            customdata=np.stack([group["name"], group["time"]], axis=-1),
+            hovertemplate=f"<b>{event}</b><br>%{{customdata[0]}} · %{{customdata[1]}}"
+                          "<br>%{y:.1f}% of the first record<extra></extra>",
+        ))
+
+    fig_index.add_hline(
+        y=100, line_dash="dot", line_color=DARK_GREY, opacity=0.7,
+        annotation_text="First recorded world record", annotation_position="bottom left",
+        annotation_font=dict(color=DARK_GREY, size=11),
+    )
+    fig_index.update_xaxes(title="Year the record was set")
+    fig_index.update_yaxes(title="Record time as % of that event's first record")
+    fig_index = plotly_clean_layout(fig_index, height=560, title="World record progression, on a shared scale")
+    st.plotly_chart(fig_index, use_container_width=True)
+
+    # ------------------------------------------------------------------
+    # 2. The same events on four axes at once.
+    #    A radar is the standard answer to "compare a few subjects across
+    #    several metrics"; every axis is rescaled 0-100 against the strongest
+    #    event in the archive, because the four metrics have different units.
+    # ------------------------------------------------------------------
+    st.markdown("### The same events, four questions at a time")
+    st.caption(
+        "Each spoke is one question, rescaled so that 100 is the highest value reached by any event "
+        "in the archive. A wide shape means an event that has been broken often, improved a lot, and "
+        "has a long history. Because the four metrics have different units, only the shapes should "
+        "be compared, never the raw distances."
+    )
+
+    radar_metrics = [
+        ("records", "Times broken"),
+        ("improvement_pct", "Total improvement"),
+        ("current_record_age_years", "Age of current record"),
+        ("history_years", "Years of history"),
+    ]
+    maxima = {col: summary[col].max() for col, _ in radar_metrics}
+
+    fig_radar = go.Figure()
+
+    for event in chosen:
+        row = summary[summary["event_label"] == event].iloc[0]
+        values = [
+            (row[col] / maxima[col] * 100) if maxima[col] else 0
+            for col, _ in radar_metrics
+        ]
+        labels = [label for _, label in radar_metrics]
+        fig_radar.add_trace(go.Scatterpolar(
+            r=values + [values[0]],
+            theta=labels + [labels[0]],
+            fill="toself",
+            name=event,
+            line=dict(color=color_of[event], width=2),
+            opacity=0.55,
+        ))
+
+    fig_radar.update_layout(
+        polar=dict(
+            bgcolor="rgba(0,0,0,0)",
+            radialaxis=dict(visible=True, range=[0, 100], gridcolor="rgba(5,43,68,0.12)"),
+            angularaxis=dict(gridcolor="rgba(5,43,68,0.12)"),
+        )
+    )
+    fig_radar = plotly_clean_layout(fig_radar, height=560, title="Event profiles compared")
+    st.plotly_chart(fig_radar, use_container_width=True)
+
+    # ------------------------------------------------------------------
+    # 3. Where the chosen events sit inside the whole archive.
+    # ------------------------------------------------------------------
+    st.markdown("### Do records that fall often also stay young?")
+    st.caption(
+        "Every dot is one event. Events far to the right have been broken many times; events high up "
+        "are still holding a record set long ago. The chosen events are drawn in colour."
+    )
+
+    summary["is_chosen"] = summary["event_label"].isin(chosen)
+
+    fig_scatter = go.Figure()
+
+    others = summary[~summary["is_chosen"]]
+    fig_scatter.add_trace(go.Scatter(
+        x=others["records"],
+        y=others["current_record_age_years"],
+        mode="markers",
+        marker=dict(size=9, color="rgba(82,97,107,0.28)", line=dict(color="white", width=0.6)),
+        name="Other events",
+        customdata=np.stack([others["event_label"], others["improvement_pct"]], axis=-1),
+        hovertemplate="<b>%{customdata[0]}</b><br>%{x} records<br>"
+                      "current mark %{y:.1f} years old<br>improved %{customdata[1]:.1f}%<extra></extra>",
+    ))
+
+    for event in chosen:
+        row = summary[summary["event_label"] == event].iloc[0]
+        fig_scatter.add_trace(go.Scatter(
+            x=[row["records"]],
+            y=[row["current_record_age_years"]],
+            mode="markers+text",
+            marker=dict(size=16, color=color_of[event], line=dict(color="white", width=1.4)),
+            text=[event],
+            textposition="top center",
+            textfont=dict(size=11, color=NAVY),
+            name=event,
+            showlegend=False,
+            hovertemplate=f"<b>{event}</b><br>%{{x}} records<br>"
+                          f"current mark %{{y:.1f}} years old<extra></extra>",
+        ))
+
+    fig_scatter.update_xaxes(title="Number of times the record has been broken")
+    fig_scatter.update_yaxes(title="Age of the current record, in years")
+    fig_scatter = plotly_clean_layout(fig_scatter, height=560, title="Record turnover against record age")
+    st.plotly_chart(fig_scatter, use_container_width=True)
+
+    st.markdown(
+        "<div class='small-caption'>Reading note: an event can be broken often and still hold an old "
+        "record, if its progress stopped recently. Counts depend on how completely the archive "
+        "recorded each event, so an event with few entries is not necessarily a stable one.</div>",
+        unsafe_allow_html=True
+    )
 
     st.dataframe(
-        summary.sort_values("records", ascending=False).rename(
+        summary.drop(columns=["is_chosen"]).sort_values("records", ascending=False).rename(
             columns={
                 "event_label": "Event",
                 "records": "Number of records",
@@ -2690,6 +3780,7 @@ elif page == "Compare Events":
                 "improvement_s": "Improvement, seconds",
                 "improvement_pct": "Improvement, %",
                 "current_record_age_years": "Current record age, years",
+                "history_years": "Years of history",
                 "current_holder": "Current holder",
                 "current_time": "Current time"
             }
