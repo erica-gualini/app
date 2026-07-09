@@ -1329,8 +1329,6 @@ def first_existing_column(df, candidates):
 def plotly_clean_layout(fig, height=480, title=None):
     fig.update_layout(
         height=height,
-        title=title,
-        title_font=dict(size=22, color=NAVY),
         font=dict(family="Arial", size=13, color=NAVY),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
@@ -1343,6 +1341,8 @@ def plotly_clean_layout(fig, height=480, title=None):
             x=1
         )
     )
+    if title:
+        fig.update_layout(title=title, title_font=dict(size=22, color=NAVY))
     fig.update_xaxes(showgrid=True, gridcolor="rgba(5,43,68,0.10)", zeroline=False)
     fig.update_yaxes(showgrid=True, gridcolor="rgba(5,43,68,0.10)", zeroline=False)
     return fig
@@ -1917,8 +1917,9 @@ def build_pool_lanes():
     for i, page_name in enumerate(PAGES, start=1):
         active_class = " active" if page == page_name else ""
         page_url = quote(page_name, safe="")
+        link_target = "_blank" if page_name == "Game" else "_self"
         lanes += (
-            f'<a class="home-lane{active_class}" href="?page={page_url}" target="_self">'
+            f'<a class="home-lane{active_class}" href="?page={page_url}" target="{link_target}">'
             f'<span class="hl-line"></span>'
             f'<span class="hl-btn">'
             f'<span class="hl-name">{PAGE_LABELS[page_name]}</span>'
@@ -2131,7 +2132,7 @@ if page != "Home":
     render_compact_pool(page)
 
 
-if page != "Home":
+if page in ("World Record Timeline", "All-Time Top 200 Rankings", "Nations & Places", "Compare Events"):
     with st.sidebar:
         st.markdown("## 🏊 Filters")
 
@@ -3665,6 +3666,10 @@ elif page == "Compare Events":
     fig_index.update_xaxes(title="Year the record was set")
     fig_index.update_yaxes(title="Record time as % of that event's first record")
     fig_index = plotly_clean_layout(fig_index, height=560, title="World record progression, on a shared scale")
+    fig_index.update_layout(
+        margin=dict(l=30, r=30, t=130, b=40),
+        legend=dict(orientation="h", y=1.02, yanchor="bottom", x=0, xanchor="left"),
+    )
     st.plotly_chart(fig_index, use_container_width=True)
 
     # ------------------------------------------------------------------
@@ -3715,6 +3720,10 @@ elif page == "Compare Events":
         )
     )
     fig_radar = plotly_clean_layout(fig_radar, height=560, title="Event profiles compared")
+    fig_radar.update_layout(
+        margin=dict(l=60, r=60, t=90, b=110),
+        legend=dict(orientation="h", y=-0.12, yanchor="top", x=0.5, xanchor="center"),
+    )
     st.plotly_chart(fig_radar, use_container_width=True)
 
     # ------------------------------------------------------------------
@@ -3761,6 +3770,10 @@ elif page == "Compare Events":
     fig_scatter.update_xaxes(title="Number of times the record has been broken")
     fig_scatter.update_yaxes(title="Age of the current record, in years")
     fig_scatter = plotly_clean_layout(fig_scatter, height=560, title="Record turnover against record age")
+    fig_scatter.update_layout(
+        margin=dict(l=30, r=30, t=110, b=40),
+        legend=dict(orientation="h", y=1.02, yanchor="bottom", x=0, xanchor="left"),
+    )
     st.plotly_chart(fig_scatter, use_container_width=True)
 
     st.markdown(
@@ -3913,7 +3926,7 @@ elif page == "Game":
         "then name a swimmer who really set a world record matching both. Claim three lanes in a row to win.",
         image_file="game.jpg",
         alt="Swimming goggles by the pool",
-        ratio="118%"
+        ratio="70%"
     )
 
     st.markdown(
