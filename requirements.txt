@@ -4,4 +4,4 @@ plotly
 openpyxl
 jupyter
 ipykernel
-nbformat
+nbformatnumpy
